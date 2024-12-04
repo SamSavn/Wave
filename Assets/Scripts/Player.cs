@@ -1,4 +1,5 @@
 using UnityEngine;
+using Wave.States.PlayerStates;
 
 namespace Wave.Actors
 {
@@ -11,6 +12,9 @@ namespace Wave.Actors
 
         private GameObject _model;
         private Collider _collider;
+
+        private IPlayerState _currentState;
+
         private float _currentAngle;
 
         private void Awake()
@@ -21,45 +25,41 @@ namespace Wave.Actors
 
         private void Start()
         {
-            _rigidbody.isKinematic = true;
-            transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+            SetState(new IdleState(transform, _rigidbody));
         }
 
         private void Update()
         {
-            if (!Input.GetKey(KeyCode.Space))
-                return;
+            if (_currentState != null)
+                _currentState.Execute();
 
-            if (_rigidbody.isKinematic)
-                _rigidbody.isKinematic = false;
-
-            ApplyUpwardForce();
-        }
-
-        private void FixedUpdate()
-        {
-            if (Input.GetKey(KeyCode.Space) || _rigidbody.isKinematic)
-                return;
-
-            ApplyGravity();
-        }
-
-        private void ApplyUpwardForce()
-        {
-            _rigidbody.AddForce(Vector3.up * _force, ForceMode.Force);
-            AdjustRotation();
-        }
-
-        private void ApplyGravity()
-        {
-            _rigidbody.linearVelocity += Physics.gravity * Time.fixedDeltaTime * 2;
-            AdjustRotation();
+            if (Input.GetKey(KeyCode.Space))
+                SetState(new RisingState(_rigidbody, _force, AdjustRotation));
+            else
+                SetState(new FallingState(_rigidbody, AdjustRotation));
         }
 
         private void AdjustRotation()
         {
             _currentAngle = Mathf.Clamp(-_rigidbody.linearVelocity.y, -_maxAngle, _maxAngle);
             transform.eulerAngles = new Vector3(_currentAngle, 0, 0);
+        }
+
+        private void SetState(IPlayerState state)
+        {
+            if (state == null)
+                return;
+
+            if (_currentState != null)
+            {
+                if (_currentState == state)
+                    return;
+
+                _currentState.Exit();
+            }
+
+            _currentState = state;
+            _currentState.Enter();
         }
     }
 }
