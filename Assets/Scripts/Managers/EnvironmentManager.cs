@@ -78,7 +78,10 @@ namespace Wave.Managers
             if (firstBlock.Position.z < -firstBlock.Width)
             {
                 firstBlock.SetActive(false);
-                _pool.Enqueue(firstBlock);
+
+                if (!firstBlock.IsInitial)
+                    _pool.Enqueue(firstBlock);
+
                 _blocks.RemoveAt(0);
 
                 newBlock = GetBlockFromPool();

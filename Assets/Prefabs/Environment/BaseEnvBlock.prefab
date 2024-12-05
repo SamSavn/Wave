@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2713233432006489289}
   - component: {fileID: 722612546815839943}
   m_Layer: 0
-  m_Name: Cube (5)
+  m_Name: UpperLimit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -157,6 +157,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _leftSocket: {fileID: 4365359812461540437}
   _rightSocket: {fileID: 6924740925257229540}
+  _initialBlock: 1
 --- !u!1 &5036013698966865858
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,7 +266,7 @@ GameObject:
   - component: {fileID: 4245999899155170116}
   - component: {fileID: 2561428551495617871}
   m_Layer: 0
-  m_Name: Cube (6)
+  m_Name: LowerLimit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

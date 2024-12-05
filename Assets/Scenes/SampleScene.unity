@@ -289,9 +289,10 @@ MonoBehaviour:
   _prefabs:
   - {fileID: 6431422547950483161, guid: e479885b6a67b0842af880477727da02, type: 3}
   - {fileID: 1631572446420958705, guid: dddb49a41c251e442a2c237af39d84c4, type: 3}
+  - {fileID: 3373160002312228796, guid: fc1344324a555354e9cfb8aa8f189498, type: 3}
   _poolCapacity: 5
   _maxBlocks: 3
-  _speed: 50
+  _speed: 70
 --- !u!4 &331164889
 Transform:
   m_ObjectHideFlags: 0
@@ -509,7 +510,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _modelPrefab: {fileID: 5163680731217342324, guid: dfa0ffded8acc8c47b5c47fd6f8ec232, type: 3}
   _rigidbody: {fileID: 2120817088}
-  _force: 20
+  _force: 30
   _maxAngle: 45
 --- !u!54 &2120817088
 Rigidbody:
