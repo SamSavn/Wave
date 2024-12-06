@@ -1,5 +1,8 @@
-public interface ICollectable
+namespace Wave.Collectables
 {
-    void Collect();
-    void SetActive(bool value);
+	public interface ICollectable
+	{
+		void Collect();
+		void SetActive(bool value);
+	} 
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using Wave.Collectables;
 
 namespace Wave.Environment
 {

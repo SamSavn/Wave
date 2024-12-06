@@ -1,4 +1,6 @@
 using UnityEngine;
+using Wave.Collectables;
+using Wave.Services;
 using Wave.States.PlayerStates;
 
 namespace Wave.Actors
@@ -10,6 +12,9 @@ namespace Wave.Actors
         [SerializeField] private float _force = 10f;
         [SerializeField] private float _maxAngle = 50f;
 
+        private UpdateService _updateService;
+        private InputService _inputService;
+
         private GameObject _model;
         private Collider _collider;
 
@@ -19,11 +24,18 @@ namespace Wave.Actors
 
         private void Awake()
         {
+            _updateService = ServiceLocator.Instance.Get<UpdateService>();
+            _inputService = ServiceLocator.Instance.Get<InputService>();
+
             _model = Instantiate(_modelPrefab, Vector3.zero, Quaternion.identity, transform);
             _model.gameObject.layer = 7;
 
             _collider = _model.GetComponent<Collider>();
             _collider.isTrigger = true;
+
+            _inputService.OnGameInputDown.Add(OnInputDown);
+            _inputService.OnGameInputUp.Add(OnInputUp);
+            _updateService.Update.Add(CustomUpdate);
         }
 
         private void Start()
@@ -31,15 +43,17 @@ namespace Wave.Actors
             SetState(new IdleState(transform, _rigidbody));
         }
 
-        private void Update()
+        private void OnDestroy()
+        {
+            _inputService.OnGameInputDown.Remove(OnInputDown);
+            _inputService.OnGameInputUp.Remove(OnInputUp);
+            _updateService.Update.Remove(CustomUpdate);
+        }
+
+        private void CustomUpdate(float dt)
         {
             if (_currentState != null)
                 _currentState.Execute();
-
-            if (Input.GetKey(KeyCode.Space))
-                SetState(new RisingState(_rigidbody, _force, AdjustRotation));
-            else
-                SetState(new FallingState(_rigidbody, AdjustRotation));
         }
 
         private void AdjustRotation()
@@ -63,6 +77,16 @@ namespace Wave.Actors
 
             _currentState = state;
             _currentState.Enter();
+        }
+
+        private void OnInputDown()
+        {
+            SetState(new RisingState(_rigidbody, _force, AdjustRotation));
+        }
+
+        private void OnInputUp()
+        {
+            SetState(new FallingState(_rigidbody, AdjustRotation));
         }
 
         private void OnTriggerEnter(Collider other)

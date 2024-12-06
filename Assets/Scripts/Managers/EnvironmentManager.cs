@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Wave.Environment;
+using Wave.Services;
 
 namespace Wave.Managers
 {
@@ -15,9 +16,20 @@ namespace Wave.Managers
         private List<EnvironmentBlock> _blocks = new List<EnvironmentBlock>();
         private Queue<EnvironmentBlock> _pool = new Queue<EnvironmentBlock>();
 
+        private InputService _inputService;
+        private UpdateService _updateService;
+
+        private bool _moving;
+
         private void Awake()
         {
+            _inputService = ServiceLocator.Instance.Get<InputService>();
+            _updateService = ServiceLocator.Instance.Get<UpdateService>();
+
             InitializePool();
+
+            _inputService.OnGameInputDown.Add(OnInputDown);
+            _updateService.Update.Add(CustomUpdate);
         }
 
         private void Start()
@@ -25,10 +37,19 @@ namespace Wave.Managers
             SpawnInitialBlocks();
         }
 
-        private void Update()
+        private void OnDestroy()
         {
+            _inputService.OnGameInputDown.Remove(OnInputDown);
+            _updateService.Update.Remove(CustomUpdate);
+        }
+
+        private void CustomUpdate(float dt)
+        {
+            if (!_moving)
+                return;
+
             MoveBlocks();
-            RecycleBlocks();
+            TryRecycleBlocks();
         }
 
         private void InitializePool()
@@ -67,7 +88,7 @@ namespace Wave.Managers
                 block.Move(_speed);
         }
 
-        private void RecycleBlocks()
+        private void TryRecycleBlocks()
         {
             if (_blocks.Count == 0)
                 return;
@@ -116,6 +137,8 @@ namespace Wave.Managers
 
             return null;
         }
+
+        private void OnInputDown() => _moving = true;
     } 
 }
 

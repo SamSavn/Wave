@@ -1,35 +1,38 @@
 using UnityEngine;
 
-public class Portal : MonoBehaviour, ICollectable
+namespace Wave.Collectables
 {
-    [SerializeField] private MeshRenderer _renderer;
-    [SerializeField] private Color _activeColor;
-
-    private Color _defaultColor;
-
-    private void Reset()
+    public class Portal : MonoBehaviour, ICollectable
     {
-        _renderer = GetComponentInChildren<MeshRenderer>();
-    }
+        [SerializeField] private MeshRenderer _renderer;
+        [SerializeField] private Color _activeColor;
 
-    private void Awake()
-    {
-        if (_renderer == null)
+        private Color _defaultColor;
+
+        private void Reset()
+        {
             _renderer = GetComponentInChildren<MeshRenderer>();
+        }
 
-        _defaultColor = _renderer.sharedMaterial.color;
-    }
+        private void Awake()
+        {
+            if (_renderer == null)
+                _renderer = GetComponentInChildren<MeshRenderer>();
 
-    public void Collect()
-    {
-        _renderer.material.color = _activeColor;
-    }
+            _defaultColor = _renderer.sharedMaterial.color;
+        }
 
-    public void SetActive(bool value)
-    {
-        gameObject.SetActive(value);
+        public void Collect()
+        {
+            _renderer.material.color = _activeColor;
+        }
 
-        if (!value)
-            _renderer.material.color = _defaultColor;
-    }
+        public void SetActive(bool value)
+        {
+            gameObject.SetActive(value);
+
+            if (!value)
+                _renderer.material.color = _defaultColor;
+        }
+    } 
 }
