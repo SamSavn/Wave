@@ -2,44 +2,47 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public static class CollectionsExtentions
+namespace Wave.Extentions
 {
-    public static T GetRandom<T>(this IEnumerable<T> collection) where T : class
+    public static class CollectionsExtentions
     {
-        if (collection.IsNullOrEmpty())
-            return null;
-
-        int random = 0;
-
-        if (collection is List<T> list)
+        public static T GetRandom<T>(this IEnumerable<T> collection) where T : class
         {
-            random = Random.Range(0, list.Count);
-            return list[random];
-        }
-        else if (collection is T[] array)
-        {
-            random = Random.Range(0, array.Length);
-            return array[random];
-        }
+            if (collection.IsNullOrEmpty())
+                return null;
 
-        random = Random.Range(0, collection.Count());
-        return collection.ElementAt(random);
-    }
+            int random = 0;
 
-    public static bool IsNullOrEmpty<T>(this IEnumerable<T> collection)
-    {
-        if (collection == null)
-            return false;
+            if (collection is List<T> list)
+            {
+                random = Random.Range(0, list.Count);
+                return list[random];
+            }
+            else if (collection is T[] array)
+            {
+                random = Random.Range(0, array.Length);
+                return array[random];
+            }
 
-        if (collection is List<T> list)
-        {
-            return list.Count == 0;
-        }
-        else if (collection is T[] array)
-        {
-            return array.Length == 0;
+            random = Random.Range(0, collection.Count());
+            return collection.ElementAt(random);
         }
 
-        return collection.Count() == 0;
-    }
+        public static bool IsNullOrEmpty<T>(this IEnumerable<T> collection)
+        {
+            if (collection == null)
+                return false;
+
+            if (collection is List<T> list)
+            {
+                return list.Count == 0;
+            }
+            else if (collection is T[] array)
+            {
+                return array.Length == 0;
+            }
+
+            return collection.Count() == 0;
+        }
+    } 
 }
