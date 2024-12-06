@@ -80,7 +80,7 @@ namespace Wave.Actors
 
             _modelPrefab = _prefabsService.GetInitialPrefab(PrefabType.PlayerShip);
             _model = Instantiate(_modelPrefab, Vector3.zero, Quaternion.identity, transform);
-            _model.gameObject.layer = 7;
+            _model.gameObject.SetLayer(Layer.Player);
 
             _collider = _model.GetComponent<Collider>();
             _collider.isTrigger = true;
