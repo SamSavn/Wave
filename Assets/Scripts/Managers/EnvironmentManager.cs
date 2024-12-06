@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Wave.Database;
 using Wave.Environment;
 using Wave.Services;
 
@@ -12,38 +11,30 @@ namespace Wave.Managers
         [SerializeField] private int _maxBlocks = 3;
         [SerializeField] private float _speed = 5f;
 
-        private const string BLOCKS_ADDRESS = "EnvironmentBlocksDB";
-
         private List<EnvironmentBlock> _blocks = new List<EnvironmentBlock>();
         private Queue<EnvironmentBlock> _pool = new Queue<EnvironmentBlock>();
 
         private InputService _inputService;
         private UpdateService _updateService;
-        private AddressablesService _addressablesService;
+        private PrefabsService _prefabsService;
 
-        private EnvironmentBlocksDB _blocksDatabase;
-
+        private GameObject _initialPrefab;
         private bool _moving;
 
         private void Awake()
         {
             _inputService = ServiceLocator.Instance.Get<InputService>();
             _updateService = ServiceLocator.Instance.Get<UpdateService>();
-            _addressablesService = ServiceLocator.Instance.Get<AddressablesService>();
+            _prefabsService = ServiceLocator.Instance.Get<PrefabsService>();
 
-            _addressablesService.LoadSingle<EnvironmentBlocksDB>(BLOCKS_ADDRESS, OnBlocksLoaded);
-        }
-
-        private void Start()
-        {
-            _inputService.OnGameInputDown.Add(OnInputDown);
-            _updateService.Update.Add(CustomUpdate);
+            _prefabsService.OnBlocksLoaded?.Add(OnPrefabsLoaded);
         }
 
         private void OnDestroy()
         {
             _inputService.OnGameInputDown.Remove(OnInputDown);
             _updateService.Update.Remove(CustomUpdate);
+            _prefabsService.OnBlocksLoaded.Remove(OnPrefabsLoaded);
         }
 
         private void CustomUpdate(float dt)
@@ -55,22 +46,13 @@ namespace Wave.Managers
             TryRecycleBlocks();
         }
 
-        private void OnBlocksLoaded(EnvironmentBlocksDB db, bool success)
-        {
-            _blocksDatabase = db;
-
-            InitializePool();
-            SpawnBlocks();
-
-            _inputService.OnGameInputDown.Add(OnInputDown);
-            _updateService.Update.Add(CustomUpdate);
-        }
-
         private void InitializePool()
         {
+            _initialPrefab = _prefabsService.GetInitialPrefab(PrefabType.EnvironmentBlock);
+
             for (int i = 0; i < _poolCapacity; i++)
             {
-                AddBlock(_blocksDatabase.GetRandomBlock());
+                AddBlock(_prefabsService.GetRandomPrefab(PrefabType.EnvironmentBlock));
             }
         }
 
@@ -127,10 +109,10 @@ namespace Wave.Managers
 
         private EnvironmentBlock GetInitialBlock()
         {
-            if (_blocksDatabase.GetInitialBlock() == null)
+            if (_initialPrefab == null)
                 return GetBlockFromPool();
 
-            GameObject blockObject = Instantiate(_blocksDatabase.GetInitialBlock(), transform);
+            GameObject blockObject = Instantiate(_initialPrefab, transform);
 
             if (blockObject.TryGetComponent(out EnvironmentBlock block))
                 return block;
@@ -143,12 +125,24 @@ namespace Wave.Managers
             if (_pool.Count > 0)
                 return _pool.Dequeue();
 
-            GameObject blockObject = Instantiate(_blocksDatabase.GetRandomBlock(), transform);
+            GameObject blockObject = Instantiate(_prefabsService.GetRandomPrefab(PrefabType.EnvironmentBlock), transform);
 
             if (blockObject.TryGetComponent(out EnvironmentBlock block))
                 return block;
 
             return null;
+        }
+
+        private void OnPrefabsLoaded(bool success)
+        {
+            if (!success) 
+                return;
+
+            InitializePool();
+            SpawnBlocks();
+
+            _inputService.OnGameInputDown.Add(OnInputDown);
+            _updateService.Update.Add(CustomUpdate);
         }
 
         private void OnInputDown() => _moving = true;

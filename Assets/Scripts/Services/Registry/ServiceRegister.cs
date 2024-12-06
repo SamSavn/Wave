@@ -12,12 +12,14 @@ namespace Wave.Services
 
             UpdateService updateService = new UpdateService();
             CoroutineService coroutineService = new CoroutineService();
+            AddressablesService addressablesService = new AddressablesService(coroutineService);
 
             ServiceLocator.Instance.Register(updateService);
             ServiceLocator.Instance.Register(coroutineService);
+            ServiceLocator.Instance.Register(addressablesService);
 
             ServiceLocator.Instance.Register(new InputService(updateService));
-            ServiceLocator.Instance.Register(new AddressablesService(coroutineService));
+            ServiceLocator.Instance.Register(new PrefabsService(addressablesService));
         }
     }
 }

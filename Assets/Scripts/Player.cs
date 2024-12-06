@@ -7,14 +7,15 @@ namespace Wave.Actors
 {
     public class Player : MonoBehaviour
     {
-        [SerializeField] private GameObject _modelPrefab;
         [SerializeField] private Rigidbody _rigidbody;
         [SerializeField] private float _force = 10f;
         [SerializeField] private float _maxAngle = 50f;
 
         private UpdateService _updateService;
         private InputService _inputService;
+        private PrefabsService _prefabsService;
 
+        private GameObject _modelPrefab;
         private GameObject _model;
         private Collider _collider;
 
@@ -26,21 +27,9 @@ namespace Wave.Actors
         {
             _updateService = ServiceLocator.Instance.Get<UpdateService>();
             _inputService = ServiceLocator.Instance.Get<InputService>();
+            _prefabsService = ServiceLocator.Instance.Get<PrefabsService>();
 
-            _model = Instantiate(_modelPrefab, Vector3.zero, Quaternion.identity, transform);
-            _model.gameObject.layer = 7;
-
-            _collider = _model.GetComponent<Collider>();
-            _collider.isTrigger = true;
-
-            _inputService.OnGameInputDown.Add(OnInputDown);
-            _inputService.OnGameInputUp.Add(OnInputUp);
-            _updateService.Update.Add(CustomUpdate);
-        }
-
-        private void Start()
-        {
-            SetState(new IdleState(transform, _rigidbody));
+            _prefabsService.OnShipsLoaded?.Add(OnPrefabsLoaded);
         }
 
         private void OnDestroy()
@@ -48,6 +37,7 @@ namespace Wave.Actors
             _inputService.OnGameInputDown.Remove(OnInputDown);
             _inputService.OnGameInputUp.Remove(OnInputUp);
             _updateService.Update.Remove(CustomUpdate);
+            _prefabsService.OnShipsLoaded.Remove(OnPrefabsLoaded);
         }
 
         private void CustomUpdate(float dt)
@@ -77,6 +67,25 @@ namespace Wave.Actors
 
             _currentState = state;
             _currentState.Enter();
+        }
+
+        private void OnPrefabsLoaded(bool success)
+        {
+            if (!success) 
+                return;
+
+            _modelPrefab = _prefabsService.GetInitialPrefab(PrefabType.PlayerShip);
+            _model = Instantiate(_modelPrefab, Vector3.zero, Quaternion.identity, transform);
+            _model.gameObject.layer = 7;
+
+            _collider = _model.GetComponent<Collider>();
+            _collider.isTrigger = true;
+
+            _inputService.OnGameInputDown.Add(OnInputDown);
+            _inputService.OnGameInputUp.Add(OnInputUp);
+            _updateService.Update.Add(CustomUpdate);
+
+            SetState(new IdleState(transform, _rigidbody));
         }
 
         private void OnInputDown()
