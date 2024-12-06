@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
@@ -9,6 +10,8 @@ namespace Wave.Environment
         [SerializeField] private Transform _rightSocket;
         [SerializeField] private bool _initialBlock;
 
+        private ICollectable[] _collectables = Array.Empty<ICollectable>();
+
         public Vector3 Position
         {
             get => transform.position;
@@ -17,6 +20,19 @@ namespace Wave.Environment
 
         public float Width => Vector3.Distance(_leftSocket.position, _rightSocket.position);
         public bool IsInitial => _initialBlock;
+
+        private void Awake()
+        {
+            _collectables = GetComponentsInChildren<ICollectable>();
+        }
+
+        public void SetActive(bool active)
+        {
+            if (active) SetCollectibles();
+            else ResetCollectibles();
+
+            gameObject.SetActive(active);
+        }
 
         public void Place(int index)
         {
@@ -35,6 +51,35 @@ namespace Wave.Environment
             SetActive(true);
         }
 
-        public void SetActive(bool active) => gameObject.SetActive(active);
+        private void SetCollectibles()
+        {
+            if (_collectables.IsNullOrEmpty()) 
+            {
+                Debug.LogWarning($"No collectibles found in block {gameObject.name}");
+                return; 
+            }
+
+            ResetCollectibles();
+
+            ICollectable collectable;
+            int rand = UnityEngine.Random.Range(1, _collectables.Length);
+            int activeCount = 0;
+
+            while (activeCount < rand)
+            {
+                collectable = _collectables.GetRandom();
+
+                if (collectable != null)
+                    collectable.SetActive(true);
+
+                activeCount++;
+            }
+        }
+
+        private void ResetCollectibles()
+        {
+            foreach (ICollectable collectable in _collectables)
+                collectable.SetActive(false);
+        }
     } 
 }

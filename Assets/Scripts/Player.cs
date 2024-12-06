@@ -20,7 +20,10 @@ namespace Wave.Actors
         private void Awake()
         {
             _model = Instantiate(_modelPrefab, Vector3.zero, Quaternion.identity, transform);
+            _model.gameObject.layer = 7;
+
             _collider = _model.GetComponent<Collider>();
+            _collider.isTrigger = true;
         }
 
         private void Start()
@@ -60,6 +63,17 @@ namespace Wave.Actors
 
             _currentState = state;
             _currentState.Enter();
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other == null)
+                return;
+
+            if (other.gameObject.layer == 6 && other.gameObject.TryGetComponent(out ICollectable collectable))
+            {
+                collectable.Collect();
+            }
         }
     }
 }
