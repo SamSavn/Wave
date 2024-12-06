@@ -267,7 +267,7 @@ GameObject:
   - component: {fileID: 331164889}
   - component: {fileID: 331164888}
   m_Layer: 0
-  m_Name: Environment
+  m_Name: Level
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -282,7 +282,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 331164887}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55470f946cadc3a41b0d494082d9d605, type: 3}
+  m_Script: {fileID: 11500000, guid: 733a8089c469d984ea70db34a30718f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _poolCapacity: 5

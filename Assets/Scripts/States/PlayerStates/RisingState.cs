@@ -1,38 +1,40 @@
 using System;
 using UnityEngine;
+using Wave.Actors;
 using Wave.Extentions;
 
 namespace Wave.States.PlayerStates
 {
-    public class FallingState : IPlayerState
+    public class RisingState : IState
     {
-        private Rigidbody _playerBody;
-        private Action[] _onExecute;
+        private readonly Rigidbody _playerBody;
+        private readonly Action[] _onExecute;
+        private readonly float _force;
 
-        public FallingState(Rigidbody rigidbody, params Action[] onExecute)
+        public RisingState(Rigidbody rigidbody, float force, params Action[] onExecute)
         {
             _playerBody = rigidbody;
             _onExecute = onExecute;
+            _force = force;
         }
 
         public void Enter()
         {
-            
+
         }
 
         public void Execute()
         {
             if (_playerBody.isKinematic)
-                return;
+                _playerBody.isKinematic = false;
 
-            _playerBody.linearVelocity += Physics.gravity * Time.fixedDeltaTime * 2;
+            _playerBody.AddForce(Vector3.up * _force, ForceMode.Force);
             _onExecute.Foreach(action => action?.Invoke());
         }
 
         public void Exit()
         {
-            _playerBody = null;
-            _onExecute = null;
+
         }
-    }
+    } 
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Random = UnityEngine.Random;
 
 namespace Wave.Extentions
 {
@@ -15,16 +16,16 @@ namespace Wave.Extentions
 
             if (collection is IList<T> list)
             {
-                random = UnityEngine.Random.Range(0, list.Count);
+                random = Random.Range(0, list.Count);
                 return list[random];
             }
             else if (collection is T[] array)
             {
-                random = UnityEngine.Random.Range(0, array.Length);
+                random = Random.Range(0, array.Length);
                 return array[random];
             }
 
-            random = UnityEngine.Random.Range(0, collection.Count());
+            random = Random.Range(0, collection.Count());
             return collection.ElementAt(random);
         }
 

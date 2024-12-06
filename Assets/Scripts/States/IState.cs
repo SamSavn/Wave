@@ -1,6 +1,6 @@
-namespace Wave.States.PlayerStates
+namespace Wave.States
 {
-    public interface IPlayerState
+    public interface IState
     {
         void Enter();
         void Exit();

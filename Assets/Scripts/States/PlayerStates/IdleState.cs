@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Wave.States.PlayerStates
 {
-	public class IdleState : IPlayerState
+	public class IdleState : IState
 	{
 		private Transform _playerTransform;
         private Rigidbody _playerBody;

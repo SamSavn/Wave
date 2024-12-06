@@ -1,12 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Wave.Environment;
 using Wave.Extentions;
 using Wave.Services;
 
-namespace Wave.Managers
+namespace Wave.Environment
 {
-    public class EnvironmentManager : MonoBehaviour
+    public class Level : MonoBehaviour
     {
         [SerializeField] private int _poolCapacity = 10;
         [SerializeField] private int _maxBlocks = 3;
@@ -18,6 +17,7 @@ namespace Wave.Managers
         private InputService _inputService;
         private UpdateService _updateService;
         private PrefabsService _prefabsService;
+        private GameService _gameService;
 
         private GameObject _initialPrefab;
         private bool _moving;
@@ -27,7 +27,9 @@ namespace Wave.Managers
             _inputService = ServiceLocator.Instance.Get<InputService>();
             _updateService = ServiceLocator.Instance.Get<UpdateService>();
             _prefabsService = ServiceLocator.Instance.Get<PrefabsService>();
+            _gameService = ServiceLocator.Instance.Get<GameService>();
 
+            _gameService.SetLevel(this);
             _prefabsService.OnBlocksLoaded?.Add(OnPrefabsLoaded);
         }
 
@@ -135,8 +137,11 @@ namespace Wave.Managers
 
         private void OnPrefabsLoaded(bool success)
         {
-            if (!success) 
+            if (!success)
+            {
+                Debug.LogError("Level loading failed");
                 return;
+            }
 
             InitializePool();
             SpawnBlocks();

@@ -2,6 +2,7 @@ using UnityEngine;
 using Wave.Collectables;
 using Wave.Extentions;
 using Wave.Services;
+using Wave.States;
 using Wave.States.PlayerStates;
 
 namespace Wave.Actors
@@ -16,13 +17,13 @@ namespace Wave.Actors
         private UpdateService _updateService;
         private InputService _inputService;
         private PrefabsService _prefabsService;
+        private GameService _gameService;
 
         private GameObject _modelPrefab;
         private GameObject _model;
         private Collider _collider;
 
-        private IPlayerState _currentState;
-
+        private StateMachine _stateMachine;
         private float _currentAngle;
 
         private void Awake()
@@ -30,7 +31,10 @@ namespace Wave.Actors
             _updateService = ServiceLocator.Instance.Get<UpdateService>();
             _inputService = ServiceLocator.Instance.Get<InputService>();
             _prefabsService = ServiceLocator.Instance.Get<PrefabsService>();
+            _gameService = ServiceLocator.Instance.Get<GameService>();
 
+            _gameService.SetPlayer(this);
+            _stateMachine = new StateMachine();
             _prefabsService.OnShipsLoaded?.Add(OnPrefabsLoaded);
         }
 
@@ -44,8 +48,7 @@ namespace Wave.Actors
 
         private void CustomUpdate(float dt)
         {
-            if (_currentState != null)
-                _currentState.Execute();
+            _stateMachine.Update();
         }
 
         private void AdjustRotation()
@@ -55,23 +58,8 @@ namespace Wave.Actors
         }
 
         public void SetVisible(bool active) => _model.SetActive(active);
-
-        private void SetState(IPlayerState state)
-        {
-            if (state == null)
-                return;
-
-            if (_currentState != null)
-            {
-                if (_currentState == state)
-                    return;
-
-                _currentState.Exit();
-            }
-
-            _currentState = state;
-            _currentState.Enter();
-        }
+        public void ResetState() => _stateMachine.SetState(new IdleState(transform, _rigidbody));
+        public void Die() => _stateMachine.SetState(new ExplodingState(this, _explosionParticle));
 
         private void OnPrefabsLoaded(bool success)
         {
@@ -88,24 +76,22 @@ namespace Wave.Actors
             _inputService.OnGameInputDown.Add(OnInputDown);
             _inputService.OnGameInputUp.Add(OnInputUp);
             _updateService.Update.Add(CustomUpdate);
-
-            SetState(new IdleState(transform, _rigidbody));
         }
 
         private void OnInputDown()
         {
-            if (_currentState is ExplodingState)
+            if (_stateMachine.CurrentState is ExplodingState)
                 return;
 
-            SetState(new RisingState(_rigidbody, _force, AdjustRotation));
+            _stateMachine.SetState(new RisingState(_rigidbody, _force, AdjustRotation));
         }
 
         private void OnInputUp()
         {
-            if (_currentState is ExplodingState)
+            if (_stateMachine.CurrentState is ExplodingState)
                 return;
 
-            SetState(new FallingState(_rigidbody, AdjustRotation));
+            _stateMachine.SetState(new FallingState(_rigidbody, AdjustRotation));
         }
 
         private void OnTriggerEnter(Collider other)
@@ -119,7 +105,7 @@ namespace Wave.Actors
             }
             else if (other.gameObject.HasLayer(Layer.Obstacle))
             {
-                SetState(new ExplodingState(this, _explosionParticle));
+                _gameService.EndGame();
             }
         }
     }
