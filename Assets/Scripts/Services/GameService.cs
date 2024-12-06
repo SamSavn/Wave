@@ -7,7 +7,6 @@ namespace Wave.Services
 {
 	public class GameService : IService
 	{
-        private readonly UpdateService _updateService;
         private readonly StateMachine _stateMachine;
 
 		private Player _player;
@@ -15,10 +14,7 @@ namespace Wave.Services
 
         public GameService(UpdateService updateService)
 		{
-			_updateService = updateService;
-            _stateMachine = new StateMachine();
-
-			_updateService.Update.Add(Update);
+			_stateMachine = new StateMachine();
         }
 
 		public void ResetGame() => _stateMachine.SetState(new StartGameState(_player, _level));
@@ -42,10 +38,5 @@ namespace Wave.Services
             if (_player != null && _level != null)
                 ResetGame();
         }
-
-		private void Update(float dt)
-		{
-			_stateMachine.Update();
-		}
 	} 
 }

@@ -14,7 +14,6 @@ namespace Wave.Actors
         [SerializeField] private float _force = 10f;
         [SerializeField] private float _maxAngle = 50f;
 
-        private UpdateService _updateService;
         private InputService _inputService;
         private PrefabsService _prefabsService;
         private GameService _gameService;
@@ -28,7 +27,6 @@ namespace Wave.Actors
 
         private void Awake()
         {
-            _updateService = ServiceLocator.Instance.Get<UpdateService>();
             _inputService = ServiceLocator.Instance.Get<InputService>();
             _prefabsService = ServiceLocator.Instance.Get<PrefabsService>();
             _gameService = ServiceLocator.Instance.Get<GameService>();
@@ -42,13 +40,8 @@ namespace Wave.Actors
         {
             _inputService.OnGameInputDown.Remove(OnInputDown);
             _inputService.OnGameInputUp.Remove(OnInputUp);
-            _updateService.Update.Remove(CustomUpdate);
             _prefabsService.OnShipsLoaded.Remove(OnPrefabsLoaded);
-        }
-
-        private void CustomUpdate(float dt)
-        {
-            _stateMachine.Update();
+            _stateMachine.Dispose();
         }
 
         private void AdjustRotation()
@@ -75,7 +68,6 @@ namespace Wave.Actors
 
             _inputService.OnGameInputDown.Add(OnInputDown);
             _inputService.OnGameInputUp.Add(OnInputUp);
-            _updateService.Update.Add(CustomUpdate);
         }
 
         private void OnInputDown()
