@@ -8,6 +8,7 @@ namespace Wave.Actors
     public class Player : MonoBehaviour
     {
         [SerializeField] private Rigidbody _rigidbody;
+        [SerializeField] private ParticleSystem _explosionParticle;
         [SerializeField] private float _force = 10f;
         [SerializeField] private float _maxAngle = 50f;
 
@@ -52,6 +53,8 @@ namespace Wave.Actors
             transform.eulerAngles = new Vector3(_currentAngle, 0, 0);
         }
 
+        public void SetActive(bool active) => _model.SetActive(active);
+
         private void SetState(IPlayerState state)
         {
             if (state == null)
@@ -90,11 +93,17 @@ namespace Wave.Actors
 
         private void OnInputDown()
         {
+            if (_currentState is ExplodingState)
+                return;
+
             SetState(new RisingState(_rigidbody, _force, AdjustRotation));
         }
 
         private void OnInputUp()
         {
+            if (_currentState is ExplodingState)
+                return;
+
             SetState(new FallingState(_rigidbody, AdjustRotation));
         }
 
@@ -106,6 +115,10 @@ namespace Wave.Actors
             if (other.gameObject.layer == 6 && other.gameObject.TryGetComponent(out ICollectable collectable))
             {
                 collectable.Collect();
+            }
+            else if (other.gameObject.layer == 3)
+            {
+                SetState(new ExplodingState(this, _explosionParticle));
             }
         }
     }

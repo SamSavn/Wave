@@ -1,5 +1,5 @@
+using DG.Tweening;
 using UnityEngine;
-using Wave.Actors;
 
 namespace Wave.States.PlayerStates
 {
@@ -7,6 +7,10 @@ namespace Wave.States.PlayerStates
 	{
 		private Transform _playerTransform;
         private Rigidbody _playerBody;
+        private Tweener _tweener;
+
+        private float _floatingValue = 5f;
+        private float _floatingDuration = 1f;
 
 		public IdleState(Transform playerTransform, Rigidbody rigidbody)
 		{
@@ -18,6 +22,9 @@ namespace Wave.States.PlayerStates
         {
             _playerBody.isKinematic = true;
             _playerTransform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+            _tweener = _playerTransform.DOMoveY(_floatingValue, _floatingDuration)
+                                       .SetLoops(-1, LoopType.Yoyo)
+                                       .SetEase(Ease.InOutSine);
         }
 
         public void Execute()
@@ -27,7 +34,11 @@ namespace Wave.States.PlayerStates
 
         public void Exit()
         {
-            
+            _tweener.Kill();
+            _tweener = null;
+
+            _playerTransform = null;
+            _playerBody = null;
         }
     } 
 }
