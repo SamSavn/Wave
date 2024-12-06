@@ -15,7 +15,7 @@ public class ExplodingState : IPlayerState
 
     public void Enter()
     {
-        _player.SetActive(false);
+        _player.SetVisible(false);
         _particle.Play();
         Time.timeScale = 0;
     }
@@ -28,7 +28,7 @@ public class ExplodingState : IPlayerState
     public void Exit()
     {
         _particle.Stop();
-        _player.SetActive(true);
+        _player.SetVisible(true);
         Time.timeScale = 1f;
 
         _particle = null;

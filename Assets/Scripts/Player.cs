@@ -1,5 +1,6 @@
 using UnityEngine;
 using Wave.Collectables;
+using Wave.Extentions;
 using Wave.Services;
 using Wave.States.PlayerStates;
 
@@ -53,7 +54,7 @@ namespace Wave.Actors
             transform.eulerAngles = new Vector3(_currentAngle, 0, 0);
         }
 
-        public void SetActive(bool active) => _model.SetActive(active);
+        public void SetVisible(bool active) => _model.SetActive(active);
 
         private void SetState(IPlayerState state)
         {
@@ -112,11 +113,11 @@ namespace Wave.Actors
             if (other == null)
                 return;
 
-            if (other.gameObject.layer == 6 && other.gameObject.TryGetComponent(out ICollectable collectable))
+            if (other.gameObject.HasLayerAndComponent(Layer.Collectible, out ICollectable collectable))
             {
                 collectable.Collect();
             }
-            else if (other.gameObject.layer == 3)
+            else if (other.gameObject.HasLayer(Layer.Obstacle))
             {
                 SetState(new ExplodingState(this, _explosionParticle));
             }
