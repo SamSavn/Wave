@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using Wave.Actors;
+using Wave.Extentions;
 
 namespace Wave.States.PlayerStates
 {
@@ -28,9 +29,7 @@ namespace Wave.States.PlayerStates
                 _playerBody.isKinematic = false;
 
             _playerBody.AddForce(Vector3.up * _force, ForceMode.Force);
-
-            foreach (Action action in _onExecute)
-                action?.Invoke();
+            _onExecute.Foreach(action => action?.Invoke());
         }
 
         public void Exit()

@@ -80,8 +80,7 @@ namespace Wave.Environment
 
         private void ResetCollectibles()
         {
-            foreach (ICollectable collectable in _collectables)
-                collectable.SetActive(false);
+            _collectables.Foreach(collectable => collectable.SetActive(false));
         }
     } 
 }

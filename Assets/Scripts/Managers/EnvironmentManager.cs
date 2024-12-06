@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Wave.Environment;
+using Wave.Extentions;
 using Wave.Services;
 
 namespace Wave.Managers
@@ -80,8 +81,7 @@ namespace Wave.Managers
 
         private void MoveBlocks()
         {
-            foreach (EnvironmentBlock block in _blocks)
-                block.Move(_speed);
+            _blocks.Foreach(block => block.Move(_speed));
         }
 
         private void TryRecycleBlocks()

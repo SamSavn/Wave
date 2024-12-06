@@ -1,6 +1,6 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 namespace Wave.Extentions
 {
@@ -13,18 +13,18 @@ namespace Wave.Extentions
 
             int random = 0;
 
-            if (collection is List<T> list)
+            if (collection is IList<T> list)
             {
-                random = Random.Range(0, list.Count);
+                random = UnityEngine.Random.Range(0, list.Count);
                 return list[random];
             }
             else if (collection is T[] array)
             {
-                random = Random.Range(0, array.Length);
+                random = UnityEngine.Random.Range(0, array.Length);
                 return array[random];
             }
 
-            random = Random.Range(0, collection.Count());
+            random = UnityEngine.Random.Range(0, collection.Count());
             return collection.ElementAt(random);
         }
 
@@ -33,7 +33,7 @@ namespace Wave.Extentions
             if (collection == null)
                 return false;
 
-            if (collection is List<T> list)
+            if (collection is IList<T> list)
             {
                 return list.Count == 0;
             }
@@ -43,6 +43,34 @@ namespace Wave.Extentions
             }
 
             return collection.Count() == 0;
+        }
+
+        public static void Foreach<T>(this IEnumerable<T> collection, Action<T> action)
+        {
+            if (collection.IsNullOrEmpty() || action == null)
+                return;
+
+            int count = 0;
+
+            if (collection is IList<T> list)
+            {
+                count = list.Count;
+
+                for (int i = 0; i < count; i++)
+                    action.Invoke(list[i]);
+            }
+            else if (collection is T[] array)
+            {
+                count = array.Length;
+
+                for (int i = 0; i < count; i++)
+                    action.Invoke(array[i]);
+            }
+            else
+            {
+                foreach (T item in collection)
+                    action.Invoke(item);
+            }
         }
     } 
 }

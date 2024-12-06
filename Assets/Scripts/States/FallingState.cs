@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Wave.Extentions;
 
 namespace Wave.States.PlayerStates
 {
@@ -25,9 +26,7 @@ namespace Wave.States.PlayerStates
                 return;
 
             _playerBody.linearVelocity += Physics.gravity * Time.fixedDeltaTime * 2;
-
-            foreach (Action action in _onExecute)
-                action?.Invoke();
+            _onExecute.Foreach(action => action?.Invoke());
         }
 
         public void Exit()
