@@ -44,9 +44,7 @@ namespace Wave.States.LevelStates
 
             if (firstBlock.Position.z < -firstBlock.Width)
             {
-                if (!firstBlock.IsInitial)
-                    _blocksPool.RecycleBlock(firstBlock);
-
+                _blocksPool.RecycleBlock(firstBlock);
                 _blocks.RemoveAt(0);
 
                 newBlock = _blocksPool.GetBlockFromPool();

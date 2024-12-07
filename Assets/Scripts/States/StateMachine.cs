@@ -25,6 +25,7 @@ namespace Wave.States
                     return;
 
                 _currentState.Exit();
+                _currentState = null;
             }
 
             _currentState = state;

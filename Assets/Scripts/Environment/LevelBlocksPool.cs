@@ -32,7 +32,10 @@ namespace Wave.Environment
         {
             GameObject clone = GameObject.Instantiate(prefab, _parentTransform);
             clone.SetActive(false);
-            _pool.Enqueue(clone.GetComponent<LevelBlock>());
+            LevelBlock block = clone.GetComponent<LevelBlock>();
+
+            if (!block.IsInitial)
+                _pool.Enqueue(block);
         }
 
         public LevelBlock GetInitialBlock()
@@ -56,7 +59,9 @@ namespace Wave.Environment
         public void RecycleBlock(LevelBlock block)
         {
             block.SetActive(false);
-            _pool.Enqueue(block);
+
+            if (!block.IsInitial)
+                _pool.Enqueue(block);
         }
 
         public void Dispose()
