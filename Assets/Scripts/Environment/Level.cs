@@ -35,7 +35,7 @@ namespace Wave.Environment
             _blocksPool.Dispose();
         }
 
-        public void StartMoving() => _stateMachine.SetState(new LevelMovingState(_blocks, _speed));
+        public void StartMoving() => _stateMachine.SetState(new LevelMovingState(_blocks, _blocksPool, _speed));
         public void StopMoving() => _stateMachine.SetState(new LevelIdleState(_blocksPool, _poolCapacity, _maxBlocks, SpawnBlocks));
 
         public void ResetLevel()

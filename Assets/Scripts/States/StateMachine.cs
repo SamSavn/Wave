@@ -6,7 +6,7 @@ namespace Wave.States
 	public class StateMachine : IDisposable
 	{
         private readonly UpdateService _updateService;
-        public IState CurrentState { get; private set; }
+        private IState _currentState;
 
         public StateMachine()
         {
@@ -19,22 +19,27 @@ namespace Wave.States
             if (state == null)
                 return;
 
-            if (CurrentState != null)
+            if (_currentState != null)
             {
-                if (CurrentState == state)
+                if (_currentState == state)
                     return;
 
-                CurrentState.Exit();
+                _currentState.Exit();
             }
 
-            CurrentState = state;
-            CurrentState.Enter();
+            _currentState = state;
+            _currentState.Enter();
+        }
+
+        public bool IsInState<T>() where T : IState
+        {
+            return _currentState is T;
         }
 
         private void Update(float dt)
         {
-            if (CurrentState != null)
-                CurrentState.Execute();
+            if (_currentState != null)
+                _currentState.Execute();
         }
 
         public void Dispose()

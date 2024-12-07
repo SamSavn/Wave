@@ -40,10 +40,11 @@ namespace Wave.Services
                 ResetGame();
         }
 
+		//todo: remove once UI is on
 		private void OnGameInputDown()
 		{
-			if (_stateMachine.CurrentState is StartGameState) StartGame();
-			else if (_stateMachine.CurrentState is EndGameState) ResetGame();
+			if (_stateMachine.IsInState<StartGameState>()) StartGame();
+			else if (_stateMachine.IsInState<EndGameState>()) ResetGame();
 		}
 	} 
 }

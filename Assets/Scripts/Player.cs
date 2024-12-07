@@ -73,7 +73,7 @@ namespace Wave.Actors
 
         private void OnInputDown()
         {
-            if (_stateMachine.CurrentState is PlayerExplodingState)
+            if (_stateMachine.IsInState<PlayerExplodingState>())
                 return;
 
             _stateMachine.SetState(new PlayerRisingState(_rigidbody, _force, AdjustRotation));
@@ -81,7 +81,7 @@ namespace Wave.Actors
 
         private void OnInputUp()
         {
-            if (_stateMachine.CurrentState is PlayerExplodingState)
+            if (_stateMachine.IsInState<PlayerExplodingState>())
                 return;
 
             _stateMachine.SetState(new PlayerFallingState(_rigidbody, AdjustRotation));
