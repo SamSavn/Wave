@@ -17,6 +17,7 @@ namespace Wave.States.GameStates
         public void Enter()
         {
             _player.ResetState();
+            _level.ResetLevel();
         }
 
         public void Execute()

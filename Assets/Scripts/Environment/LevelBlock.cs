@@ -6,7 +6,7 @@ using Wave.Extentions;
 
 namespace Wave.Environment
 {
-    public class EnvironmentBlock : MonoBehaviour
+    public class LevelBlock : MonoBehaviour
     {
         [SerializeField] private Transform _leftSocket;
         [SerializeField] private Transform _rightSocket;
@@ -47,7 +47,7 @@ namespace Wave.Environment
             Position += Vector3.back * speed * Time.deltaTime;
         }
 
-        public void Recycle(EnvironmentBlock lastBlock)
+        public void Recycle(LevelBlock lastBlock)
         {
             Position = new Vector3(0, 0, lastBlock.Position.z + Width);
             SetActive(true);

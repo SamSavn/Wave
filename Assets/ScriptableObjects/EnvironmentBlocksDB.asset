@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ad5a33ba7d20f442874292bb89786a0, type: 3}
   m_Name: EnvironmentBlocksDB
   m_EditorClassIdentifier: 
-  _startingBlock: {fileID: 4183992181207888189, guid: 6e53f6191ab2f2449a49fc79dc67285f, type: 3}
+  _startingBlock: {fileID: 944465435117380009, guid: 3c0dbc1b4458ecf4192fafc79e0cdd64, type: 3}
   _blocks:
   - {fileID: 6431422547950483161, guid: e479885b6a67b0842af880477727da02, type: 3}
   - {fileID: 1631572446420958705, guid: dddb49a41c251e442a2c237af39d84c4, type: 3}

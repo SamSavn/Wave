@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Wave.Extentions;
 using Wave.Services;
+using Wave.States;
+using Wave.States.LevelStates;
 
 namespace Wave.Environment
 {
@@ -11,146 +13,65 @@ namespace Wave.Environment
         [SerializeField] private int _maxBlocks = 3;
         [SerializeField] private float _speed = 5f;
 
-        private List<EnvironmentBlock> _blocks = new List<EnvironmentBlock>();
-        private Queue<EnvironmentBlock> _pool = new Queue<EnvironmentBlock>();
+        private List<LevelBlock> _blocks = new();
+        private LevelBlocksPool _blocksPool;
+        private StateMachine _stateMachine;
 
-        private InputService _inputService;
-        private UpdateService _updateService;
         private PrefabsService _prefabsService;
-        private GameService _gameService;
-
-        private GameObject _initialPrefab;
-        private bool _moving;
 
         private void Awake()
         {
-            _inputService = ServiceLocator.Instance.Get<InputService>();
-            _updateService = ServiceLocator.Instance.Get<UpdateService>();
             _prefabsService = ServiceLocator.Instance.Get<PrefabsService>();
-            _gameService = ServiceLocator.Instance.Get<GameService>();
 
-            _gameService.SetLevel(this);
+            _blocksPool = new LevelBlocksPool(transform, _prefabsService);
+            _stateMachine = new StateMachine();
+
             _prefabsService.OnBlocksLoaded?.Add(OnPrefabsLoaded);
         }
 
         private void OnDestroy()
         {
-            _inputService.OnGameInputDown.Remove(OnInputDown);
-            _updateService.Update.Remove(CustomUpdate);
-            _prefabsService.OnBlocksLoaded.Remove(OnPrefabsLoaded);
+            _stateMachine.Dispose();
+            _blocksPool.Dispose();
         }
 
-        private void CustomUpdate(float dt)
+        public void StartMoving() => _stateMachine.SetState(new LevelMovingState(_blocks, _speed));
+        public void StopMoving() => _stateMachine.SetState(new LevelIdleState(_blocksPool, _poolCapacity, _maxBlocks, SpawnBlocks));
+
+        public void ResetLevel()
         {
-            if (!_moving)
-                return;
-
-            MoveBlocks();
-            TryRecycleBlocks();
-        }
-
-        private void InitializePool()
-        {
-            _initialPrefab = _prefabsService.GetInitialPrefab(PrefabType.EnvironmentBlock);
-
-            for (int i = 0; i < _poolCapacity; i++)
-            {
-                AddBlock(_prefabsService.GetRandomPrefab(PrefabType.EnvironmentBlock));
-            }
-        }
-
-        private void AddBlock(GameObject prefab)
-        {
-            GameObject clone = Instantiate(prefab, transform);
-            clone.SetActive(false);
-            _pool.Enqueue(clone.GetComponent<EnvironmentBlock>());
+            _blocks.Foreach(block => _blocksPool.RecycleBlock(block));
+            _blocks.Clear();
+            StopMoving();
         }
 
         private void SpawnBlocks()
         {
-            EnvironmentBlock block = GetInitialBlock();
+            LevelBlock block = _blocksPool.GetInitialBlock();
             block.Place(0);
             _blocks.Add(block);
 
             for (int i = 0; i < _maxBlocks; i++)
             {
-                block = GetBlockFromPool();
+                block = _blocksPool.GetBlockFromPool();
                 block.Place(i + 1);
-
                 _blocks.Add(block);
             }
-        }
-
-        private void MoveBlocks()
-        {
-            _blocks.Foreach(block => block.Move(_speed));
-        }
-
-        private void TryRecycleBlocks()
-        {
-            if (_blocks.Count == 0)
-                return;
-
-            EnvironmentBlock firstBlock = _blocks[0];
-            EnvironmentBlock newBlock;
-
-            if (firstBlock.Position.z < -firstBlock.Width)
-            {
-                firstBlock.SetActive(false);
-
-                if (!firstBlock.IsInitial)
-                    _pool.Enqueue(firstBlock);
-
-                _blocks.RemoveAt(0);
-
-                newBlock = GetBlockFromPool();
-                newBlock.Recycle(_blocks[^1]);
-                _blocks.Add(newBlock);
-            }
-        }
-
-        private EnvironmentBlock GetInitialBlock()
-        {
-            if (_initialPrefab == null)
-                return GetBlockFromPool();
-
-            GameObject blockObject = Instantiate(_initialPrefab, transform);
-
-            if (blockObject.TryGetComponent(out EnvironmentBlock block))
-                return block;
-
-            return null;
-        }
-
-        private EnvironmentBlock GetBlockFromPool()
-        {
-            if (_pool.Count > 0)
-                return _pool.Dequeue();
-
-            GameObject blockObject = Instantiate(_prefabsService.GetRandomPrefab(PrefabType.EnvironmentBlock), transform);
-
-            if (blockObject.TryGetComponent(out EnvironmentBlock block))
-                return block;
-
-            return null;
         }
 
         private void OnPrefabsLoaded(bool success)
         {
             if (!success)
             {
-                Debug.LogError("Level loading failed");
+                Debug.LogError("Unable to set current level: something went wrong loading the prefabs");
                 return;
             }
 
-            InitializePool();
-            SpawnBlocks();
+            _prefabsService.OnBlocksLoaded?.Remove(OnPrefabsLoaded);
 
-            _inputService.OnGameInputDown.Add(OnInputDown);
-            _updateService.Update.Add(CustomUpdate);
+            ResetLevel();
+            ServiceLocator.Instance.Get<GameService>().SetLevel(this);
         }
-
-        private void OnInputDown() => _moving = true;
-    } 
+    }
 }
 

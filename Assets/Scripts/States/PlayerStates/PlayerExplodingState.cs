@@ -3,12 +3,12 @@ using Wave.Actors;
 
 namespace Wave.States.PlayerStates
 {
-    public class ExplodingState : IState
+    public class PlayerExplodingState : IState
     {
         private Player _player;
         private ParticleSystem _particle;
 
-        public ExplodingState(Player player, ParticleSystem particle)
+        public PlayerExplodingState(Player player, ParticleSystem particle)
         {
             _player = player;
             _particle = particle;

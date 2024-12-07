@@ -15,10 +15,11 @@ namespace Wave.Services
         public GameService(UpdateService updateService)
 		{
 			_stateMachine = new StateMachine();
+			ServiceLocator.Instance.Get<InputService>().OnGameInputDown.Add(OnGameInputDown);
         }
 
 		public void ResetGame() => _stateMachine.SetState(new StartGameState(_player, _level));
-		public void StartGame() => _stateMachine.SetState(new PlayGameState());
+		public void StartGame() => _stateMachine.SetState(new PlayGameState(_level));
 		public void EndGame() => _stateMachine.SetState(new EndGameState(_player, _level));
 
 		public void SetPlayer(Player player)
@@ -38,5 +39,11 @@ namespace Wave.Services
             if (_player != null && _level != null)
                 ResetGame();
         }
+
+		private void OnGameInputDown()
+		{
+			if (_stateMachine.CurrentState is StartGameState) StartGame();
+			else if (_stateMachine.CurrentState is EndGameState) ResetGame();
+		}
 	} 
 }

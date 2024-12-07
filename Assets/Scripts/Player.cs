@@ -31,16 +31,15 @@ namespace Wave.Actors
             _prefabsService = ServiceLocator.Instance.Get<PrefabsService>();
             _gameService = ServiceLocator.Instance.Get<GameService>();
 
-            _gameService.SetPlayer(this);
             _stateMachine = new StateMachine();
             _prefabsService.OnShipsLoaded?.Add(OnPrefabsLoaded);
+            _gameService.SetPlayer(this);
         }
 
         private void OnDestroy()
         {
             _inputService.OnGameInputDown.Remove(OnInputDown);
-            _inputService.OnGameInputUp.Remove(OnInputUp);
-            _prefabsService.OnShipsLoaded.Remove(OnPrefabsLoaded);
+            _inputService.OnGameInputUp.Remove(OnInputUp);            
             _stateMachine.Dispose();
         }
 
@@ -51,13 +50,15 @@ namespace Wave.Actors
         }
 
         public void SetVisible(bool active) => _model.SetActive(active);
-        public void ResetState() => _stateMachine.SetState(new IdleState(transform, _rigidbody));
-        public void Die() => _stateMachine.SetState(new ExplodingState(this, _explosionParticle));
+        public void ResetState() => _stateMachine.SetState(new PlayerIdleState(transform, _rigidbody));
+        public void Die() => _stateMachine.SetState(new PlayerExplodingState(this, _explosionParticle));
 
         private void OnPrefabsLoaded(bool success)
         {
             if (!success) 
                 return;
+
+            _prefabsService.OnShipsLoaded.Remove(OnPrefabsLoaded);
 
             _modelPrefab = _prefabsService.GetInitialPrefab(PrefabType.PlayerShip);
             _model = Instantiate(_modelPrefab, Vector3.zero, Quaternion.identity, transform);
@@ -72,18 +73,18 @@ namespace Wave.Actors
 
         private void OnInputDown()
         {
-            if (_stateMachine.CurrentState is ExplodingState)
+            if (_stateMachine.CurrentState is PlayerExplodingState)
                 return;
 
-            _stateMachine.SetState(new RisingState(_rigidbody, _force, AdjustRotation));
+            _stateMachine.SetState(new PlayerRisingState(_rigidbody, _force, AdjustRotation));
         }
 
         private void OnInputUp()
         {
-            if (_stateMachine.CurrentState is ExplodingState)
+            if (_stateMachine.CurrentState is PlayerExplodingState)
                 return;
 
-            _stateMachine.SetState(new FallingState(_rigidbody, AdjustRotation));
+            _stateMachine.SetState(new PlayerFallingState(_rigidbody, AdjustRotation));
         }
 
         private void OnTriggerEnter(Collider other)

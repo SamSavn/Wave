@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Wave.States.PlayerStates
 {
-	public class IdleState : IState
+	public class PlayerIdleState : IState
 	{
 		private Transform _playerTransform;
         private Rigidbody _playerBody;
@@ -12,7 +12,7 @@ namespace Wave.States.PlayerStates
         private float _floatingValue = 5f;
         private float _floatingDuration = 1f;
 
-		public IdleState(Transform playerTransform, Rigidbody rigidbody)
+		public PlayerIdleState(Transform playerTransform, Rigidbody rigidbody)
 		{
 			_playerTransform = playerTransform;
             _playerBody = rigidbody;
