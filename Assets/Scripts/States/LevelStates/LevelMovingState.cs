@@ -10,11 +10,11 @@ namespace Wave.States.LevelStates
         private LevelBlocksPool _blocksPool;
         private readonly float _speed;
 
-        public LevelMovingState(List<LevelBlock> blocks, LevelBlocksPool pool, float speed)
+        public LevelMovingState(List<LevelBlock> blocks, float speed, LevelBlocksPool blocksPool)
         {
-            _blocks = blocks != null ? blocks : new List<LevelBlock>();
-            _blocksPool = pool;
+            _blocks = blocks;
             _speed = speed;
+            _blocksPool = blocksPool;
         }
 
         public void Enter() 
@@ -30,8 +30,8 @@ namespace Wave.States.LevelStates
 
         public void Exit() 
         {
-            _blocks.Clear();
             _blocks = null;
+            _blocksPool = null;
         }
 
         private void TryRecycleBlocks()
@@ -40,17 +40,16 @@ namespace Wave.States.LevelStates
                 return;
 
             LevelBlock firstBlock = _blocks[0];
-            LevelBlock newBlock;
 
-            if (firstBlock.Position.z < -firstBlock.Width)
-            {
-                _blocksPool.RecycleBlock(firstBlock);
-                _blocks.RemoveAt(0);
+            if (firstBlock.Position.z >= -firstBlock.Width)
+                return;
 
-                newBlock = _blocksPool.GetBlockFromPool();
-                newBlock.Recycle(_blocks[^1]);
-                _blocks.Add(newBlock);
-            }
+            _blocksPool.RecycleBlock(firstBlock);
+            _blocks.RemoveAt(0);
+
+            LevelBlock newBlock = _blocksPool.GetBlockFromPool();
+            newBlock.Recycle(_blocks[^1]);
+            _blocks.Add(newBlock);
         }
     }
 }

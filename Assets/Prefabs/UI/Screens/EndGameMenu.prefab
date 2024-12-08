@@ -32,7 +32,6 @@ RectTransform:
   m_Children:
   - {fileID: 2795674425562541302}
   - {fileID: 919027370241923836}
-  - {fileID: 1615326286878165820}
   - {fileID: 7680278220707804657}
   - {fileID: 4492074979890202258}
   m_Father: {fileID: 0}
@@ -63,7 +62,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _homeButton: {fileID: 6249279174294134696}
-  _restartButton: {fileID: 5481486000642625128}
+  _restartButton: {fileID: 0}
 --- !u!1001 &2073284710778223816
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -174,91 +173,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2491272421209389658, guid: d3788e7e1c2a18b46966d1dd03e94e56, type: 3}
   m_PrefabInstance: {fileID: 2073284710778223816}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &2744542997928600218
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 5909134361822457520}
-    m_Modifications:
-    - target: {fileID: 3493766245309262246, guid: 5d3d7beaa4c6be441ae83c8ff3f342b2, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3493766245309262246, guid: 5d3d7beaa4c6be441ae83c8ff3f342b2, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3493766245309262246, guid: 5d3d7beaa4c6be441ae83c8ff3f342b2, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3493766245309262246, guid: 5d3d7beaa4c6be441ae83c8ff3f342b2, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3493766245309262246, guid: 5d3d7beaa4c6be441ae83c8ff3f342b2, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3493766245309262246, guid: 5d3d7beaa4c6be441ae83c8ff3f342b2, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3493766245309262246, guid: 5d3d7beaa4c6be441ae83c8ff3f342b2, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3493766245309262246, guid: 5d3d7beaa4c6be441ae83c8ff3f342b2, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 95
-      objectReference: {fileID: 0}
-    - target: {fileID: 3493766245309262246, guid: 5d3d7beaa4c6be441ae83c8ff3f342b2, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -269
-      objectReference: {fileID: 0}
-    - target: {fileID: 3493766245309262246, guid: 5d3d7beaa4c6be441ae83c8ff3f342b2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3493766245309262246, guid: 5d3d7beaa4c6be441ae83c8ff3f342b2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3493766245309262246, guid: 5d3d7beaa4c6be441ae83c8ff3f342b2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4284525063084969010, guid: 5d3d7beaa4c6be441ae83c8ff3f342b2, type: 3}
-      propertyPath: m_Name
-      value: RestartButton
-      objectReference: {fileID: 0}
-    - target: {fileID: 4406027460807155063, guid: 5d3d7beaa4c6be441ae83c8ff3f342b2, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: b1bc14152c59204419eaaf3988e2cd7a, type: 3}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 5d3d7beaa4c6be441ae83c8ff3f342b2, type: 3}
---- !u!224 &1615326286878165820 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3493766245309262246, guid: 5d3d7beaa4c6be441ae83c8ff3f342b2, type: 3}
-  m_PrefabInstance: {fileID: 2744542997928600218}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &5481486000642625128 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7639430055822978290, guid: 5d3d7beaa4c6be441ae83c8ff3f342b2, type: 3}
-  m_PrefabInstance: {fileID: 2744542997928600218}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &4376746108509565786
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -297,7 +211,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3493766245309262246, guid: 5d3d7beaa4c6be441ae83c8ff3f342b2, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -95
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3493766245309262246, guid: 5d3d7beaa4c6be441ae83c8ff3f342b2, type: 3}
       propertyPath: m_AnchoredPosition.y

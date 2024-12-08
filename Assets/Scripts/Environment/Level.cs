@@ -35,28 +35,20 @@ namespace Wave.Environment
             _blocksPool.Dispose();
         }
 
-        public void StartMoving() => _stateMachine.SetState(new LevelMovingState(_blocks, _blocksPool, _speed));
-        public void StopMoving() => _stateMachine.SetState(new LevelIdleState(_blocksPool, _poolCapacity, _maxBlocks, SpawnBlocks));
+        public void StartMoving() => _stateMachine.SetState(new LevelMovingState(_blocks, _speed, _blocksPool));
+        public void StopMoving() => _stateMachine.SetState(new LevelIdleState(_blocks, _blocksPool, _poolCapacity, _maxBlocks));
+        public void Pause() => _stateMachine.SetState(new LevelPausedState());
 
         public void ResetLevel()
         {
-            _blocks.Foreach(block => _blocksPool.RecycleBlock(block));
-            _blocks.Clear();
+            RecycleAllBlocks();
             StopMoving();
         }
 
-        private void SpawnBlocks()
+        private void RecycleAllBlocks()
         {
-            LevelBlock block = _blocksPool.GetInitialBlock();
-            block.Place(0);
-            _blocks.Add(block);
-
-            for (int i = 0; i < _maxBlocks; i++)
-            {
-                block = _blocksPool.GetBlockFromPool();
-                block.Place(i + 1);
-                _blocks.Add(block);
-            }
+            _blocks.Foreach(block => _blocksPool.RecycleBlock(block));
+            _blocks.Clear();
         }
 
         private void OnPrefabsLoaded(bool success)

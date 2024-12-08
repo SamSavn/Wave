@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Wave.Extentions;
 using Wave.Services;
 
 namespace Wave.Environment
@@ -12,10 +13,13 @@ namespace Wave.Environment
         private PrefabsService _prefabsService;
         private GameObject _initialPrefab;
 
+        public bool Initialized { get; private set; }
+
         public LevelBlocksPool(Transform parentTransform, PrefabsService prefabsService)
         {
             _parentTransform = parentTransform;
             _prefabsService = prefabsService;
+            Initialized = false;
         }
 
         public void InitializePool(int capacity)
@@ -26,9 +30,11 @@ namespace Wave.Environment
             {
                 AddBlock(_prefabsService.GetRandomPrefab(PrefabType.EnvironmentBlock));
             }
+
+            Initialized = true;
         }
 
-        public void AddBlock(GameObject prefab)
+        private void AddBlock(GameObject prefab)
         {
             GameObject clone = GameObject.Instantiate(prefab, _parentTransform);
             clone.SetActive(false);

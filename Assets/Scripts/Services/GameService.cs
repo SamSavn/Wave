@@ -17,16 +17,10 @@ namespace Wave.Services
 			_stateMachine = new StateMachine();			
         }
 
-		public void ResetGame() => _stateMachine.SetState(new StartGameState(_player, _level));
-		public void StartGame() => _stateMachine.SetState(new PlayGameState(_level));
-		public void PauseGame() => _stateMachine.SetState(new PauseGameState(_player));
-		public void EndGame() => _stateMachine.SetState(new EndGameState(_player, _level));
-
-		public void RestartLevel()
-		{
-			ResetGame();
-			StartGame();
-		}
+		public void ResetGame() => _stateMachine.SetState(new GameStartState(_player, _level));
+		public void StartGame() => _stateMachine.SetState(new GamePlayingState(_level));
+		public void PauseGame() => _stateMachine.SetState(new GamePauseState(_player, _level));
+		public void EndGame() => _stateMachine.SetState(new GameEndState(_player, _level));
 
 		public void SetPlayer(Player player)
 		{
@@ -45,12 +39,5 @@ namespace Wave.Services
             if (_player != null && _level != null)
                 ResetGame();
         }
-
-		//todo: remove once UI is on
-		private void OnGameInputDown()
-		{
-			if (_stateMachine.IsInState<StartGameState>()) StartGame();
-			else if (_stateMachine.IsInState<EndGameState>()) ResetGame();
-		}
 	} 
 }
