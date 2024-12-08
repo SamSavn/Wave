@@ -14,13 +14,19 @@ namespace Wave.Services
 
         public GameService(UpdateService updateService)
 		{
-			_stateMachine = new StateMachine();
-			ServiceLocator.Instance.Get<InputService>().OnGameInputDown.Add(OnGameInputDown);
+			_stateMachine = new StateMachine();			
         }
 
 		public void ResetGame() => _stateMachine.SetState(new StartGameState(_player, _level));
 		public void StartGame() => _stateMachine.SetState(new PlayGameState(_level));
+		public void PauseGame() => _stateMachine.SetState(new PauseGameState(_player));
 		public void EndGame() => _stateMachine.SetState(new EndGameState(_player, _level));
+
+		public void RestartLevel()
+		{
+			ResetGame();
+			StartGame();
+		}
 
 		public void SetPlayer(Player player)
 		{

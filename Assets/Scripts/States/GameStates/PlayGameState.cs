@@ -1,4 +1,6 @@
 using Wave.Environment;
+using Wave.Services;
+using Wave.UI;
 
 namespace Wave.States.GameStates
 {
@@ -13,6 +15,7 @@ namespace Wave.States.GameStates
 
         public void Enter()
         {
+            ServiceLocator.Instance.Get<UiService>().ShowScreen<HUD>();
             _level.StartMoving();
         }
 

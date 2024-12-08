@@ -51,6 +51,8 @@ namespace Wave.Actors
 
         public void SetVisible(bool active) => _model.SetActive(active);
         public void ResetState() => _stateMachine.SetState(new PlayerIdleState(transform, _rigidbody));
+        public void Pause() => _stateMachine.SetState(new PlayerPausedState(_rigidbody));
+        public void Resume() => _stateMachine.SetState(new PlayerFallingState(_rigidbody, AdjustRotation));
         public void Die() => _stateMachine.SetState(new PlayerExplodingState(this, _explosionParticle));
 
         private void OnPrefabsLoaded(bool success)
@@ -73,16 +75,22 @@ namespace Wave.Actors
 
         private void OnInputDown()
         {
-            if (_stateMachine.IsInState<PlayerExplodingState>())
+            if (_stateMachine.IsInState<PlayerExplodingState>() ||
+                _stateMachine.IsInState<PlayerPausedState>())
+            {
                 return;
+            }
 
             _stateMachine.SetState(new PlayerRisingState(_rigidbody, _force, AdjustRotation));
         }
 
         private void OnInputUp()
         {
-            if (_stateMachine.IsInState<PlayerExplodingState>())
+            if (_stateMachine.IsInState<PlayerExplodingState>() ||
+                _stateMachine.IsInState<PlayerPausedState>())
+            {
                 return;
+            }
 
             _stateMachine.SetState(new PlayerFallingState(_rigidbody, AdjustRotation));
         }

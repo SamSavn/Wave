@@ -22,7 +22,10 @@ namespace Wave.States
             if (_currentState != null)
             {
                 if (_currentState == state)
+                {
+                    _currentState.Enter();
                     return;
+                }
 
                 _currentState.Exit();
                 _currentState = null;
