@@ -5,15 +5,19 @@ namespace Wave.Services
 {
     public class PlayerService : IService
     {
+        private const string COINS_KEY = "Coins";
         private const string BEST_SCORE_KEY = "BestScore";
 
+        private int _coins;
         private int _currentScore;
         private bool _newBestScore;
 
         public EventDisparcher<int> OnScoreChanged { get; } = new EventDisparcher<int>();
+        public EventDisparcher<int> OnCoinsChanged { get; } = new EventDisparcher<int>();
 
         public int GetCurrentScore() => _currentScore;
         public int GetBestScore() => PlayerPrefs.GetInt(BEST_SCORE_KEY);
+        public int GetCoins() => PlayerPrefs.GetInt(COINS_KEY);
         public bool HasNewBestScore() => _newBestScore;
 
         public void AddScore(int value)
@@ -22,11 +26,18 @@ namespace Wave.Services
             OnScoreChanged?.Invoke(_currentScore);
         }
 
-        public void ResetScore()
+        public void ResetGameValues()
         {
+            _coins = GetCoins();
             _currentScore = 0;
             _newBestScore = false;
             OnScoreChanged?.Invoke(_currentScore);
+        }
+
+        public void AddCoins(int value)
+        {
+            _coins += value;
+            OnCoinsChanged?.Invoke(_coins);
         }
 
         public void SaveScore()
@@ -36,6 +47,17 @@ namespace Wave.Services
 
             PlayerPrefs.SetInt(BEST_SCORE_KEY, _currentScore);
             _newBestScore = true;
+        }
+
+        public void SaveCoins()
+        {
+            PlayerPrefs.SetInt(COINS_KEY, _coins);
+        }
+
+        public void SaveEndGameValues()
+        {
+            SaveScore();
+            SaveCoins();
         }
     }
 }

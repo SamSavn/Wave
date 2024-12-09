@@ -8,8 +8,24 @@ namespace Wave.CustomEditors
         [MenuItem("Wave/Clear Best Score")]
         public static void ClearBestScore()
         {
-            string key = "BestScore";
+            DeletePlayerPref("BestScore");
+        }
 
+        [MenuItem("Wave/Clear Coins")]
+        public static void ClearCoins()
+        {
+            DeletePlayerPref("Coins");
+        }
+
+        [MenuItem("Wave/Clear All")]
+        public static void ClearAll()
+        {
+            PlayerPrefs.DeleteAll();
+            Debug.Log($"<color=green>All cleared!</color>");
+        }
+
+        private static void DeletePlayerPref(string key)
+        {
             if (!PlayerPrefs.HasKey(key))
             {
                 Debug.LogWarning($"Unable to clear best score: PlayerPrefs does not contain key '{key}'");
@@ -17,7 +33,7 @@ namespace Wave.CustomEditors
             }
 
             PlayerPrefs.DeleteKey(key);
-            Debug.Log("<color=green>Best Score cleared!</color>");
+            Debug.Log($"<color=green>{key} cleared!</color>");
         }
     } 
 }

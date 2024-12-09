@@ -18,7 +18,7 @@ namespace Wave.States.GameStates
 
         public void Enter()
         {
-            ServiceLocator.Instance.Get<PlayerService>().SaveScore();
+            ServiceLocator.Instance.Get<PlayerService>().SaveEndGameValues();
             ServiceLocator.Instance.Get<UiService>().ShowScreen<EndGameMenu>();
             _player.Die();
         }

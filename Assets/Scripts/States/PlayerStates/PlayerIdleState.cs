@@ -1,5 +1,7 @@
 using DG.Tweening;
+using System.Collections;
 using UnityEngine;
+using Wave.Services;
 
 namespace Wave.States.PlayerStates
 {
@@ -22,9 +24,7 @@ namespace Wave.States.PlayerStates
         {
             _playerBody.isKinematic = true;
             _playerTransform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
-            _tweener = _playerTransform.DOMoveY(_floatingValue, _floatingDuration)
-                                       .SetLoops(-1, LoopType.Yoyo)
-                                       .SetEase(Ease.InOutSine);
+            ServiceLocator.Instance.Get<CoroutineService>().StartCoroutine(StartTween());
         }
 
         public void Execute()
@@ -39,6 +39,14 @@ namespace Wave.States.PlayerStates
 
             _playerTransform = null;
             _playerBody = null;
+        }
+
+        private IEnumerator StartTween()
+        {
+            yield return new WaitForEndOfFrame();
+            _tweener = _playerTransform.DOMoveY(_floatingValue, _floatingDuration)
+                                       .SetLoops(-1, LoopType.Yoyo)
+                                       .SetEase(Ease.InOutSine);
         }
     } 
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Wave.UI;
 using Wave.UI.Screens;
 
 namespace Wave.Services
@@ -9,8 +10,12 @@ namespace Wave.Services
 		private Dictionary<Type, UIScreen> _screens = new Dictionary<Type, UIScreen>();
 		private UIScreen _activeScreen;
 		private Type _lastCalledScreenType;
+		private CoinsCounter _coinsCounter;
 
-		public void RegisterScreen<T>(T screen) where T : UIScreen
+		public void SetCoinsCounter(CoinsCounter coinsCounter) => _coinsCounter = coinsCounter;
+		public void ToggleCoinsCounter(bool value) => _coinsCounter.SetActive(value);
+
+        public void RegisterScreen<T>(T screen) where T : UIScreen
 		{
             _screens[typeof(T)] = screen;
 
