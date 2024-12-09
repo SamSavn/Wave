@@ -1,10 +1,13 @@
 ﻿using Wave.Services;
+using UnityEngine;
 
-namespace Wave.UI
+namespace Wave.UI.Screens
 {
     public class MainMenu : UIScreen
     {
         private InputService _inputService;
+
+        [SerializeField] private ResizingLabel _bestScoreLabel;
 
         protected override void Awake()
         {
@@ -16,6 +19,7 @@ namespace Wave.UI
         private void OnEnable()
         {
             _inputService.OnGameInputDown.Add(OnGameInputDown);
+            _bestScoreLabel.SetValue(_playerService.GetBestScore());
         }
 
         private void OnDisable()

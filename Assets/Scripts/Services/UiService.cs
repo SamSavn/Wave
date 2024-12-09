@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Wave.UI;
+using Wave.UI.Screens;
 
 namespace Wave.Services
 {

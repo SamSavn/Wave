@@ -1,8 +1,7 @@
-﻿using UnityEngine;
-using Wave.Actors;
+﻿using Wave.Actors;
 using Wave.Environment;
 using Wave.Services;
-using Wave.UI;
+using Wave.UI.Screens;
 
 namespace Wave.States.GameStates
 {

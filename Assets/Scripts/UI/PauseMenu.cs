@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Wave.UI
+namespace Wave.UI.Screens
 {
     public class PauseMenu : UIScreen
     {

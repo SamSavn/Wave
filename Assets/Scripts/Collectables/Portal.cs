@@ -1,4 +1,5 @@
 using UnityEngine;
+using Wave.Services;
 
 namespace Wave.Collectables
 {
@@ -6,7 +7,9 @@ namespace Wave.Collectables
     {
         [SerializeField] private MeshRenderer _renderer;
         [SerializeField] private Color _activeColor;
+        [SerializeField] [Range(1, 100)] private int _points = 1;
 
+        private PlayerService _playerService;
         private Color _defaultColor;
 
         private void Reset()
@@ -16,6 +19,8 @@ namespace Wave.Collectables
 
         private void Awake()
         {
+            _playerService = ServiceLocator.Instance.Get<PlayerService>();
+
             if (_renderer == null)
                 _renderer = GetComponentInChildren<MeshRenderer>();
 
@@ -25,6 +30,7 @@ namespace Wave.Collectables
         public void Collect()
         {
             _renderer.material.color = _activeColor;
+            _playerService.AddScore(_points);
         }
 
         public void SetActive(bool value)

@@ -21,7 +21,9 @@ namespace Wave.Services
             ServiceLocator.Instance.Register(new InputService(updateService));
             ServiceLocator.Instance.Register(new PrefabsService(addressablesService));
             ServiceLocator.Instance.Register(new GameService(updateService));
+
             ServiceLocator.Instance.Register(new UiService());
+            ServiceLocator.Instance.Register(new PlayerService());
         }
     }
 }

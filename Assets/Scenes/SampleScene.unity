@@ -285,7 +285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 733a8089c469d984ea70db34a30718f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _poolCapacity: 5
+  _poolCapacity: 10
   _maxBlocks: 3
   _speed: 70
 --- !u!4 &331164889
@@ -649,10 +649,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -677,7 +677,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
+  m_VertexColorAlwaysGammaSpace: 1
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -1375,6 +1375,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2700007330832891591, guid: 2111dfef92dc9b64288e9455fd4bfb3c, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2957382989802076987, guid: 2111dfef92dc9b64288e9455fd4bfb3c, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
@@ -1394,6 +1398,22 @@ PrefabInstance:
     - target: {fileID: 4199459723868895954, guid: 2111dfef92dc9b64288e9455fd4bfb3c, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5321416835250070611, guid: 2111dfef92dc9b64288e9455fd4bfb3c, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7818204459166206672, guid: 2111dfef92dc9b64288e9455fd4bfb3c, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7818204459166206672, guid: 2111dfef92dc9b64288e9455fd4bfb3c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8195003629486017956, guid: 2111dfef92dc9b64288e9455fd4bfb3c, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
