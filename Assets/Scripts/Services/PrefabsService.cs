@@ -7,7 +7,7 @@ namespace Wave.Services
 {
 	public enum PrefabType
 	{
-		EnvironmentBlock,
+		LevelBlock,
 		PlayerShip
 	}
 
@@ -44,7 +44,7 @@ namespace Wave.Services
 		{
 			switch (prefabType)
 			{
-				case PrefabType.EnvironmentBlock:
+				case PrefabType.LevelBlock:
 					return _environmentBlocksDB?.GetInitialBlock();
 
                 case PrefabType.PlayerShip:
@@ -59,7 +59,7 @@ namespace Wave.Services
 		{
 			switch (prefabType)
 			{
-				case PrefabType.EnvironmentBlock:
+				case PrefabType.LevelBlock:
                     return _environmentBlocksDB?.GetAllBlocks();
 
                 case PrefabType.PlayerShip:
@@ -74,7 +74,7 @@ namespace Wave.Services
 		{
 			switch (prefabType)
 			{
-				case PrefabType.EnvironmentBlock:
+				case PrefabType.LevelBlock:
 					return _environmentBlocksDB?.GetBlockAt(index);
 
                 case PrefabType.PlayerShip:
@@ -89,7 +89,7 @@ namespace Wave.Services
 		{
 			switch (prefabType)
 			{
-				case PrefabType.EnvironmentBlock:
+				case PrefabType.LevelBlock:
 					return _environmentBlocksDB?.GetRandomBlock();
 
                 case PrefabType.PlayerShip:

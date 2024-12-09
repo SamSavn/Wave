@@ -24,11 +24,11 @@ namespace Wave.Environment
 
         public void InitializePool(int capacity)
         {
-            _initialPrefab = _prefabsService.GetInitialPrefab(PrefabType.EnvironmentBlock);
+            _initialPrefab = _prefabsService.GetInitialPrefab(PrefabType.LevelBlock);
 
             for (int i = 0; i < capacity; i++)
             {
-                AddBlock(_prefabsService.GetRandomPrefab(PrefabType.EnvironmentBlock));
+                AddBlock(_prefabsService.GetRandomPrefab(PrefabType.LevelBlock));
             }
 
             Initialized = true;
@@ -58,7 +58,7 @@ namespace Wave.Environment
             if (_pool.Count > 0)
                 return _pool.Dequeue();
 
-            GameObject blockObject = GameObject.Instantiate(_prefabsService.GetRandomPrefab(PrefabType.EnvironmentBlock), _parentTransform);
+            GameObject blockObject = GameObject.Instantiate(_prefabsService.GetRandomPrefab(PrefabType.LevelBlock), _parentTransform);
             return blockObject.GetComponent<LevelBlock>();
         }
 

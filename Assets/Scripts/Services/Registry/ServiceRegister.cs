@@ -24,6 +24,8 @@ namespace Wave.Services
 
             ServiceLocator.Instance.Register(new UiService());
             ServiceLocator.Instance.Register(new PlayerService());
+            ServiceLocator.Instance.Register(new SceneService());
+            ServiceLocator.Instance.Register(new ShipsService());
         }
     }
 }

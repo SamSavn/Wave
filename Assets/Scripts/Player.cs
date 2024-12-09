@@ -17,8 +17,9 @@ namespace Wave.Actors
         private InputService _inputService;
         private PrefabsService _prefabsService;
         private GameService _gameService;
+        private PlayerService _playerService;
+        private ShipsService _shipsService;
 
-        private GameObject _modelPrefab;
         private GameObject _model;
         private Collider _collider;
 
@@ -30,6 +31,8 @@ namespace Wave.Actors
             _inputService = ServiceLocator.Instance.Get<InputService>();
             _prefabsService = ServiceLocator.Instance.Get<PrefabsService>();
             _gameService = ServiceLocator.Instance.Get<GameService>();
+            _playerService = ServiceLocator.Instance.Get<PlayerService>();
+            _shipsService = ServiceLocator.Instance.Get<ShipsService>();
 
             _stateMachine = new StateMachine();
             _prefabsService.OnShipsLoaded?.Add(OnPrefabsLoaded);
@@ -62,8 +65,8 @@ namespace Wave.Actors
 
             _prefabsService.OnShipsLoaded.Remove(OnPrefabsLoaded);
 
-            _modelPrefab = _prefabsService.GetInitialPrefab(PrefabType.PlayerShip);
-            _model = Instantiate(_modelPrefab, Vector3.zero, Quaternion.identity, transform);
+            _model = _shipsService.GetShip(_playerService.GetActiveShipIndex());
+            _model.transform.SetParent(transform, false);
             _model.gameObject.SetLayer(Layer.Player);
 
             _collider = _model.GetComponent<Collider>();

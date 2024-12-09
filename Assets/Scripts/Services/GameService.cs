@@ -1,5 +1,6 @@
 using Wave.Actors;
 using Wave.Environment;
+using Wave.Handlers;
 using Wave.States;
 using Wave.States.GameStates;
 
@@ -35,9 +36,12 @@ namespace Wave.Services
 		}
 
 		private void TrySetGame()
-		{
-            if (_player != null && _level != null)
-                ResetGame();
+        {
+            if (_player == null || _level == null)
+                return;
+
+            ServiceLocator.Instance.Get<SceneService>().SetScene(SceneType.Game);
+            ResetGame();
         }
-	} 
+    } 
 }
