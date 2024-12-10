@@ -18,8 +18,6 @@ namespace Wave.UI.Screens
         [SerializeField] private ResizingLabel _priceLabel;
         [SerializeField] private GameObject _equippedLabel;
 
-        private const int SHIPS_PRICE = 100;
-
         private SceneService _sceneService;
         private ShipsService _shipsService;
 
@@ -76,14 +74,20 @@ namespace Wave.UI.Screens
 
         private void Refresh()
         {
+            bool unlocked = _shipsService.IsShipUnlocked(_currentIndex);
+            bool equipped = _shipsService.IsShipEquiped(_currentIndex);
+
             _leftArrow.gameObject.SetActive(_currentIndex > 0);
             _rightArrow.gameObject.SetActive(_currentIndex < _shipsService.GetShipsCount() - 1);
 
-            _buyButton.gameObject.SetActive(!_shipsService.IsShipUnlocked(_currentIndex));
-            _equipButton.gameObject.SetActive(_shipsService.IsShipUnlocked(_currentIndex) && !_shipsService.IsShipEquiped(_currentIndex));
-            _equippedLabel.SetActive(_shipsService.IsShipEquiped(_currentIndex));
+            _buyButton.gameObject.SetActive(!unlocked);
+            _buyButton.interactable = _playerService.CanBuy(_shipsService.GetShipPrice(_currentIndex));
 
-            _priceLabel.SetValue(SHIPS_PRICE);
+            _equipButton.gameObject.SetActive(unlocked && !equipped);
+            _equippedLabel.SetActive(equipped);
+
+            _priceLabel.SetValue(_shipsService.GetShipPrice(_currentIndex));
+            _priceLabel.gameObject.SetActive(!unlocked);
         }
 
         private void OnLeftArrowClick()
@@ -98,7 +102,7 @@ namespace Wave.UI.Screens
 
         private void OnBuyButtonClick()
         {
-            _playerService.AddCoins(-SHIPS_PRICE, save: true);
+            _playerService.AddCoins(-_shipsService.GetShipPrice(_currentIndex), save: true);
             _shipsService.UnlockShip(_currentIndex);
             Refresh();
         }

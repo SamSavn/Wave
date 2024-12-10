@@ -1221,10 +1221,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 1.108
       objectReference: {fileID: 0}
-    - target: {fileID: 6347400272986215465, guid: 8c7757d15b9ad1547a284cdca797d987, type: 3}
-      propertyPath: field of view
-      value: 13.000001
-      objectReference: {fileID: 0}
     - target: {fileID: 8967359555971352310, guid: 8c7757d15b9ad1547a284cdca797d987, type: 3}
       propertyPath: m_Name
       value: Selected Ship Camera

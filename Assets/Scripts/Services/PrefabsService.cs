@@ -48,8 +48,6 @@ namespace Wave.Services
 					return _environmentBlocksDB?.GetInitialBlock();
 
                 case PrefabType.PlayerShip:
-					return _playerShipsDB?.GetInitialShip();
-
 				default:
 					return null;
 			}

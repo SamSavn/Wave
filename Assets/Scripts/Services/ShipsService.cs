@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Wave.Data;
 using Wave.Ships;
 
 namespace Wave.Services
@@ -8,8 +7,9 @@ namespace Wave.Services
 	public class ShipsService : IService
 	{
 		private const string DATA_KEY = "ShipsData";
+        private const int SHIPS_BASE_PRICE = 100;
 
-		private DataService _dataService;
+        private DataService _dataService;
 
 		private ShipCamerasHandler _shipCamerasHandler;
         private ShipsPool _pool;
@@ -23,15 +23,14 @@ namespace Wave.Services
 			_unlockedShips = _dataService.GetUnlockedShips() != null
 								? new List<int>(_dataService.GetUnlockedShips())
 								: new List<int>();
+
+			UnlockShip(0);
 		}
 
 		public void SetShipCamerasHandler(ShipCamerasHandler shipCamerasHandler) => _shipCamerasHandler = shipCamerasHandler;
+		public void SetSelectedShip(int index) =>_shipCamerasHandler.SetShips(_pool, index);
 
-		public void SetSelectedShip(int index)
-		{
-			_shipCamerasHandler.SetShips(_pool, index);
-		}
-
+		public int GetShipPrice(int index) => SHIPS_BASE_PRICE + index / 5 * (SHIPS_BASE_PRICE / 2);
 		public int GetShipsCount() => _pool.Count;
 		public GameObject GetShip(int index) => _pool.GetShip(index);
 		public void RecycleShip(GameObject ship, int index) => _pool.RecycleShip(ship, index);
