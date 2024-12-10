@@ -61,7 +61,7 @@ namespace Wave.Services
                     return _environmentBlocksDB?.GetAllBlocks();
 
                 case PrefabType.PlayerShip:
-					return _playerShipsDB?.GetAllShips();
+					return _playerShipsDB?.GetAllPrefabs();
 
 				default:
 					return Array.Empty<GameObject>();
