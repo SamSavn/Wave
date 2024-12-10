@@ -17,16 +17,13 @@ namespace Wave.Environment
         private LevelBlocksPool _blocksPool;
         private StateMachine _stateMachine;
 
-        private PrefabsService _prefabsService;
-
         private void Awake()
         {
-            _prefabsService = ServiceLocator.Instance.Get<PrefabsService>();
-
-            _blocksPool = new LevelBlocksPool(transform, _prefabsService);
+            _blocksPool = new LevelBlocksPool(transform);
             _stateMachine = new StateMachine();
 
-            _prefabsService.OnBlocksLoaded?.Add(OnPrefabsLoaded);
+            ResetLevel();
+            ServiceLocator.Instance.Get<GameService>().SetLevel(this);
         }
 
         private void OnDestroy()
@@ -49,20 +46,6 @@ namespace Wave.Environment
         {
             _blocks.Foreach(block => _blocksPool.RecycleBlock(block));
             _blocks.Clear();
-        }
-
-        private void OnPrefabsLoaded(bool success)
-        {
-            if (!success)
-            {
-                Debug.LogError("Unable to set current level: something went wrong loading the prefabs");
-                return;
-            }
-
-            _prefabsService.OnBlocksLoaded?.Remove(OnPrefabsLoaded);
-
-            ResetLevel();
-            ServiceLocator.Instance.Get<GameService>().SetLevel(this);
         }
     }
 }

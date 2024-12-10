@@ -189,7 +189,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.10145959, g: 0.14658242, b: 0.2264151, a: 0}
+  m_BackGroundColor: {r: 0.10145959, g: 0.14658242, b: 0.2264151, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -974,6 +974,10 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 8350078074490226995, guid: 5976096b3e477f3489e0598b1b896ebd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8350078074490226995, guid: 5976096b3e477f3489e0598b1b896ebd, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
@@ -1217,9 +1221,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 1.108
       objectReference: {fileID: 0}
+    - target: {fileID: 6347400272986215465, guid: 8c7757d15b9ad1547a284cdca797d987, type: 3}
+      propertyPath: field of view
+      value: 13.000001
+      objectReference: {fileID: 0}
     - target: {fileID: 8967359555971352310, guid: 8c7757d15b9ad1547a284cdca797d987, type: 3}
       propertyPath: m_Name
-      value: Ship Camera
+      value: Selected Ship Camera
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1420,6 +1428,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1911633626524769325, guid: 108b34c3860159a4a9c8b773f2cf82ff, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4643838308707927327, guid: 108b34c3860159a4a9c8b773f2cf82ff, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
@@ -1471,6 +1483,14 @@ PrefabInstance:
     - target: {fileID: 6590944126936090200, guid: 108b34c3860159a4a9c8b773f2cf82ff, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6913613695921040838, guid: 108b34c3860159a4a9c8b773f2cf82ff, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7441016322107962452, guid: 108b34c3860159a4a9c8b773f2cf82ff, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8017911772181714309, guid: 108b34c3860159a4a9c8b773f2cf82ff, type: 3}
       propertyPath: m_Pivot.x

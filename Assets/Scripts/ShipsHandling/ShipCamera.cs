@@ -43,6 +43,7 @@ namespace Wave.Ships
             _currentShip.SetLayer(Layer.ShipRender);
             _currentShip.transform.SetParent(_shipContainer);
             _currentShip.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+            _currentShip.SetActive(true);
         }
     } 
 }

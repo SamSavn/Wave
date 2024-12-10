@@ -15,13 +15,15 @@ namespace Wave.Services
 
         public GameService(UpdateService updateService)
 		{
-			_stateMachine = new StateMachine();			
+			_stateMachine = new StateMachine();
         }
 
 		public void ResetGame() => _stateMachine.SetState(new GameStartState(_player, _level));
 		public void StartGame() => _stateMachine.SetState(new GamePlayingState(_level));
 		public void PauseGame() => _stateMachine.SetState(new GamePauseState(_player, _level));
 		public void EndGame() => _stateMachine.SetState(new GameEndState(_player, _level));
+
+		public Player GetPlayer() => _player;
 
 		public void SetPlayer(Player player)
 		{

@@ -59,7 +59,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 926ba0943d14d9c43a796b65309fc524, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _coinsLabel: {fileID: 7883541276033789920}
+  _coinsLabel: {fileID: 1030253032936109153}
 --- !u!1 &8799180253972988382
 GameObject:
   m_ObjectHideFlags: 0
@@ -71,7 +71,6 @@ GameObject:
   - component: {fileID: 2089284351584080550}
   - component: {fileID: 5173611559465978523}
   - component: {fileID: 1030253032936109153}
-  - component: {fileID: 7883541276033789920}
   m_Layer: 5
   m_Name: CoinsLabel
   m_TagString: Untagged
@@ -197,20 +196,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &7883541276033789920
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8799180253972988382}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ad756dcdf09e724e8ef37c623bd12e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _rectTransform: {fileID: 2089284351584080550}
-  _label: {fileID: 1030253032936109153}
 --- !u!1001 &8077908046190833543
 PrefabInstance:
   m_ObjectHideFlags: 0

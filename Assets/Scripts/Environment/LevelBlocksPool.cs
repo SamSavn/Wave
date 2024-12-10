@@ -15,10 +15,11 @@ namespace Wave.Environment
 
         public bool Initialized { get; private set; }
 
-        public LevelBlocksPool(Transform parentTransform, PrefabsService prefabsService)
+        public LevelBlocksPool(Transform parentTransform)
         {
+            _prefabsService = ServiceLocator.Instance.Get<PrefabsService>();
+
             _parentTransform = parentTransform;
-            _prefabsService = prefabsService;
             Initialized = false;
         }
 

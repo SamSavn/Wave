@@ -28,7 +28,6 @@ namespace Wave.Ships
             if (_pool.TryGetValue(prefabIndex, out GameObject prefab) && prefab != null)
             {
                 _pool[prefabIndex] = null;
-                prefab.SetActive(true);
                 return prefab;
             }
 

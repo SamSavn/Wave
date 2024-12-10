@@ -5,28 +5,32 @@ namespace Wave.Services
 {
     public class PlayerService : IService
     {
-        private const string SHIP_KEY = "Ship";
-        private const string COINS_KEY = "Coins";
-        private const string BEST_SCORE_KEY = "BestScore";
+        private DataService _dataService;
+        private GameService _gameService;
 
-        private int _shipIndex;
-        private int _coins;
         private int _currentScore;
+        private int _currentCoins;
         private bool _newBestScore;
 
         public EventDisparcher<int> OnScoreChanged { get; } = new EventDisparcher<int>();
         public EventDisparcher<int> OnCoinsChanged { get; } = new EventDisparcher<int>();
 
-        public int GetActiveShipIndex() => _shipIndex;
+        public PlayerService(DataService dataService, GameService gameService)
+        {
+            _dataService = dataService;
+            _gameService = gameService;
+        }
+
+        public int GetEquipedShipIndex() => _dataService.GetEquipedShip();
         public int GetCurrentScore() => _currentScore;
-        public int GetBestScore() => PlayerPrefs.GetInt(BEST_SCORE_KEY);
-        public int GetCoins() => PlayerPrefs.GetInt(COINS_KEY);
+        public int GetBestScore() => _dataService.GetBestScore();
+        public int GetCoins() => _dataService.GetCoins();
         public bool HasNewBestScore() => _newBestScore;
 
-        public void EquipShip(int shipIndex)
+        public void EquipShip(GameObject ship, int shipIndex)
         {
-            _shipIndex = shipIndex;
-            PlayerPrefs.SetInt(SHIP_KEY, shipIndex);
+            _gameService.GetPlayer().SetModel(ship);
+            _dataService.SaveEquipedShip(shipIndex);
         }
 
         public void AddScore(int value)
@@ -37,35 +41,40 @@ namespace Wave.Services
 
         public void ResetGameValues()
         {
-            _coins = GetCoins();
+            _currentCoins = GetCoins();
             _currentScore = 0;
             _newBestScore = false;
             OnScoreChanged?.Invoke(_currentScore);
         }
 
-        public void AddCoins(int value)
+        public bool CanBuy(int price) => _currentCoins >= price;
+
+        public void AddCoins(int value, bool save = false)
         {
-            _coins += value;
-            OnCoinsChanged?.Invoke(_coins);
+            if (value < 0 && !CanBuy(Mathf.Abs(value)))
+                return;
+
+            _currentCoins += value;
+            OnCoinsChanged?.Invoke(_currentCoins);
+
+            if (save)
+                SaveCoins();
         }
 
-        public void SaveScore()
+        public void TrySaveBestScore()
         {
             if (_currentScore <= GetBestScore())
                 return;
 
-            PlayerPrefs.SetInt(BEST_SCORE_KEY, _currentScore);
+            _dataService.SaveBestScore(_currentCoins);
             _newBestScore = true;
         }
 
-        public void SaveCoins()
-        {
-            PlayerPrefs.SetInt(COINS_KEY, _coins);
-        }
+        public void SaveCoins() => _dataService.SaveCoins(_currentCoins);
 
         public void SaveEndGameValues()
         {
-            SaveScore();
+            TrySaveBestScore();
             SaveCoins();
         }
     }
