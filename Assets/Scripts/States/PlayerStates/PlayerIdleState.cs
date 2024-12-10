@@ -10,20 +10,22 @@ namespace Wave.States.PlayerStates
 		private Transform _playerTransform;
         private Rigidbody _playerBody;
         private Tweener _tweener;
+        private Vector3 _startPosition;
 
         private float _floatingValue = 5f;
         private float _floatingDuration = 1f;
 
-		public PlayerIdleState(Transform playerTransform, Rigidbody rigidbody)
+		public PlayerIdleState(Transform playerTransform, Rigidbody rigidbody, Vector3 startPosition)
 		{
 			_playerTransform = playerTransform;
             _playerBody = rigidbody;
+            _startPosition = startPosition;
 		}
 
         public void Enter()
         {
             _playerBody.isKinematic = true;
-            _playerTransform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+            _playerTransform.SetPositionAndRotation(_startPosition, Quaternion.identity);
             ServiceLocator.Instance.Get<CoroutineService>().StartCoroutine(StartTween());
         }
 

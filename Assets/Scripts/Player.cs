@@ -23,6 +23,8 @@ namespace Wave.Actors
         private Collider _collider;
 
         private StateMachine _stateMachine;
+
+        private Vector3 _startPosition;
         private float _currentAngle;
 
         private void Awake()
@@ -36,6 +38,8 @@ namespace Wave.Actors
             _inputService.OnGameInputUp.Add(OnInputUp);
 
             _stateMachine = new StateMachine();
+            _startPosition = transform.position;
+
             _gameService.SetPlayer(this);
         }
 
@@ -77,7 +81,7 @@ namespace Wave.Actors
             _collider.enabled = true;
         }
 
-        public void ResetState() => _stateMachine.SetState(new PlayerIdleState(transform, _rigidbody));
+        public void ResetState() => _stateMachine.SetState(new PlayerIdleState(transform, _rigidbody, _startPosition));
         public void Pause() => _stateMachine.SetState(new PlayerPausedState(_rigidbody));
         public void Resume() => _stateMachine.SetState(new PlayerFallingState(_rigidbody, AdjustRotation));
         public void Die() => _stateMachine.SetState(new PlayerExplodingState(this, _explosionParticle));

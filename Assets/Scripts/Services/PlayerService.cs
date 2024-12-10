@@ -66,7 +66,7 @@ namespace Wave.Services
             if (_currentScore <= GetBestScore())
                 return;
 
-            _dataService.SaveBestScore(_currentCoins);
+            _dataService.SaveBestScore(_currentScore);
             _newBestScore = true;
         }
 

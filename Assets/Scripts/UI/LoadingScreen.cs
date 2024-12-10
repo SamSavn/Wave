@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Wave.Services;
 
-namespace Wave
+namespace Wave.UI.Screens
 {
     public class LoadingScreen : MonoBehaviour
     {
