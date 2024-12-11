@@ -75,7 +75,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 7757731798896095695}
   _explosionParticle: {fileID: 7760254050557076039}
-  _force: 30
+  _force: 150
   _maxAngle: 45
 --- !u!1 &6507614843323733871
 GameObject:
