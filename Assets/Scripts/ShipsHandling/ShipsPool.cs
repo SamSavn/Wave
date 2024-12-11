@@ -22,14 +22,14 @@ namespace Wave.Ships
 
         public GameObject GetShip(int prefabIndex)
         {
-            if (!_pool.ContainsKey(prefabIndex) && !prefabIndex.IsInCollectionRange(_shipPrefabs))
-                return null;
-
             if (_pool.TryGetValue(prefabIndex, out GameObject prefab) && prefab != null)
             {
                 _pool[prefabIndex] = null;
                 return prefab;
             }
+
+            if (!prefabIndex.IsInCollectionRange(_shipPrefabs))
+                return null;
 
             return GameObject.Instantiate(_shipPrefabs[prefabIndex], _poolContainer);
         }

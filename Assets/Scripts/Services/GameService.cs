@@ -1,3 +1,4 @@
+using UnityEngine;
 using Wave.Actors;
 using Wave.Environment;
 using Wave.Handlers;
@@ -15,6 +16,7 @@ namespace Wave.Services
 
         public GameService(UpdateService updateService)
 		{
+			Application.targetFrameRate = 30;
 			_stateMachine = new StateMachine();
         }
 

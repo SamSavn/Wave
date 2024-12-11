@@ -32,11 +32,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1870785319844472106}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.35097224, y: 0.18125}
-  m_AnchorMax: {x: 0.64902776, y: 0.23333333}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 125}
+  m_SizeDelta: {x: 425.76, y: 75}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &814379837936563365
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -217,27 +217,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2491272421209389658, guid: d3788e7e1c2a18b46966d1dd03e94e56, type: 3}
       propertyPath: m_Pivot.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2491272421209389658, guid: d3788e7e1c2a18b46966d1dd03e94e56, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2491272421209389658, guid: d3788e7e1c2a18b46966d1dd03e94e56, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2491272421209389658, guid: d3788e7e1c2a18b46966d1dd03e94e56, type: 3}
-      propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2491272421209389658, guid: d3788e7e1c2a18b46966d1dd03e94e56, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2491272421209389658, guid: d3788e7e1c2a18b46966d1dd03e94e56, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2491272421209389658, guid: d3788e7e1c2a18b46966d1dd03e94e56, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2491272421209389658, guid: d3788e7e1c2a18b46966d1dd03e94e56, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2491272421209389658, guid: d3788e7e1c2a18b46966d1dd03e94e56, type: 3}
       propertyPath: m_SizeDelta.x
-      value: -1600
+      value: 308
+      objectReference: {fileID: 0}
+    - target: {fileID: 2491272421209389658, guid: d3788e7e1c2a18b46966d1dd03e94e56, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 114
       objectReference: {fileID: 0}
     - target: {fileID: 2491272421209389658, guid: d3788e7e1c2a18b46966d1dd03e94e56, type: 3}
       propertyPath: m_LocalPosition.x
@@ -273,7 +277,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2491272421209389658, guid: d3788e7e1c2a18b46966d1dd03e94e56, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -22.506947
+      value: 185
       objectReference: {fileID: 0}
     - target: {fileID: 2491272421209389658, guid: d3788e7e1c2a18b46966d1dd03e94e56, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -334,19 +338,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7067498557875242753, guid: 9a4ac54c1b55539479d5997e883d96f9, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.6429688
+      value: 0.66880953
       objectReference: {fileID: 0}
     - target: {fileID: 7067498557875242753, guid: 9a4ac54c1b55539479d5997e883d96f9, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.8088735
+      value: 1.0729166
       objectReference: {fileID: 0}
     - target: {fileID: 7067498557875242753, guid: 9a4ac54c1b55539479d5997e883d96f9, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.35651043
+      value: 0.3307143
       objectReference: {fileID: 0}
     - target: {fileID: 7067498557875242753, guid: 9a4ac54c1b55539479d5997e883d96f9, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.5966821
+      value: 0.33333334
       objectReference: {fileID: 0}
     - target: {fileID: 7067498557875242753, guid: 9a4ac54c1b55539479d5997e883d96f9, type: 3}
       propertyPath: m_SizeDelta.x

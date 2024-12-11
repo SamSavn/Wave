@@ -115,7 +115,7 @@ namespace Wave.UI.Screens
 
         private void OnHomeButtonClick()
         {
-            _uiService.ShowScreen<MainMenu>();
+            _gameService.ResetGame();
         }
     } 
 }

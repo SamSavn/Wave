@@ -20,7 +20,16 @@ namespace Wave.Extentions
 
         public static bool IsInCollectionRange<T>(this int value, IEnumerable<T> collection)
         {
-            return value.IsInRange(0, collection.Count());
+            int count = 0;
+
+            if (collection is IList<T> list) 
+                count = list.Count;
+            else if (collection is T[] array) 
+                count = array.Length;
+            else 
+                count = collection.Count();
+
+            return value.IsInRange(0, count - 1);
         }
     }
 }
