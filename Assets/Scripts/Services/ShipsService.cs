@@ -30,7 +30,8 @@ namespace Wave.Services
 		public void SetShipCamerasHandler(ShipCamerasHandler shipCamerasHandler) => _shipCamerasHandler = shipCamerasHandler;
 		public void SetSelectedShip(int index) =>_shipCamerasHandler.SetShips(_pool, index);
 
-		public int GetShipPrice(int index) => SHIPS_BASE_PRICE + index / 5 * (SHIPS_BASE_PRICE / 2);
+		//todo: restore price change once ships performance is up and running
+		public int GetShipPrice(int index) => SHIPS_BASE_PRICE /*+ index / 5 * (SHIPS_BASE_PRICE / 2)*/;
 		public int GetShipsCount() => _pool.Count;
 		public GameObject GetShip(int index) => _pool.GetShip(index);
 		public void RecycleShip(GameObject ship, int index) => _pool.RecycleShip(ship, index);

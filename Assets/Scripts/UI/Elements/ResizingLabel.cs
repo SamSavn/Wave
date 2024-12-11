@@ -12,6 +12,8 @@ namespace Wave.UI
         [SerializeField] private float _offset;
         [SerializeField] private bool _resizeOnAwake;
 
+        public float Width => _label.preferredWidth;
+
         private void Reset()
         {
             _rectTransform = GetComponent<RectTransform>();

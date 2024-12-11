@@ -19,8 +19,6 @@ namespace Wave.States.GameStates
 
         public void Enter()
         {
-            GC.Collect();
-
             ServiceLocator.Instance.Get<PlayerService>().SaveEndGameValues();
             ServiceLocator.Instance.Get<UiService>().ShowScreen<EndGameMenu>();
             _player.Die();
@@ -35,6 +33,7 @@ namespace Wave.States.GameStates
         {
             _player = null;
             _level = null;
+            GC.Collect();
         }
     }
 }

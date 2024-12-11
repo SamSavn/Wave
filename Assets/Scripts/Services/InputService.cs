@@ -1,5 +1,6 @@
-﻿using UnityEngine;
-using UnityEngine.InputSystem;
+﻿using System.Collections;
+using UnityEngine;
+using UnityEngine.EventSystems;
 using Wave.Events;
 using Wave.Input;
 
@@ -7,27 +8,42 @@ namespace Wave.Services
 {
     public class InputService : IService
     {
-        private readonly UpdateService _updateService;
+        private readonly PlayerInputActions _inputActions;
+        private readonly CoroutineService _coroutineService;
+
         public EventDisparcher OnGameInputDown { get; } = new();
         public EventDisparcher OnGameInputUp { get; } = new();
 
-        private PlayerInputActions inputActions;
-
-        public InputService(UpdateService updateService)
+        public InputService(CoroutineService coroutineService)
         {
-            _updateService = updateService;
-            _updateService.Update.Add(Update);
+            _coroutineService = coroutineService;
 
-            inputActions = new PlayerInputActions();
-            inputActions.Enable();
+            _inputActions = new PlayerInputActions();
+            _inputActions.Enable();
 
-            inputActions.GameInput.Action.performed += ctx => OnGameInputDown?.Invoke();
-            inputActions.GameInput.Action.canceled += ctx => OnGameInputUp?.Invoke();
+            _inputActions.GameInput.Action.performed += ctx => ProcessInput(true);
+            _inputActions.GameInput.Action.canceled += ctx => ProcessInput(false);
         }
 
-        private void Update(float dt)
+        private void ProcessInput(bool isDown)
         {
-            
+            _coroutineService.StartCoroutine(DeferredInputCheck(isDown));
+        }
+
+        private IEnumerator DeferredInputCheck(bool isDown)
+        {
+            yield return null;
+
+            if (IsPointerOverUI())
+                yield break;
+
+            if (isDown) OnGameInputDown?.Invoke();
+            else OnGameInputUp?.Invoke();
+        }
+
+        private bool IsPointerOverUI()
+        {
+            return EventSystem.current != null && EventSystem.current.IsPointerOverGameObject();
         }
     }
 }

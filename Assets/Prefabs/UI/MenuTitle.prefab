@@ -227,5 +227,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rectTransform: {fileID: 8790466908810783395}
   _label: {fileID: 6810408203150445560}
-  _offset: 10
+  _offset: 20
   _resizeOnAwake: 1

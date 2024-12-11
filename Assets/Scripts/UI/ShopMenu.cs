@@ -10,8 +10,8 @@ namespace Wave.UI.Screens
         [SerializeField] private Button _rightArrow;
 
         [Space]
-        [SerializeField] private Button _buyButton;
-        [SerializeField] private Button _equipButton;
+        [SerializeField] private TextButton _buyButton;
+        [SerializeField] private TextButton _equipButton;
         [SerializeField] private Button _homeButton;
 
         [Space]
@@ -37,10 +37,10 @@ namespace Wave.UI.Screens
                 _rightArrow.onClick.AddListener(OnRightArrowClick);
 
             if (_buyButton != null)
-                _buyButton.onClick.AddListener(OnBuyButtonClick);
+                _buyButton.OnClick.AddListener(OnBuyButtonClick);
 
             if (_equipButton != null)
-                _equipButton.onClick.AddListener(OnEquipButtonClick);
+                _equipButton.OnClick.AddListener(OnEquipButtonClick);
 
             if (_homeButton != null)
                 _homeButton.onClick.AddListener(OnHomeButtonClick);
@@ -81,7 +81,7 @@ namespace Wave.UI.Screens
             _rightArrow.gameObject.SetActive(_currentIndex < _shipsService.GetShipsCount() - 1);
 
             _buyButton.gameObject.SetActive(!unlocked);
-            _buyButton.interactable = _playerService.CanBuy(_shipsService.GetShipPrice(_currentIndex));
+            _buyButton.Interactable = _playerService.CanBuy(_shipsService.GetShipPrice(_currentIndex));
 
             _equipButton.gameObject.SetActive(unlocked && !equipped);
             _equippedLabel.SetActive(equipped);
