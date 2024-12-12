@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Wave.Settings;
 using Wave.Ships;
 
 namespace Wave.Services
@@ -10,15 +11,18 @@ namespace Wave.Services
         private const int SHIPS_BASE_PRICE = 100;
 
         private DataService _dataService;
+        private AssetsService _assetsService;
 
 		private ShipCamerasHandler _shipCamerasHandler;
         private ShipsPool _pool;
 
 		private List<int> _unlockedShips = new List<int>();
 
-		public ShipsService(DataService dataService)
+		public ShipsService(DataService dataService, AssetsService assetsService)
 		{
 			_dataService = dataService;
+			_assetsService = assetsService;
+
 			_pool = new ShipsPool();
 			_unlockedShips = _dataService.GetUnlockedShips() != null
 								? new List<int>(_dataService.GetUnlockedShips())
@@ -33,7 +37,8 @@ namespace Wave.Services
 		//todo: restore price change once ships performance is up and running
 		public int GetShipPrice(int index) => SHIPS_BASE_PRICE /*+ index / 5 * (SHIPS_BASE_PRICE / 2)*/;
 		public int GetShipsCount() => _pool.Count;
-		public GameObject GetShip(int index) => _pool.GetShip(index);
+		public GameObject GetShip(int index) => _pool.GetShip(index);	
+		public ShipStats GetStats(int index) => _assetsService.GetShipStats(index);
 		public void RecycleShip(GameObject ship, int index) => _pool.RecycleShip(ship, index);
 
 		public bool IsShipUnlocked(int index) => _unlockedShips.Contains(index);

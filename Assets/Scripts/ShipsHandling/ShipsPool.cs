@@ -10,13 +10,13 @@ namespace Wave.Ships
         private Dictionary<int, GameObject> _pool = new();
         private GameObject[] _shipPrefabs;
         private Transform _poolContainer;
-        private PrefabsService _prefabsService;
+        private AssetsService _prefabsService;
 
         public int Count => _pool.Count;
 
         public ShipsPool()
         {
-            _prefabsService = ServiceLocator.Instance.Get<PrefabsService>();
+            _prefabsService = ServiceLocator.Instance.Get<AssetsService>();
             _prefabsService.OnShipsLoaded?.Add(OnPrefabsLoaded);
         }
 

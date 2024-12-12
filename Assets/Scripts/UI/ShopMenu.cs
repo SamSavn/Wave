@@ -10,6 +10,9 @@ namespace Wave.UI.Screens
         [SerializeField] private Button _rightArrow;
 
         [Space]
+        [SerializeField] private ShipsVersionsContainer _versionsContainer;
+
+        [Space]
         [SerializeField] private TextButton _buyButton;
         [SerializeField] private TextButton _equipButton;
         [SerializeField] private Button _homeButton;
@@ -69,6 +72,8 @@ namespace Wave.UI.Screens
         {
             _currentIndex = index;
             _shipsService.SetSelectedShip(_currentIndex);
+            _versionsContainer.SetVersions(_shipsService.GetStats(_currentIndex));
+
             Refresh();
         }
 

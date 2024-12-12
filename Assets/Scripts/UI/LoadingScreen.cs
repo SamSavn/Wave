@@ -13,7 +13,7 @@ namespace Wave.UI.Screens
         private const int PROGRESS_STEPS = 3;
         private const float TOTAL_FAKE_LOADING_TIME = 5f;
 
-        private PrefabsService _prefabsService;
+        private AssetsService _prefabsService;
 
         private float _realProgress = 0f;
         private float _fakeProgress = 0f;
@@ -52,7 +52,7 @@ namespace Wave.UI.Screens
         {
             yield return new WaitUntil(() => ServiceLocator.Instance.IsReady);
 
-            _prefabsService = ServiceLocator.Instance.Get<PrefabsService>();
+            _prefabsService = ServiceLocator.Instance.Get<AssetsService>();
             _prefabsService.OnBlocksLoaded?.Add(OnBlocksLoaded);
             _prefabsService.OnShipsLoaded?.Add(OnShipsLoaded);
 

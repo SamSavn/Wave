@@ -12,7 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6160c060ef5548a41ae2f386f97bb2fa, type: 3}
   m_Name: 5.1_ShipStats
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 8279969143979241102, guid: ff23e3972c8602b4e87bf04fe4395c79, type: 3}
+  _info:
+    _prefab: {fileID: 8279969143979241102, guid: ff23e3972c8602b4e87bf04fe4395c79, type: 3}
+    _primaryColor: {r: 0.8352942, g: 0.63529414, b: 0.14509805, a: 1}
+    _secondaryColor: {r: 0.42352945, g: 0.44705886, b: 0.48235297, a: 1}
+  _variants:
+  - _prefab: {fileID: 877918401672259474, guid: a761ba83e62bf8a4aa3c0efa6f61e22d, type: 3}
+    _primaryColor: {r: 0.80392164, g: 0.22352943, b: 0.15686275, a: 1}
+    _secondaryColor: {r: 0.8196079, g: 0.8588236, b: 0.92549026, a: 1}
+  - _prefab: {fileID: 6921238706466614037, guid: f18cef774753a3b47be966654f6e6097, type: 3}
+    _primaryColor: {r: 0.18431373, g: 0.18823531, b: 0.19607845, a: 1}
+    _secondaryColor: {r: 0.25882354, g: 0.854902, b: 0.85098046, a: 1}
+  - _prefab: {fileID: 7778484918840999946, guid: 5ff23903cc097f34684ffe262418971c, type: 3}
+    _primaryColor: {r: 0.80392164, g: 0.22352943, b: 0.15686275, a: 1}
+    _secondaryColor: {r: 0.20784315, g: 0.21960786, b: 0.2392157, a: 1}
+  - _prefab: {fileID: 2907491432433429739, guid: 5e69db28db8a2c3489766fa1ce875a0b, type: 3}
+    _primaryColor: {r: 0.14509805, g: 0.32156864, b: 0.8745099, a: 1}
+    _secondaryColor: {r: 0.8196079, g: 0.8588236, b: 0.92549026, a: 1}
   _mass: 1
   _power: 40
   _speed: 60

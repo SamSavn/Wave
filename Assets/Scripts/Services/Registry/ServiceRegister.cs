@@ -14,11 +14,13 @@ namespace Wave.Services
             CoroutineService coroutineService = new CoroutineService();
             AddressablesService addressablesService = new AddressablesService(coroutineService);
             DataService dataService = new DataService();
+            AssetsService assetsService = new AssetsService(addressablesService);
 
             ServiceLocator.Instance.Register(updateService);
             ServiceLocator.Instance.Register(coroutineService);
             ServiceLocator.Instance.Register(addressablesService);
             ServiceLocator.Instance.Register(dataService);
+            ServiceLocator.Instance.Register(assetsService);
 
             GameService gameService = new GameService(updateService);
             ServiceLocator.Instance.Register(gameService);
@@ -27,8 +29,7 @@ namespace Wave.Services
             ServiceLocator.Instance.Register(new SceneService());
 
             ServiceLocator.Instance.Register(new InputService(coroutineService));
-            ServiceLocator.Instance.Register(new PrefabsService(addressablesService));
-            ServiceLocator.Instance.Register(new ShipsService(dataService));
+            ServiceLocator.Instance.Register(new ShipsService(dataService, assetsService));
             ServiceLocator.Instance.Register(new PlayerService(dataService, gameService));
 
             ServiceLocator.Instance.SetAsReady();
