@@ -9,26 +9,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6160c060ef5548a41ae2f386f97bb2fa, type: 3}
+  m_Script: {fileID: 11500000, guid: 3aea163808bf73b47bff16fb8cede688, type: 3}
   m_Name: 10.1_ShipStats
   m_EditorClassIdentifier: 
   _info:
     _prefab: {fileID: 8176574050564155633, guid: 291b42fb06ae864409a7a9bda68067d5, type: 3}
-    _primaryColor: {r: 0.8431373, g: 0.25490198, b: 0.20000002, a: 1}
-    _secondaryColor: {r: 0.8431373, g: 0.882353, b: 0.94117653, a: 1}
+    _primaryColor: {r: 0.78823537, g: 0.22352943, b: 0.18039216, a: 1}
+    _secondaryColor: {r: 0.72156864, g: 0.7686275, b: 0.854902, a: 1}
   _variants:
   - _prefab: {fileID: 4977543351004493683, guid: 35614d4c95c3f45438fb17a79ef8a73f, type: 3}
-    _primaryColor: {r: 0.20392159, g: 0.21960786, b: 0.2392157, a: 1}
-    _secondaryColor: {r: 0.86666673, g: 0.25882354, b: 0.20000002, a: 1}
+    _primaryColor: {r: 0.18823531, g: 0.21176472, b: 0.2392157, a: 1}
+    _secondaryColor: {r: 0.78823537, g: 0.22352943, b: 0.18039216, a: 1}
   - _prefab: {fileID: 4924052989975529907, guid: 49e7685687bdfe5439ccc63b03546fe9, type: 3}
-    _primaryColor: {r: 0.16862746, g: 0.67058825, b: 0.9568628, a: 1}
-    _secondaryColor: {r: 0.21568629, g: 0.227451, b: 0.2392157, a: 1}
+    _primaryColor: {r: 0.12941177, g: 0.6039216, b: 0.89019614, a: 1}
+    _secondaryColor: {r: 0.18823531, g: 0.21176472, b: 0.2392157, a: 1}
   - _prefab: {fileID: 3568770686382826839, guid: 38eb5df97b5f781499522faf896ed855, type: 3}
-    _primaryColor: {r: 0.8431373, g: 0.6509804, b: 0.19607845, a: 1}
-    _secondaryColor: {r: 0.43921572, g: 0.45882356, b: 0.4901961, a: 1}
+    _primaryColor: {r: 0.86274517, g: 0.6666667, b: 0.25490198, a: 1}
+    _secondaryColor: {r: 0.38823533, g: 0.4156863, b: 0.45882356, a: 1}
   - _prefab: {fileID: 8161773041596865618, guid: 9acebd848c5e80240a98c64dcef3d2ae, type: 3}
-    _primaryColor: {r: 0.16862746, g: 0.34901962, b: 0.9450981, a: 1}
-    _secondaryColor: {r: 0.8431373, g: 0.882353, b: 0.94117653, a: 1}
-  _mass: 0.6
-  _power: 35
-  _speed: 80
+    _primaryColor: {r: 0.13725491, g: 0.31764707, b: 0.8980393, a: 1}
+    _secondaryColor: {r: 0.72156864, g: 0.7686275, b: 0.854902, a: 1}
+  _mass: 0
+  _power: 0
+  _speed: 0

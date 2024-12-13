@@ -5,16 +5,17 @@ using Wave.Extentions;
 namespace Wave.Settings
 {
 	[CreateAssetMenu(fileName = "ShipStats", menuName = "Wave/Settings/Ship Stats")]
-	public class ShipStats : ScriptableObject
+	public class ShipInfo : ScriptableObject
 	{
-		[SerializeField] private ShipInfo _info;
-		[SerializeField] private ShipInfo[] _variants;
+		[SerializeField] private ShipVersion _info;
+		[SerializeField] private ShipVersion[] _variants;
 		[SerializeField] private float _mass;
 		[SerializeField] private float _power;
 		[SerializeField] private float _speed;
 
 		public GameObject GetPrefab() => _info.GetPrefab();
-		public ShipInfo[] GetVariants() => _variants;
+		public ShipVersion GetMainVersion() => _info;
+		public ShipVersion[] GetVariants() => _variants;
 		public bool HasVariants() => !_variants.IsNullOrEmpty();
 
 		public (Color primary, Color secondary) GetColors()
@@ -48,7 +49,7 @@ namespace Wave.Settings
 	}
 
     [Serializable]
-    public class ShipInfo
+    public class ShipVersion
     {
         [SerializeField] private GameObject _prefab;
         [SerializeField] private Color _primaryColor;

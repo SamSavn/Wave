@@ -9,26 +9,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6160c060ef5548a41ae2f386f97bb2fa, type: 3}
+  m_Script: {fileID: 11500000, guid: 3aea163808bf73b47bff16fb8cede688, type: 3}
   m_Name: 11.1_ShipStats
   m_EditorClassIdentifier: 
   _info:
-    _prefab: {fileID: 7046610107163128614, guid: 7b1193876daceb3438726c4a3adee451, type: 3}
-    _primaryColor: {r: 0.83921576, g: 0.8745099, b: 0.93725497, a: 1}
-    _secondaryColor: {r: 0.7686275, g: 0.21568629, b: 0.15294118, a: 1}
+    _prefab: {fileID: 8176574050564155633, guid: 291b42fb06ae864409a7a9bda68067d5, type: 3}
+    _primaryColor: {r: 0.72156864, g: 0.7686275, b: 0.854902, a: 1}
+    _secondaryColor: {r: 0.78823537, g: 0.22352943, b: 0.18039216, a: 1}
   _variants:
-  - _prefab: {fileID: 6798828391096509197, guid: de81c4cc4a723254cba1427028cca900, type: 3}
-    _primaryColor: {r: 0.86274517, g: 0.24705884, b: 0.18431373, a: 1}
-    _secondaryColor: {r: 0.18039216, g: 0.18431373, b: 0.19215688, a: 1}
-  - _prefab: {fileID: 9051124630825489796, guid: f55920731bc14b045ba0c6d25208bb18, type: 3}
-    _primaryColor: {r: 0.21568629, g: 0.6901961, b: 0.98823535, a: 1}
-    _secondaryColor: {r: 0.20392159, g: 0.20784315, b: 0.22352943, a: 1}
-  - _prefab: {fileID: 9110229412411202512, guid: 5b34bcd7054ce124f9b8d6bcbec50170, type: 3}
-    _primaryColor: {r: 0.8705883, g: 0.6784314, b: 0.2392157, a: 1}
-    _secondaryColor: {r: 0.43137258, g: 0.45098042, b: 0.48235297, a: 1}
-  - _prefab: {fileID: 4676345756898732685, guid: b84194ea03853054d8eb2ef411d8899e, type: 3}
-    _primaryColor: {r: 0.14901961, g: 0.30980393, b: 0.8431373, a: 1}
-    _secondaryColor: {r: 0.83921576, g: 0.8745099, b: 0.93725497, a: 1}
-  _mass: 1.2
-  _power: 50
-  _speed: 30
+  - _prefab: {fileID: 4977543351004493683, guid: 35614d4c95c3f45438fb17a79ef8a73f, type: 3}
+    _primaryColor: {r: 0.78823537, g: 0.22352943, b: 0.18039216, a: 1}
+    _secondaryColor: {r: 0.18823531, g: 0.21176472, b: 0.2392157, a: 1}
+  - _prefab: {fileID: 4924052989975529907, guid: 49e7685687bdfe5439ccc63b03546fe9, type: 3}
+    _primaryColor: {r: 0.12941177, g: 0.6039216, b: 0.89019614, a: 1}
+    _secondaryColor: {r: 0.18823531, g: 0.21176472, b: 0.2392157, a: 1}
+  - _prefab: {fileID: 3568770686382826839, guid: 38eb5df97b5f781499522faf896ed855, type: 3}
+    _primaryColor: {r: 0.86274517, g: 0.6666667, b: 0.25490198, a: 1}
+    _secondaryColor: {r: 0.38823533, g: 0.4156863, b: 0.45882356, a: 1}
+  - _prefab: {fileID: 8161773041596865618, guid: 9acebd848c5e80240a98c64dcef3d2ae, type: 3}
+    _primaryColor: {r: 0.72156864, g: 0.7686275, b: 0.854902, a: 1}
+    _secondaryColor: {r: 0.13725491, g: 0.31764707, b: 0.8980393, a: 1}
+  _mass: 0
+  _power: 0
+  _speed: 0

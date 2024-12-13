@@ -50,7 +50,7 @@ namespace Wave.Services
 		}
 
 		public GameObject GetShipVersionColorPrefab() => _shipVersionColor;
-		public ShipStats GetShipStats(int index) => _playerShipsDB.GetShipStats(index);
+		public ShipInfo GetShipStats(int index) => _playerShipsDB.GetShipStats(index);
 
 		public GameObject GetInitialPrefab(PrefabType prefabType)
 		{

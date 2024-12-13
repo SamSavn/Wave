@@ -10,7 +10,7 @@ namespace Wave.UI
         [SerializeField] private Image _primaryColor;
         [SerializeField] private Image _secondaryColor;
 
-        public void SetUp(ShipInfo ship)
+        public void SetUp(ShipVersion ship)
         {
             _primaryColor.color = ship.GetPrimaryColor();
             _secondaryColor.color = ship.GetSecondaryColor();

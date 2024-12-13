@@ -89,7 +89,7 @@ namespace Wave.CustomEditors
                 }
 
                 // Create the ScriptableObject instance
-                ShipStats shipStats = ScriptableObject.CreateInstance<ShipStats>();
+                ShipInfo shipStats = ScriptableObject.CreateInstance<ShipInfo>();
                 shipStats.name = prefab.name;
                 AssignStats(shipStats, prefab);
 
@@ -103,7 +103,7 @@ namespace Wave.CustomEditors
             Debug.Log("Ship Stats generation completed.");
         }
 
-        private void AssignStats(ShipStats stats, GameObject prefab)
+        private void AssignStats(ShipInfo stats, GameObject prefab)
         {
             var statsType = stats.GetType();
             statsType.GetField("_prefab", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)?.SetValue(stats, prefab);

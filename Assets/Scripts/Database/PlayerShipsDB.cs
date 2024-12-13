@@ -8,7 +8,7 @@ namespace Wave.Database
     [CreateAssetMenu(fileName = "PlayerShipsDB", menuName = "Wave/Database/Player Ships")]
     public class PlayerShipsDB : ScriptableObject
     {
-        [SerializeField] private ShipStats[] _shipStats;
+        [SerializeField] private ShipInfo[] _shipStats;
         private GameObject[] _allPrfabs = Array.Empty<GameObject>();
 
         public GameObject[] GetAllPrefabs()
@@ -25,15 +25,9 @@ namespace Wave.Database
             return _allPrfabs;
         }
 
-        public GameObject GetShipAt(int index)
-        {
-            if (index.IsInCollectionRange(_shipStats))
-                return _shipStats[index].GetPrefab();
+        public GameObject GetShipAt(int index) => GetShipStats(index)?.GetPrefab();
 
-            return null;
-        }
-
-        public ShipStats GetShipStats(int index)
+        public ShipInfo GetShipStats(int index)
         {
             if (index.IsInCollectionRange(_shipStats))
                 return _shipStats[index];

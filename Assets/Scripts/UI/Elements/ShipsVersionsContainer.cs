@@ -5,6 +5,7 @@ namespace Wave.UI
 {
     using System.Collections.Generic;
     using UnityEngine;
+    using Wave.Extentions;
 
     public class ShipsVersionsContainer : MonoBehaviour
     {
@@ -18,48 +19,46 @@ namespace Wave.UI
             _colorPrefab = ServiceLocator.Instance.Get<AssetsService>().GetShipVersionColorPrefab();
         }
 
-        public void SetVersions(ShipStats info)
+        public void SetVersions(ShipInfo shipStats)
         {
-            if (info == null || !info.HasVariants())
+            if (shipStats == null || !shipStats.HasVariants())
                 return;
 
-            ShipInfo[] variants = info.GetVariants();
-            (Color primary, Color secondary) colors = default;
+            ShipVersion[] variants = shipStats.GetVariants();
             int count = variants.Length;
 
-            for (int i = 0; i < count; i++)
-            {
-                if (!info.TryGetVariantColors(i, out colors))
-                    continue;
+            AddVersion(shipStats.GetMainVersion(), 0);
 
-                ShipVersionColor version = GetOrCreateVersion();
-                version.SetUp(variants[i]);
-                version.gameObject.SetActive(true);
-            }
+            for (int i = 0; i < count; i++)
+                AddVersion(variants[i], i + 1);
 
             DeactivateUnusedItems(count);
         }
 
-        private ShipVersionColor GetOrCreateVersion()
+        private void AddVersion(ShipVersion version, int index)
         {
-            foreach (ShipVersionColor version in _pool)
-            {
-                if (!version.gameObject.activeSelf)
-                    return version;
-            }
+            ShipVersionColor versionColors = GetOrCreateVersion(index);
+            versionColors.SetUp(version);
+            versionColors.gameObject.SetActive(true);
+        }
 
-            GameObject versionObject = Instantiate(_colorPrefab, _container);
-            ShipVersionColor newVersion = versionObject.GetComponent<ShipVersionColor>();
+        private ShipVersionColor GetOrCreateVersion(int index)
+        {
+            if (index.IsInCollectionRange(_pool))
+                return _pool[index];
 
-            if (newVersion == null)
+            GameObject clone = Instantiate(_colorPrefab, _container);
+            ShipVersionColor versionColor = clone.GetComponent<ShipVersionColor>();
+
+            if (versionColor == null)
             {
                 Debug.LogError("Prefab is missing ShipVersionColor component.");
-                Destroy(versionObject);
+                Destroy(clone);
                 return null;
             }
 
-            _pool.Add(newVersion);
-            return newVersion;
+            _pool.Add(versionColor);
+            return versionColor;
         }
 
         private void DeactivateUnusedItems(int activeCount)

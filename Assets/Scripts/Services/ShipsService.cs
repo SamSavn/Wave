@@ -38,7 +38,7 @@ namespace Wave.Services
 		public int GetShipPrice(int index) => SHIPS_BASE_PRICE /*+ index / 5 * (SHIPS_BASE_PRICE / 2)*/;
 		public int GetShipsCount() => _pool.Count;
 		public GameObject GetShip(int index) => _pool.GetShip(index);	
-		public ShipStats GetStats(int index) => _assetsService.GetShipStats(index);
+		public ShipInfo GetStats(int index) => _assetsService.GetShipStats(index);
 		public void RecycleShip(GameObject ship, int index) => _pool.RecycleShip(ship, index);
 
 		public bool IsShipUnlocked(int index) => _unlockedShips.Contains(index);
