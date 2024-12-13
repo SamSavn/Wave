@@ -9,21 +9,7 @@ namespace Wave.Database
     public class PlayerShipsDB : ScriptableObject
     {
         [SerializeField] private ShipStats[] _shipStats;
-        private GameObject[] _allPrfabs = Array.Empty<GameObject>();
-
-        public GameObject[] GetAllPrefabs()
-        {
-            if (_allPrfabs.IsNullOrEmpty())
-            {
-                _allPrfabs = new GameObject[_shipStats.Length];
-                int count = _allPrfabs.Length;
-
-                for (int i = 0; i < count; i++)
-                    _allPrfabs[i] = _shipStats[i].GetPrefab();
-            }
-
-            return _allPrfabs;
-        }
+        public int Count => _shipStats.Length;
 
         public GameObject GetShipAt(int index)
         {
