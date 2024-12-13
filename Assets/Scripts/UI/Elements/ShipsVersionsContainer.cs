@@ -1,18 +1,21 @@
 using Wave.Services;
 using Wave.Settings;
+using System.Collections.Generic;
+using UnityEngine;
+using Wave.Events;
+using Wave.Extentions;
 
 namespace Wave.UI
 {
-    using System.Collections.Generic;
-    using UnityEngine;
-    using Wave.Extentions;
-
     public class ShipsVersionsContainer : MonoBehaviour
     {
         [SerializeField] private Transform _container;
 
-        private List<ShipVersionColor> _pool = new();
         private GameObject _colorPrefab;
+        private List<ShipVersionColor> _pool = new();
+        private ShipVersionColor _selectedVersion;
+
+        public EventDisparcher<int> OnVersionSelectionChanged { get; } = new EventDisparcher<int>();
 
         private void Awake()
         {
@@ -24,6 +27,12 @@ namespace Wave.UI
             if (shipStats == null || !shipStats.HasVariants())
                 return;
 
+            if (_selectedVersion != null)
+            {
+                _selectedVersion.Select(false);
+                _selectedVersion = null;
+            }
+
             ShipVersion[] variants = shipStats.GetVariants();
             int count = variants.Length;
 
@@ -32,14 +41,18 @@ namespace Wave.UI
             for (int i = 0; i < count; i++)
                 AddVersion(variants[i], i + 1);
 
-            DeactivateUnusedItems(count);
+            DeactivateUnusedItems(count + 1);
         }
 
         private void AddVersion(ShipVersion version, int index)
         {
-            ShipVersionColor versionColors = GetOrCreateVersion(index);
-            versionColors.SetUp(version);
-            versionColors.gameObject.SetActive(true);
+            ShipVersionColor versionColor = GetOrCreateVersion(index);
+            versionColor.SetUp(version, index);
+            versionColor.OnClick?.Add(SelectVersion);
+            versionColor.gameObject.SetActive(true);
+
+            if (index == 0)
+                SelectVersion(versionColor);
         }
 
         private ShipVersionColor GetOrCreateVersion(int index)
@@ -48,9 +61,8 @@ namespace Wave.UI
                 return _pool[index];
 
             GameObject clone = Instantiate(_colorPrefab, _container);
-            ShipVersionColor versionColor = clone.GetComponent<ShipVersionColor>();
 
-            if (versionColor == null)
+            if (!clone.TryGetComponent(out ShipVersionColor versionColor))
             {
                 Debug.LogError("Prefab is missing ShipVersionColor component.");
                 Destroy(clone);
@@ -63,9 +75,28 @@ namespace Wave.UI
 
         private void DeactivateUnusedItems(int activeCount)
         {
+            ShipVersionColor versionColor;
+
             for (int i = activeCount; i < _pool.Count; i++)
-                _pool[i].gameObject.SetActive(false);
+            {
+                versionColor = _pool[i];
+                versionColor.gameObject.SetActive(false);
+                versionColor.OnClick.Remove(SelectVersion);
+            }
+        }
+
+        private void SelectVersion(ShipVersionColor version)
+        {
+            if (_selectedVersion == version)
+                return;
+
+            if (_selectedVersion != null)
+                _selectedVersion.Select(false);
+
+            _selectedVersion = version;
+            _selectedVersion.Select(true);
+
+            OnVersionSelectionChanged?.Invoke(version.Index);
         }
     }
-
 }
