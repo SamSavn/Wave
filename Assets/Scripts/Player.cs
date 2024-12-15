@@ -43,11 +43,6 @@ namespace Wave.Actors
             _gameService.SetPlayer(this);
         }
 
-        private void Start()
-        {
-            SetModel(_shipsService.GetShip(_playerService.GetEquipedShipIndex()));
-        }
-
         private void OnDestroy()
         {
             _inputService.OnGameInputDown.Remove(OnInputDown);
@@ -61,7 +56,14 @@ namespace Wave.Actors
             transform.eulerAngles = new Vector3(_currentAngle, 0, 0);
         }
 
-        public void SetVisible(bool active) => _model.SetActive(active);
+        public void SetVisible(bool active)
+        {
+            _model.SetActive(active);
+            
+            if (active) _rigidbody.WakeUp();
+            else _rigidbody.Sleep();
+        }
+
         public void SetModel(GameObject model)
         {
             if (_model != null)
@@ -79,6 +81,8 @@ namespace Wave.Actors
 
             _model.SetActive(true);
             _collider.enabled = true;
+
+            ResetState();
         }
 
         public void ResetState() => _stateMachine.SetState(new PlayerIdleState(transform, _rigidbody, _startPosition));

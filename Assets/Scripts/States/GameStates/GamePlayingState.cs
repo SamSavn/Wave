@@ -16,7 +16,6 @@ namespace Wave.States.GameStates
         public void Enter()
         {
             ServiceLocator.Instance.Get<UiService>().ShowScreen<HUD>();
-            ServiceLocator.Instance.Get<PlayerService>().ResetGameValues();
             _level.StartMoving();
         }
 

@@ -17,7 +17,7 @@ namespace Wave.States.PlayerStates
         public void Enter()
         {
             _player.SetVisible(false);
-            _particle.Play();
+            _particle.gameObject.SetActive(true);
             Time.timeScale = 0;
         }
 
@@ -29,6 +29,7 @@ namespace Wave.States.PlayerStates
         public void Exit()
         {
             _particle.Stop();
+            _particle.gameObject.SetActive(false);
             _player.SetVisible(true);
             Time.timeScale = 1f;
 

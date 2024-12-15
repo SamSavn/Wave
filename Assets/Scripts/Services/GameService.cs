@@ -30,6 +30,11 @@ namespace Wave.Services
 		public void SetPlayer(Player player)
 		{
             _player = player;
+
+			int modelIndex = ServiceLocator.Instance.Get<PlayerService>().GetEquipedShipIndex();
+			GameObject model = ServiceLocator.Instance.Get<ShipsService>().GetShip(modelIndex);
+
+			_player.SetModel(model);
 			TrySetGame();
         }
 
