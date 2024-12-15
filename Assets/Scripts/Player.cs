@@ -74,7 +74,7 @@ namespace Wave.Actors
 
             _model.transform.SetParent(transform);
             _model.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
-            _model.transform.localScale = Vector3.one;
+            _model.transform.localScale = _model.transform.lossyScale * transform.lossyScale.x;
             _model.SetLayer(Layer.Player);
 
             _model.SetActive(true);
