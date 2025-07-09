@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using Wave.Collectables;
 using Wave.Extentions;
@@ -22,16 +21,20 @@ namespace Wave.Environment
 
         public float Width => Vector3.Distance(_leftSocket.position, _rightSocket.position);
         public bool IsInitial => _initialBlock;
+        public bool IsActive => gameObject.activeSelf;
 
         private void Awake()
         {
             _collectables = GetComponentsInChildren<ICollectable>();
         }
 
-        public void SetActive(bool active)
+        public void SetActive(bool active, bool handleCollectibles = true)
         {
-            if (active) SetCollectibles();
-            else ResetCollectibles();
+            if (handleCollectibles)
+            {
+                if (active) SetCollectibles();
+                else ResetCollectibles(); 
+            }
 
             gameObject.SetActive(active);
         }
@@ -56,10 +59,7 @@ namespace Wave.Environment
         private void SetCollectibles()
         {
             if (_collectables.IsNullOrEmpty()) 
-            {
-                Debug.LogWarning($"No collectibles found in block {gameObject.name}");
-                return; 
-            }
+                return;
 
             ResetCollectibles();
 

@@ -14,6 +14,8 @@ namespace Wave.Actors
         [SerializeField] private float _force = 10f;
         [SerializeField] private float _maxAngle = 50f;
 
+        private readonly StateMachine _stateMachine = new StateMachine();
+
         private InputService _inputService;
         private GameService _gameService;
         private PlayerService _playerService;
@@ -21,8 +23,6 @@ namespace Wave.Actors
 
         private GameObject _model;
         private Collider _collider;
-
-        private StateMachine _stateMachine;
 
         private Vector3 _startPosition;
         private float _currentAngle;
@@ -37,9 +37,7 @@ namespace Wave.Actors
             _inputService.OnGameInputDown.Add(OnInputDown);
             _inputService.OnGameInputUp.Add(OnInputUp);
 
-            _stateMachine = new StateMachine();
             _startPosition = transform.position;
-
             _gameService.SetPlayer(this);
         }
 

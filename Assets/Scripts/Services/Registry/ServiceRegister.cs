@@ -14,17 +14,18 @@ namespace Wave.Services
             CoroutineService coroutineService = new CoroutineService();
             AddressablesService addressablesService = new AddressablesService(coroutineService);
             DataService dataService = new DataService();
+            UiService uiService = new UiService();
+            SceneService sceneService = new SceneService();
 
             ServiceLocator.Instance.Register(updateService);
             ServiceLocator.Instance.Register(coroutineService);
             ServiceLocator.Instance.Register(addressablesService);
             ServiceLocator.Instance.Register(dataService);
+            ServiceLocator.Instance.Register(uiService);
+            ServiceLocator.Instance.Register(sceneService);
 
-            GameService gameService = new GameService(updateService);
+            GameService gameService = new GameService(updateService, uiService, sceneService);
             ServiceLocator.Instance.Register(gameService);
-
-            ServiceLocator.Instance.Register(new UiService());
-            ServiceLocator.Instance.Register(new SceneService());
 
             ServiceLocator.Instance.Register(new InputService(coroutineService));
             ServiceLocator.Instance.Register(new PrefabsService(addressablesService));
