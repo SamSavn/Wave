@@ -10,6 +10,7 @@ namespace Wave.States.LevelStates
         private readonly LevelBlocksPool _blocksPool;
         private readonly int _poolCapacity;
         private readonly int _maxBlocks;
+        private bool _resetBlocks;
 
         public LevelIdleState(List<LevelBlock> activeBlocks, LevelBlocksPool blocksPool, int poolCapacity, int maxBlocks)
         {
@@ -17,10 +18,21 @@ namespace Wave.States.LevelStates
             _blocksPool = blocksPool;
             _poolCapacity = poolCapacity;
             _maxBlocks = maxBlocks;
+            _resetBlocks = _maxBlocks > 0;
+        }
+
+        public LevelIdleState(List<LevelBlock> activeBlocks) : this(activeBlocks, null, 0, 0)
+        {
         }
 
         public void Enter()
         {
+            if (!_resetBlocks)
+            {
+                _blocks.ForEach(block => block.SetActive(true, false));
+                return;
+            }
+
             if (!_blocksPool.Initialized)
             {
                 _blocksPool.InitializePool(_poolCapacity);

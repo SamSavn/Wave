@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 3148128566911414297}
   serializedVersion: 2
   m_LocalRotation: {x: -0.061908077, y: 0.92525166, z: -0.20574427, w: 0.31264383}
-  m_LocalPosition: {x: 0, y: 0, z: 190}
+  m_LocalPosition: {x: 0, y: -3, z: 190}
   m_LocalScale: {x: 2.5699995, y: 2.5700002, z: 2.5699995}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -99,7 +99,7 @@ Camera:
     height: 1080
   near clip plane: 0.3
   far clip plane: 250
-  field of view: 20
+  field of view: 13.000001
   orthographic: 0
   orthographic size: 5
   m_Depth: -2
@@ -174,3 +174,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _shipContainer: {fileID: 8189342314311107513}
+  _isMainCamera: 0

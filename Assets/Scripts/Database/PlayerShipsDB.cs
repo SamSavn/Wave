@@ -10,6 +10,7 @@ namespace Wave.Database
     {
         [SerializeField] private ShipInfo[] _shipStats;
         private GameObject[] _allPrfabs = Array.Empty<GameObject>();
+        public int Count => _shipStats.Length;
 
         public GameObject[] GetAllPrefabs()
         {

@@ -9,7 +9,12 @@ namespace Wave.States.PlayerStates
 	{
 		private Transform _playerTransform;
         private Rigidbody _playerBody;
+
+        private CoroutineService _coroutineService;
+
         private Tweener _tweener;
+        private Coroutine _coroutine;
+
         private Vector3 _startPosition;
 
         private float _floatingValue = 5f;
@@ -20,13 +25,16 @@ namespace Wave.States.PlayerStates
 			_playerTransform = playerTransform;
             _playerBody = rigidbody;
             _startPosition = startPosition;
-		}
+
+            _coroutineService = ServiceLocator.Instance.Get<CoroutineService>();
+
+        }
 
         public void Enter()
         {
             _playerBody.isKinematic = true;
             _playerTransform.SetPositionAndRotation(_startPosition, Quaternion.identity);
-            ServiceLocator.Instance.Get<CoroutineService>().StartCoroutine(StartTween());
+            _coroutine = _coroutineService.StartCoroutine(StartTween());
         }
 
         public void Execute()
@@ -36,7 +44,11 @@ namespace Wave.States.PlayerStates
 
         public void Exit()
         {
-            _tweener.Kill();
+            _coroutineService.StopCoroutine(_coroutine);
+            _coroutine = null;
+
+            _tweener?.Rewind();
+            _tweener?.Kill();
             _tweener = null;
 
             _playerTransform = null;
@@ -45,6 +57,9 @@ namespace Wave.States.PlayerStates
 
         private IEnumerator StartTween()
         {
+            if (_tweener != null && _tweener.IsPlaying())
+                yield break;
+
             yield return new WaitForEndOfFrame();
             _tweener = _playerTransform.DOMoveY(_floatingValue, _floatingDuration)
                                        .SetLoops(-1, LoopType.Yoyo)

@@ -15,18 +15,19 @@ namespace Wave.Services
             AddressablesService addressablesService = new AddressablesService(coroutineService);
             DataService dataService = new DataService();
             AssetsService assetsService = new AssetsService(addressablesService);
+            UiService uiService = new UiService();
+            SceneService sceneService = new SceneService();
 
             ServiceLocator.Instance.Register(updateService);
             ServiceLocator.Instance.Register(coroutineService);
             ServiceLocator.Instance.Register(addressablesService);
             ServiceLocator.Instance.Register(dataService);
             ServiceLocator.Instance.Register(assetsService);
+            ServiceLocator.Instance.Register(sceneService);
+            ServiceLocator.Instance.Register(uiService);
 
-            GameService gameService = new GameService(updateService);
+            GameService gameService = new GameService(updateService, uiService, sceneService);
             ServiceLocator.Instance.Register(gameService);
-
-            ServiceLocator.Instance.Register(new UiService());
-            ServiceLocator.Instance.Register(new SceneService());
 
             ServiceLocator.Instance.Register(new InputService(coroutineService));
             ServiceLocator.Instance.Register(new ShipsService(dataService, assetsService));

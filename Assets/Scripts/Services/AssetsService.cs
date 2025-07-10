@@ -3,7 +3,7 @@ using UnityEngine;
 using Wave.Database;
 using Wave.Events;
 using Wave.Settings;
-using Wave.UI;
+using Wave.Extentions;
 
 namespace Wave.Services
 {
@@ -23,6 +23,7 @@ namespace Wave.Services
 		private EnvironmentBlocksDB _environmentBlocksDB;
 		private PlayerShipsDB _playerShipsDB;
 		private GameObject _shipVersionColor;
+		private GameObject[] _allShipsPrefabs = Array.Empty<GameObject>();
 
 		public EventDisparcher<bool> OnBlocksLoaded { get; } = new EventDisparcher<bool>();
 		public EventDisparcher<bool> OnShipsLoaded { get; } = new EventDisparcher<bool>();
@@ -73,7 +74,17 @@ namespace Wave.Services
                     return _environmentBlocksDB?.GetAllBlocks();
 
                 case PrefabType.PlayerShip:
-					return _playerShipsDB?.GetAllPrefabs();
+
+					if (_allShipsPrefabs.IsNullOrEmpty())
+					{
+						_allShipsPrefabs = new GameObject[_playerShipsDB.Count];
+						int count = _allShipsPrefabs.Length;
+
+						for (int i = 0; i < count; i++)
+							_allShipsPrefabs[i] = _playerShipsDB.GetShipAt(i); 
+					}
+
+                    return _allShipsPrefabs;
 
 				default:
 					return Array.Empty<GameObject>();

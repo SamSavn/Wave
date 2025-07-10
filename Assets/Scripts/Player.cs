@@ -14,6 +14,8 @@ namespace Wave.Actors
         [SerializeField] private float _force = 10f;
         [SerializeField] private float _maxAngle = 50f;
 
+        private readonly StateMachine _stateMachine = new StateMachine();
+
         private InputService _inputService;
         private GameService _gameService;
         private PlayerService _playerService;
@@ -21,8 +23,6 @@ namespace Wave.Actors
 
         private GameObject _model;
         private Collider _collider;
-
-        private StateMachine _stateMachine;
 
         private Vector3 _startPosition;
         private float _currentAngle;
@@ -37,15 +37,8 @@ namespace Wave.Actors
             _inputService.OnGameInputDown.Add(OnInputDown);
             _inputService.OnGameInputUp.Add(OnInputUp);
 
-            _stateMachine = new StateMachine();
             _startPosition = transform.position;
-
             _gameService.SetPlayer(this);
-        }
-
-        private void Start()
-        {
-            SetModel(_shipsService.GetShip(_playerService.GetEquipedShipIndex()));
         }
 
         private void OnDestroy()
@@ -61,7 +54,14 @@ namespace Wave.Actors
             transform.eulerAngles = new Vector3(_currentAngle, 0, 0);
         }
 
-        public void SetVisible(bool active) => _model.SetActive(active);
+        public void SetVisible(bool active)
+        {
+            _model.SetActive(active);
+            
+            if (active) _rigidbody.WakeUp();
+            else _rigidbody.Sleep();
+        }
+
         public void SetModel(GameObject model)
         {
             if (_model != null)
@@ -74,11 +74,13 @@ namespace Wave.Actors
 
             _model.transform.SetParent(transform);
             _model.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
-            _model.transform.localScale = Vector3.one;
+            _model.transform.localScale = _model.transform.lossyScale * transform.lossyScale.x;
             _model.SetLayer(Layer.Player);
 
             _model.SetActive(true);
             _collider.enabled = true;
+
+            ResetState();
         }
 
         public void ResetState() => _stateMachine.SetState(new PlayerIdleState(transform, _rigidbody, _startPosition));
