@@ -1,6 +1,5 @@
 using UnityEngine;
 using Wave.Services;
-using Wave.Settings;
 
 namespace Wave.Ships
 {
@@ -20,9 +19,13 @@ namespace Wave.Ships
 			int previousIndex = selectedIndex - 1;
 			int nextIndex = selectedIndex + 1;
 
+			_previousShipCam.RecycleCurrentShip();
+			_selectedShipCam.RecycleCurrentShip();
+			_nextShipCam.RecycleCurrentShip();
+
             _previousShipCam.SetShip(pool.GetShip(previousIndex), previousIndex);
 			_selectedShipCam.SetShip(pool.GetShip(selectedIndex), selectedIndex);
-			_nextShipCam.SetShip(pool.GetShip(nextIndex), nextIndex);
+            _nextShipCam.SetShip(pool.GetShip(nextIndex), nextIndex);
 		}
 
 		public void SetShipVersion(GameObject versionPrefab)

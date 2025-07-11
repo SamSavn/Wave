@@ -76,7 +76,7 @@ namespace Wave.Ships
                                         .SetEase(Ease.InOutSine);
         }
 
-        private void RecycleCurrentShip()
+        public void RecycleCurrentShip()
         {
             if (_currentShip == null)
                 return;

@@ -24,7 +24,6 @@ namespace Wave.Ships
         {
             if (_pool.TryGetValue(prefabIndex, out GameObject prefab) && prefab != null)
             {
-                _pool[prefabIndex] = null;
                 return prefab;
             }
 
@@ -39,8 +38,6 @@ namespace Wave.Ships
             ship.SetActive(false);
             ship.SetLayer(Layer.Default);
             ship.transform.SetParent(_poolContainer);
-
-            _pool[prefabIndex] = ship;
         }
 
         private void OnPrefabsLoaded(bool success)
