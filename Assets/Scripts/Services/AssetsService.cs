@@ -23,9 +23,10 @@ namespace Wave.Services
 		private EnvironmentBlocksDB _environmentBlocksDB;
 		private PlayerShipsDB _playerShipsDB;
 		private GameObject _shipVersionColor;
-		private GameObject[] _allShipsPrefabs = Array.Empty<GameObject>();
 
-		public EventDisparcher<bool> OnBlocksLoaded { get; } = new EventDisparcher<bool>();
+        private GameObject[] _allShipsPrfabs = Array.Empty<GameObject>();
+
+        public EventDisparcher<bool> OnBlocksLoaded { get; } = new EventDisparcher<bool>();
 		public EventDisparcher<bool> OnShipsLoaded { get; } = new EventDisparcher<bool>();
 
 		public AssetsService(AddressablesService addressablesService)
@@ -51,7 +52,7 @@ namespace Wave.Services
 		}
 
 		public GameObject GetShipVersionColorPrefab() => _shipVersionColor;
-		public ShipInfo GetShipStats(int index) => _playerShipsDB.GetShipStats(index);
+		public ShipInfo GetShipInfo(int index) => _playerShipsDB.GetShipStats(index);
 
 		public GameObject GetInitialPrefab(PrefabType prefabType)
 		{
@@ -74,19 +75,9 @@ namespace Wave.Services
                     return _environmentBlocksDB?.GetAllBlocks();
 
                 case PrefabType.PlayerShip:
+					return _playerShipsDB?.GetMainPrefabs();
 
-					if (_allShipsPrefabs.IsNullOrEmpty())
-					{
-						_allShipsPrefabs = new GameObject[_playerShipsDB.Count];
-						int count = _allShipsPrefabs.Length;
-
-						for (int i = 0; i < count; i++)
-							_allShipsPrefabs[i] = _playerShipsDB.GetShipAt(i); 
-					}
-
-                    return _allShipsPrefabs;
-
-				default:
+                default:
 					return Array.Empty<GameObject>();
 			}
 		}

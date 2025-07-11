@@ -24,7 +24,7 @@ namespace Wave.UI
 
         public void SetVersions(ShipInfo shipStats)
         {
-            if (shipStats == null || !shipStats.HasVariants())
+            if (shipStats == null || !shipStats.HasVersions())
                 return;
 
             if (_selectedVersion != null)
@@ -33,7 +33,7 @@ namespace Wave.UI
                 _selectedVersion = null;
             }
 
-            ShipVersion[] variants = shipStats.GetVariants();
+            ShipVersion[] variants = shipStats.GetVersions();
             int count = variants.Length;
 
             AddVersion(shipStats.GetMainVersion(), 0);

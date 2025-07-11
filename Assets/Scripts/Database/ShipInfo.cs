@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Wave.Extentions;
 
 namespace Wave.Settings
@@ -8,15 +9,15 @@ namespace Wave.Settings
 	public class ShipInfo : ScriptableObject
 	{
 		[SerializeField] private ShipVersion _info;
-		[SerializeField] private ShipVersion[] _variants;
+		[SerializeField][FormerlySerializedAs("_variants")] private ShipVersion[] _versions;
 		[SerializeField] private float _mass;
 		[SerializeField] private float _power;
 		[SerializeField] private float _speed;
 
 		public GameObject GetPrefab() => _info.GetPrefab();
 		public ShipVersion GetMainVersion() => _info;
-		public ShipVersion[] GetVariants() => _variants;
-		public bool HasVariants() => !_variants.IsNullOrEmpty();
+		public ShipVersion[] GetVersions() => _versions;
+		public bool HasVersions() => !_versions.IsNullOrEmpty();
 
 		public (Color primary, Color secondary) GetColors()
 		{
@@ -31,7 +32,7 @@ namespace Wave.Settings
         {
 			colors = default;
 
-			if (!index.IsInCollectionRange(_variants))
+			if (!index.IsInCollectionRange(_versions))
 				return false;
 
             colors = new()

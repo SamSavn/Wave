@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using Wave.Extentions;
 using Wave.Settings;
@@ -8,34 +7,43 @@ namespace Wave.Database
     [CreateAssetMenu(fileName = "PlayerShipsDB", menuName = "Wave/Database/Player Ships")]
     public class PlayerShipsDB : ScriptableObject
     {
-        [SerializeField] private ShipInfo[] _shipStats;
-        private GameObject[] _allPrfabs = Array.Empty<GameObject>();
-        public int Count => _shipStats.Length;
+        [SerializeField] private ShipInfo[] _shipInfo;
 
-        public GameObject[] GetAllPrefabs()
+        public int Count()
         {
-            if (_allPrfabs.IsNullOrEmpty())
-            {
-                _allPrfabs = new GameObject[_shipStats.Length];
-                int count = _allPrfabs.Length;
+            ShipVersion[] variants;
+            int count = _shipInfo.Length;
 
-                for (int i = 0; i < count; i++)
-                    _allPrfabs[i] = _shipStats[i].GetPrefab();
+            for (int i = 0; i < _shipInfo.Length; i++)
+            {
+                variants = _shipInfo[i].GetVersions();
+                if (variants != null && variants.Length > 0)
+                    count += variants.Length;
             }
 
-            return _allPrfabs;
+            return count;
+        }
+
+        public GameObject[] GetMainPrefabs()
+        {
+            GameObject[] prefabs = new GameObject[_shipInfo.Length];
+
+            for (int i = 0; i < _shipInfo.Length; i++)
+                prefabs[i] = _shipInfo[i].GetPrefab();
+
+            return prefabs;
         }
 
         public GameObject GetShipAt(int index) => GetShipStats(index)?.GetPrefab();
 
         public ShipInfo GetShipStats(int index)
         {
-            if (index.IsInCollectionRange(_shipStats))
-                return _shipStats[index];
+            if (index.IsInCollectionRange(_shipInfo))
+                return _shipInfo[index];
 
             return null;
         }
 
-        public GameObject GetRandomShip() => GetShipAt(UnityEngine.Random.Range(0, _shipStats.Length));
+        public GameObject GetRandomShip() => GetShipAt(Random.Range(0, _shipInfo.Length));
     } 
 }

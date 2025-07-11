@@ -1,5 +1,6 @@
 using UnityEngine;
 using Wave.Services;
+using Wave.Settings;
 
 namespace Wave.Ships
 {
@@ -23,5 +24,10 @@ namespace Wave.Ships
 			_selectedShipCam.SetShip(pool.GetShip(selectedIndex), selectedIndex);
 			_nextShipCam.SetShip(pool.GetShip(nextIndex), nextIndex);
 		}
+
+		public void SetShipVersion(GameObject versionPrefab)
+		{
+			_selectedShipCam.SetShipVersion(versionPrefab);
+        }
     }
 }

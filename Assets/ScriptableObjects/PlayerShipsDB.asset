@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f3f24adcd71f544f98d44690a18cb5b, type: 3}
   m_Name: PlayerShipsDB
   m_EditorClassIdentifier: 
-  _shipStats:
+  _shipInfo:
   - {fileID: 11400000, guid: 3fcc82d4197508a40bac853014ae4d52, type: 2}
   - {fileID: 11400000, guid: 6c47dbee559932646abc8e9969a2af49, type: 2}
   - {fileID: 11400000, guid: 8e1bd0c9ba676164c8360fef39202df7, type: 2}
@@ -24,5 +24,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 866b178d13007b74fbe9f030cdf6042a, type: 2}
   - {fileID: 11400000, guid: f2f83719d40a87541a6d47c11b738a22, type: 2}
   - {fileID: 11400000, guid: 955f339e002adb540aea72b935185724, type: 2}
-  - {fileID: 11400000, guid: eb1ac3c4f96231848b8e5b153d71724d, type: 2}
   - {fileID: 11400000, guid: f92e09156edd6a347955f1601848f9d6, type: 2}
+  - {fileID: 11400000, guid: eb1ac3c4f96231848b8e5b153d71724d, type: 2}

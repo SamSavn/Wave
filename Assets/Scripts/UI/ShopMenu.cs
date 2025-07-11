@@ -24,7 +24,7 @@ namespace Wave.UI.Screens
         private SceneService _sceneService;
         private ShipsService _shipsService;
 
-        private int _currentIndex;
+        private int _currentIndex = -1;
 
         protected override void Awake()
         {
@@ -47,6 +47,9 @@ namespace Wave.UI.Screens
 
             if (_homeButton != null)
                 _homeButton.onClick.AddListener(OnHomeButtonClick);
+
+            if (_versionsContainer != null)
+                _versionsContainer.OnVersionSelectionChanged.Add(OnVersionSelectionChanged);
 
             _uiService.RegisterScreen(this);
         }
@@ -74,7 +77,13 @@ namespace Wave.UI.Screens
             _shipsService.SetSelectedShip(_currentIndex);
             _versionsContainer.SetVersions(_shipsService.GetStats(_currentIndex));
 
+            SetVersion(0);
             Refresh();
+        }
+
+        private void SetVersion(int index)
+        {
+            _shipsService.SetShipVersion(_currentIndex, index);
         }
 
         private void Refresh()
@@ -103,6 +112,11 @@ namespace Wave.UI.Screens
         private void OnRightArrowClick()
         {
             SetSelection(_currentIndex + 1);
+        }
+
+        private void OnVersionSelectionChanged(int index)
+        {
+            SetVersion(index);
         }
 
         private void OnBuyButtonClick()
