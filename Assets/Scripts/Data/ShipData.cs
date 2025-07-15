@@ -8,6 +8,5 @@ namespace Wave.Data
     {
         public int index;
         public int version = 0;
-        public HashSet<int> unlockedVersions = new();
     }
 }

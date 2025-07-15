@@ -11,7 +11,9 @@ namespace Wave.CustomEditors
         private static PlayerData GetData()
         {
             string jsonData = PlayerPrefs.GetString("PlayerData");
-            return JsonUtility.FromJson<PlayerData>(jsonData);
+            return !string.IsNullOrEmpty(jsonData)
+                ? JsonConvert.DeserializeObject<PlayerData>(jsonData)
+                : new PlayerData();
         }
 
         private static void Save(PlayerData data)
@@ -57,15 +59,13 @@ namespace Wave.CustomEditors
         public static void UnlockAllShips()
         {
             PlayerData data = GetData();
-            data.unlockedShips = new HashSet<ShipData>();
+            data.unlockedShips = new HashSet<int>();
 
-            for (int i = 0; i < 13; i++)
-                data.unlockedShips.Add(new ShipData() 
-                { 
-                    index = i, 
-                    version = 0,
-                    unlockedVersions = new HashSet<int> { 0, 1, 2, 3, 4 }
-                });
+            for (int i = 0; i < 13; i++) 
+            {
+                data.unlockedShips.Add(i);
+                data.unlockedVersions[i] = new HashSet<int> { 0, 1, 2, 3, 4 };
+            }
 
             Save(data);
         }
@@ -74,14 +74,11 @@ namespace Wave.CustomEditors
         public static void ResetUnlockedShips()
         {
             PlayerData data = GetData();
-            data.unlockedShips = new HashSet<ShipData> 
+
+            data.unlockedShips = new HashSet<int>(){ 0 };
+            data.unlockedVersions = new Dictionary<int, HashSet<int>>()
             {
-                new ShipData()
-                {
-                    index = 0,
-                    version = 0,
-                    unlockedVersions = new HashSet<int> { 0 }
-                }
+                { 0, new HashSet<int> { 0 } }
             };
 
             Save(data);
