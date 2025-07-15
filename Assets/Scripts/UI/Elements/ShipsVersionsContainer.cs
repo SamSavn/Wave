@@ -22,9 +22,9 @@ namespace Wave.UI
             _colorPrefab = ServiceLocator.Instance.Get<AssetsService>().GetShipVersionColorPrefab();
         }
 
-        public void SetVersions(ShipInfo shipStats)
+        public void SetVersions(ShipInfo shipInfo, int selectedVersion)
         {
-            if (shipStats == null || !shipStats.HasVersions())
+            if (shipInfo == null || !shipInfo.HasVersions())
                 return;
 
             if (_selectedVersion != null)
@@ -33,25 +33,25 @@ namespace Wave.UI
                 _selectedVersion = null;
             }
 
-            ShipVersion[] variants = shipStats.GetVersions();
+            ShipVersion[] variants = shipInfo.GetVersions();
             int count = variants.Length;
 
-            AddVersion(shipStats.GetMainVersion(), 0);
+            AddVersion(shipInfo.GetMainVersion(), 0, selectedVersion);
 
             for (int i = 0; i < count; i++)
-                AddVersion(variants[i], i + 1);
+                AddVersion(variants[i], i + 1, selectedVersion);
 
             DeactivateUnusedItems(count + 1);
         }
 
-        private void AddVersion(ShipVersion version, int index)
+        private void AddVersion(ShipVersion version, int index, int selected)
         {
             ShipVersionColor versionColor = GetOrCreateVersion(index);
             versionColor.SetUp(version, index);
             versionColor.OnClick?.Add(SelectVersion);
             versionColor.gameObject.SetActive(true);
 
-            if (index == 0)
+            if (index == selected)
                 SelectVersion(versionColor);
         }
 

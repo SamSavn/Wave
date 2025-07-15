@@ -26,6 +26,7 @@ namespace Wave.UI.Screens
 
         private int _currentIndex = 0;
         private int _currentVersion = 0;
+        private int _currentPrice = 0;
 
         protected override void Awake()
         {
@@ -76,9 +77,13 @@ namespace Wave.UI.Screens
         {
             _currentIndex = index;
             _shipsService.SetSelectedShip(_currentIndex);
-            _versionsContainer.SetVersions(_shipsService.GetStats(_currentIndex));
 
-            SetVersion(0);
+            int selectedVersion = _shipsService.IsShipEquipped(_currentIndex)
+                ? _playerService.GetEquippedShipVersion()
+                : 0;
+
+            _versionsContainer.SetVersions(_shipsService.GetStats(_currentIndex), selectedVersion);
+            SetVersion(selectedVersion);
             Refresh();
         }
 
@@ -86,23 +91,25 @@ namespace Wave.UI.Screens
         {
             _currentVersion = index;
             _shipsService.SetShipVersion(_currentIndex, _currentVersion);
+            Refresh();
         }
 
         private void Refresh()
         {
-            bool unlocked = _shipsService.IsShipUnlocked(_currentIndex);
-            bool equipped = _shipsService.IsShipEquipped(_currentIndex);
+            bool unlocked = _shipsService.IsVersionUnlocked(_currentIndex, _currentVersion);
+            bool equipped = _shipsService.IsShipEquipped(_currentIndex, _currentVersion);
+            _currentPrice = _shipsService.GetPrice(_currentIndex, _currentVersion);
 
             _leftArrow.gameObject.SetActive(_currentIndex > 0);
             _rightArrow.gameObject.SetActive(_currentIndex < _shipsService.GetShipsCount() - 1);
 
             _buyButton.gameObject.SetActive(!unlocked);
-            _buyButton.Interactable = _playerService.CanBuy(_shipsService.GetShipPrice(_currentIndex));
+            _buyButton.Interactable = _playerService.CanBuy(_currentPrice);
 
             _equipButton.gameObject.SetActive(unlocked && !equipped);
             _equippedLabel.SetActive(equipped);
 
-            _priceLabel.SetValue(_shipsService.GetShipPrice(_currentIndex));
+            _priceLabel.SetValue(_currentPrice);
             _priceLabel.gameObject.SetActive(!unlocked);
         }
 
@@ -123,8 +130,8 @@ namespace Wave.UI.Screens
 
         private void OnBuyButtonClick()
         {
-            _playerService.AddCoins(-_shipsService.GetShipPrice(_currentIndex), save: true);
-            _shipsService.UnlockShip(_currentIndex);
+            _playerService.AddCoins(-_currentPrice, save: true);
+            _shipsService.UnlockShip(_currentIndex, _currentVersion);
             Refresh();
         }
 

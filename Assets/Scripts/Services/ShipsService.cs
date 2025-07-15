@@ -6,8 +6,6 @@ namespace Wave.Services
 {
     public class ShipsService : IService
     {
-        private const int SHIPS_BASE_PRICE = 100;
-
         private PlayerService _playerService;
         private AssetsService _assetsService;
         private ShipCamerasHandler _shipCamerasHandler;
@@ -24,8 +22,19 @@ namespace Wave.Services
         public void SetSelectedShip(int index) => _shipCamerasHandler.SetShips(_pool, index);
         public void SetShipVersion(int shipIndex, int versionIndex) => _shipCamerasHandler.SetShipVersion(GetModel(shipIndex, versionIndex));
 
-        public int GetShipPrice(int index) => SHIPS_BASE_PRICE /*+ dynamic logic later*/;
+        public int GetPrice(int index, int version)
+        {
+            if (!IsShipUnlocked(index))
+                return _assetsService.GetShipPrice();
+
+            if (!IsVersionUnlocked(index, version))
+                return _assetsService.GetVersionPrice();
+
+            return 0;
+        }
+
         public int GetShipsCount() => _pool.Count;
+
         public GameObject GetShip(int index) => _pool.GetShip(index);
         public ShipInfo GetStats(int index) => _assetsService.GetShipInfo(index);
         public GameObject GetModel(int index, int version = 0)
@@ -40,6 +49,7 @@ namespace Wave.Services
 
         public bool IsShipUnlocked(int index) => _playerService.IsShipUnlocked(index);
         public bool IsVersionUnlocked(int index, int version) => _playerService.IsVersionUnlocked(index, version);
+        public bool IsShipEquipped(int index, int version) => _playerService.IsShipEquipped(index, version);
         public bool IsShipEquipped(int index) => _playerService.IsShipEquipped(index);
         public void UnlockShip(int index, int version = 0) => _playerService.UnlockShip(index, version);
     }

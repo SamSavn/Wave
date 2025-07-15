@@ -35,8 +35,8 @@ namespace Wave.Services
             }
         }
 
-        public int GetEquippedShipIndex() => PlayerState.EquippedShip?.index ?? 0;
-        public int GetEquippedShipVersion() => PlayerState.EquippedShip?.version ?? 0;
+        public int GetEquippedShipIndex() => PlayerState.EquippedShip.index;
+        public int GetEquippedShipVersion() => PlayerState.EquippedShip.version;
         public int GetCurrentScore() => _currentScore;
         public int GetBestScore() => PlayerState.BestScore;
         public int GetCoins() => PlayerState.Coins;
@@ -44,6 +44,7 @@ namespace Wave.Services
 
         public bool IsShipUnlocked(int index) => PlayerState.IsShipUnlocked(index);
         public bool IsVersionUnlocked(int index, int version) => PlayerState.IsVersionUnlocked(index, version);
+        public bool IsShipEquipped(int index, int version) => IsShipEquipped(index) && PlayerState.EquippedShip.version == version;
         public bool IsShipEquipped(int index) => PlayerState.EquippedShip.index == index;
         public void UnlockShip(int index, int version = 0) => PlayerState.UnlockShip(index, version);
 

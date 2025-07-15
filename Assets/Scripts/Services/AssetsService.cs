@@ -24,8 +24,6 @@ namespace Wave.Services
 		private PlayerShipsDB _playerShipsDB;
 		private GameObject _shipVersionColor;
 
-        private GameObject[] _allShipsPrfabs = Array.Empty<GameObject>();
-
         public EventDisparcher<bool> OnBlocksLoaded { get; } = new EventDisparcher<bool>();
 		public EventDisparcher<bool> OnShipsLoaded { get; } = new EventDisparcher<bool>();
 
@@ -51,7 +49,10 @@ namespace Wave.Services
 			});
 		}
 
-		public GameObject GetShipVersionColorPrefab() => _shipVersionColor;
+		public int GetShipPrice() => _playerShipsDB?.BasePrice ?? 100;
+		public int GetVersionPrice() => _playerShipsDB?.VersionPrice ?? 50;
+
+        public GameObject GetShipVersionColorPrefab() => _shipVersionColor;
 		public ShipInfo GetShipInfo(int index) => _playerShipsDB.GetShipStats(index);
 
 		public GameObject GetInitialPrefab(PrefabType prefabType)
