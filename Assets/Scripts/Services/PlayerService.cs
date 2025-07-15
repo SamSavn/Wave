@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Wave.Events;
+using Wave.Settings;
 
 namespace Wave.Services
 {
@@ -7,6 +8,7 @@ namespace Wave.Services
     {
         private DataService _dataService;
         private GameService _gameService;
+        private ShipsService _shipService;
 
         private int _currentCoins;
         private int _currentScore;
@@ -45,12 +47,16 @@ namespace Wave.Services
         public bool IsShipEquipped(int index) => PlayerState.EquippedShip.index == index;
         public void UnlockShip(int index, int version = 0) => PlayerState.UnlockShip(index, version);
 
-        public void EquipShip(GameObject ship, int shipIndex, int version)
+        public void EquipShip(int shipIndex, int version)
         {
+            if (PlayerState.IsShipEquipped(shipIndex, version))
+                return;
+
             PlayerState.EquipShip(shipIndex, version);
             _dataService.Save(PlayerState);
 
-            _gameService.GetPlayer().SetModel(ship);
+            _shipService ??= ServiceLocator.Instance.Get<ShipsService>();
+            _gameService.GetPlayer().SetModel(_shipService.GetModel(shipIndex, version));
         }
 
         public void AddScore(int value)

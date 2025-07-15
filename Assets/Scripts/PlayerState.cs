@@ -46,6 +46,9 @@ namespace Wave
             }
         }
 
+        public bool IsShipEquipped(int index, int version) =>
+            _data.equippedShip != null && _data.equippedShip.index == index && _data.equippedShip.version == version;
+
         public bool IsShipUnlocked(int index) =>
             _data.unlockedShips.Any(s => s.index == index);
 

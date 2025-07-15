@@ -15,7 +15,6 @@ namespace Wave.Ships
 
         private ShipsService _shipsService;
         private GameObject _currentShip;
-        private MeshFilter _currentShipMeshFilter;
         private Tweener _tweener;
 
         private int _shipIndex;
@@ -48,7 +47,6 @@ namespace Wave.Ships
                 return;
 
             _currentShip = ship;
-            _currentShipMeshFilter = _currentShip.GetComponent<MeshFilter>();
             _shipIndex = index;
 
             _currentShip.SetLayer(Layer.ShipRender);
@@ -59,11 +57,7 @@ namespace Wave.Ships
             StartFloating();
         }
 
-        public void SetShipVersion(GameObject versionPrefab)
-        {
-            Mesh versionMesh = versionPrefab.GetComponent<MeshFilter>().sharedMesh;
-            _currentShipMeshFilter.mesh = versionMesh;
-        }
+        public void SetShipVersion(GameObject versionPrefab) => _currentShip.SwapMesh(versionPrefab);
 
         [ContextMenu("Start Floating")]
         public void StartFloating()

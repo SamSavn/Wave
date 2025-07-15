@@ -24,8 +24,8 @@ namespace Wave.UI.Screens
         private SceneService _sceneService;
         private ShipsService _shipsService;
 
-        private int _currentIndex = -1;
-        private int _currentVersion = -1;
+        private int _currentIndex = 0;
+        private int _currentVersion = 0;
 
         protected override void Awake()
         {
@@ -130,7 +130,7 @@ namespace Wave.UI.Screens
 
         private void OnEquipButtonClick()
         {
-            _playerService.EquipShip(_shipsService.GetShip(_currentIndex), _currentIndex, _currentVersion);
+            _playerService.EquipShip(_currentIndex, _currentVersion);
             Refresh();
         }
 

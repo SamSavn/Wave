@@ -23,14 +23,18 @@ namespace Wave.Ships
         public GameObject GetShip(int prefabIndex)
         {
             if (_pool.TryGetValue(prefabIndex, out GameObject prefab) && prefab != null)
-            {
                 return prefab;
-            }
 
             if (!prefabIndex.IsInCollectionRange(_shipPrefabs))
+            {
+                Debug.LogWarning($"Unable to get ship: {nameof(prefabIndex)} ({prefabIndex}) is out of range (0-{_shipPrefabs.Length})");
                 return null;
+            }
 
-            return GameObject.Instantiate(_shipPrefabs[prefabIndex], _poolContainer);
+            GameObject ship = GameObject.Instantiate(_shipPrefabs[prefabIndex], _poolContainer);
+            _pool[prefabIndex] = ship;
+
+            return ship;
         }
 
         public void RecycleShip(GameObject ship, int prefabIndex)

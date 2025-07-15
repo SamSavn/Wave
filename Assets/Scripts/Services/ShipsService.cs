@@ -20,26 +20,22 @@ namespace Wave.Services
             _pool = new ShipsPool();
         }
 
-        public void SetShipCamerasHandler(ShipCamerasHandler handler) =>
-            _shipCamerasHandler = handler;
-
-        public void SetSelectedShip(int index) =>
-            _shipCamerasHandler.SetShips(_pool, index);
-
-        public void SetShipVersion(int shipIndex, int versionIndex)
-        {
-            ShipInfo ship = _assetsService.GetShipInfo(shipIndex);
-            GameObject version = versionIndex == 0
-                ? ship.GetPrefab()
-                : ship.GetVersions()[versionIndex - 1].GetPrefab();
-
-            _shipCamerasHandler.SetShipVersion(version);
-        }
+        public void SetShipCamerasHandler(ShipCamerasHandler handler) => _shipCamerasHandler = handler;
+        public void SetSelectedShip(int index) => _shipCamerasHandler.SetShips(_pool, index);
+        public void SetShipVersion(int shipIndex, int versionIndex) => _shipCamerasHandler.SetShipVersion(GetModel(shipIndex, versionIndex));
 
         public int GetShipPrice(int index) => SHIPS_BASE_PRICE /*+ dynamic logic later*/;
         public int GetShipsCount() => _pool.Count;
         public GameObject GetShip(int index) => _pool.GetShip(index);
         public ShipInfo GetStats(int index) => _assetsService.GetShipInfo(index);
+        public GameObject GetModel(int index, int version = 0)
+        {
+            ShipInfo ship = _assetsService.GetShipInfo(index);
+            return version == 0
+                ? ship.GetPrefab()
+                : ship.GetVersions()[version - 1].GetPrefab();
+        }
+
         public void RecycleShip(GameObject ship, int index) => _pool.RecycleShip(ship, index);
 
         public bool IsShipUnlocked(int index) => _playerService.IsShipUnlocked(index);

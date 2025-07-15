@@ -10,6 +10,8 @@ namespace Wave.Actors
     public class Player : MonoBehaviour
     {
         [SerializeField] private Rigidbody _rigidbody;
+        [SerializeField] private GameObject _model;
+        [SerializeField] private Collider _collider;
         [SerializeField] private ParticleSystem _explosionParticle;
         [SerializeField] private float _force = 10f;
         [SerializeField] private float _maxAngle = 50f;
@@ -18,11 +20,6 @@ namespace Wave.Actors
 
         private InputService _inputService;
         private GameService _gameService;
-        private PlayerService _playerService;
-        private ShipsService _shipsService;
-
-        private GameObject _model;
-        private Collider _collider;
 
         private Vector3 _startPosition;
         private float _currentAngle;
@@ -31,8 +28,6 @@ namespace Wave.Actors
         {
             _inputService = ServiceLocator.Instance.Get<InputService>();
             _gameService = ServiceLocator.Instance.Get<GameService>();
-            _playerService = ServiceLocator.Instance.Get<PlayerService>();
-            _shipsService = ServiceLocator.Instance.Get<ShipsService>();
 
             _inputService.OnGameInputDown.Add(OnInputDown);
             _inputService.OnGameInputUp.Add(OnInputUp);
@@ -62,13 +57,12 @@ namespace Wave.Actors
             else _rigidbody.Sleep();
         }
 
-        public void SetModel(GameObject model)
+        public void SetModel(GameObject newModel)
         {
-            if (_model != null)
-                _shipsService.RecycleShip(_model, _playerService.GetEquippedShipIndex());
+            _model ??= GetComponentInChildren<MeshFilter>(true)?.gameObject;
+            _collider ??= _model.GetComponent<Collider>();
 
-            _model = model;
-            _collider = _model.GetComponent<Collider>();
+            _model.SwapMesh(newModel, true);
             _collider.isTrigger = true;
             _collider.enabled = false;
 
