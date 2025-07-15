@@ -35,9 +35,22 @@ namespace Wave.Ships
 
         public void RecycleShip(GameObject ship, int prefabIndex)
         {
+            if (ship == null)
+            {
+                Debug.LogError($"Unable to recycle ship: {nameof(ship)} is NULL");
+                return;
+            }
+
+            if (prefabIndex < 0)
+            {
+                Debug.LogError($"Unable to recycle ship: {nameof(prefabIndex)} cannot be a negative value");
+                return;
+            }
+
             ship.SetActive(false);
             ship.SetLayer(Layer.Default);
             ship.transform.SetParent(_poolContainer);
+            _pool[prefabIndex] = ship;
         }
 
         private void OnPrefabsLoaded(bool success)

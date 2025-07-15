@@ -65,7 +65,7 @@ namespace Wave.Actors
         public void SetModel(GameObject model)
         {
             if (_model != null)
-                _shipsService.RecycleShip(_model, _playerService.GetEquipedShipIndex());
+                _shipsService.RecycleShip(_model, _playerService.GetEquippedShipIndex());
 
             _model = model;
             _collider = _model.GetComponent<Collider>();

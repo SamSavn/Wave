@@ -47,7 +47,7 @@ namespace Wave.Services
 		{
             _player = player;
 
-			int modelIndex = ServiceLocator.Instance.Get<PlayerService>().GetEquipedShipIndex();
+			int modelIndex = ServiceLocator.Instance.Get<PlayerService>().GetEquippedShipIndex();
 			GameObject model = ServiceLocator.Instance.Get<ShipsService>().GetShip(modelIndex);
 
 			_player.SetModel(model);

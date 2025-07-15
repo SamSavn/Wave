@@ -29,9 +29,11 @@ namespace Wave.Services
             GameService gameService = new GameService(updateService, uiService, sceneService);
             ServiceLocator.Instance.Register(gameService);
 
+            PlayerService playerService = new PlayerService(dataService, gameService);
+            ServiceLocator.Instance.Register(playerService);
+
             ServiceLocator.Instance.Register(new InputService(coroutineService));
-            ServiceLocator.Instance.Register(new ShipsService(dataService, assetsService));
-            ServiceLocator.Instance.Register(new PlayerService(dataService, gameService));
+            ServiceLocator.Instance.Register(new ShipsService(playerService, assetsService));
 
             ServiceLocator.Instance.SetAsReady();
         }

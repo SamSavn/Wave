@@ -8,10 +8,11 @@ namespace Wave.Services
         private DataService _dataService;
         private GameService _gameService;
 
-        private int _currentScore;
         private int _currentCoins;
+        private int _currentScore;
         private bool _newBestScore;
 
+        public PlayerState PlayerState { get; private set; }
         public EventDisparcher<int> OnScoreChanged { get; } = new EventDisparcher<int>();
         public EventDisparcher<int> OnCoinsChanged { get; } = new EventDisparcher<int>();
 
@@ -19,18 +20,37 @@ namespace Wave.Services
         {
             _dataService = dataService;
             _gameService = gameService;
+
+            PlayerState = _dataService.LoadPlayerState();
+
+            if (!PlayerState.IsShipUnlocked(0))
+                PlayerState.UnlockShip(0);
+
+            if (PlayerState.EquippedShip == null)
+            {
+                PlayerState.EquipShip(0, 0);
+                _dataService.Save(PlayerState);
+            }
         }
 
-        public int GetEquipedShipIndex() => _dataService.GetEquipedShip();
+        public int GetEquippedShipIndex() => PlayerState.EquippedShip?.index ?? 0;
+        public int GetEquippedShipVersion() => PlayerState.EquippedShip?.version ?? 0;
         public int GetCurrentScore() => _currentScore;
-        public int GetBestScore() => _dataService.GetBestScore();
-        public int GetCoins() => _dataService.GetCoins();
+        public int GetBestScore() => PlayerState.BestScore;
+        public int GetCoins() => PlayerState.Coins;
         public bool HasNewBestScore() => _newBestScore;
 
-        public void EquipShip(GameObject ship, int shipIndex)
+        public bool IsShipUnlocked(int index) => PlayerState.IsShipUnlocked(index);
+        public bool IsVersionUnlocked(int index, int version) => PlayerState.IsVersionUnlocked(index, version);
+        public bool IsShipEquipped(int index) => PlayerState.EquippedShip.index == index;
+        public void UnlockShip(int index, int version = 0) => PlayerState.UnlockShip(index, version);
+
+        public void EquipShip(GameObject ship, int shipIndex, int version)
         {
+            PlayerState.EquipShip(shipIndex, version);
+            _dataService.Save(PlayerState);
+
             _gameService.GetPlayer().SetModel(ship);
-            _dataService.SaveEquipedShip(shipIndex);
         }
 
         public void AddScore(int value)
@@ -41,10 +61,12 @@ namespace Wave.Services
 
         public void ResetGameValues()
         {
-            _currentCoins = GetCoins();
+            _currentCoins = PlayerState.Coins;
             _currentScore = 0;
             _newBestScore = false;
+
             OnScoreChanged?.Invoke(_currentScore);
+            OnCoinsChanged?.Invoke(_currentCoins);
         }
 
         public bool CanBuy(int price) => _currentCoins >= price;
@@ -61,16 +83,21 @@ namespace Wave.Services
                 SaveCoins();
         }
 
-        public void TrySaveBestScore()
+        public void SaveCoins()
         {
-            if (_currentScore <= GetBestScore())
-                return;
-
-            _dataService.SaveBestScore(_currentScore);
-            _newBestScore = true;
+            PlayerState.SetCoins(_currentCoins);
+            _dataService.Save(PlayerState);
         }
 
-        public void SaveCoins() => _dataService.SaveCoins(_currentCoins);
+        public void TrySaveBestScore()
+        {
+            if (_currentScore <= PlayerState.BestScore)
+                return;
+
+            PlayerState.SetBestScore(_currentScore);
+            _newBestScore = true;
+            _dataService.Save(PlayerState);
+        }
 
         public void SaveEndGameValues()
         {

@@ -25,6 +25,7 @@ namespace Wave.UI.Screens
         private ShipsService _shipsService;
 
         private int _currentIndex = -1;
+        private int _currentVersion = -1;
 
         protected override void Awake()
         {
@@ -59,7 +60,7 @@ namespace Wave.UI.Screens
             if (!_uiService.IsScreenActive<ShopMenu>())
                 return;
 
-            SetSelection(_playerService.GetEquipedShipIndex());
+            SetSelection(_playerService.GetEquippedShipIndex());
             _sceneService.SetScene(Handlers.SceneType.Shop);
         }
 
@@ -83,13 +84,14 @@ namespace Wave.UI.Screens
 
         private void SetVersion(int index)
         {
-            _shipsService.SetShipVersion(_currentIndex, index);
+            _currentVersion = index;
+            _shipsService.SetShipVersion(_currentIndex, _currentVersion);
         }
 
         private void Refresh()
         {
             bool unlocked = _shipsService.IsShipUnlocked(_currentIndex);
-            bool equipped = _shipsService.IsShipEquiped(_currentIndex);
+            bool equipped = _shipsService.IsShipEquipped(_currentIndex);
 
             _leftArrow.gameObject.SetActive(_currentIndex > 0);
             _rightArrow.gameObject.SetActive(_currentIndex < _shipsService.GetShipsCount() - 1);
@@ -128,7 +130,7 @@ namespace Wave.UI.Screens
 
         private void OnEquipButtonClick()
         {
-            _playerService.EquipShip(_shipsService.GetShip(_currentIndex), _currentIndex);
+            _playerService.EquipShip(_shipsService.GetShip(_currentIndex), _currentIndex, _currentVersion);
             Refresh();
         }
 

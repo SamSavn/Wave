@@ -1,13 +1,13 @@
-using UnityEngine;
+using System.Collections.Generic;
 
 namespace Wave.Data
 {
 	public class PlayerData
 	{
-		public int shipIndex;
+		public ShipData equippedShip;
 		public int bestScore;
 		public int coins;
 
-        public int[] unlockedShips;
+        public HashSet<ShipData> unlockedShips = new();
     } 
 }
