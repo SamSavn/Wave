@@ -36,7 +36,7 @@ namespace Wave.Services
         public int GetShipsCount() => _pool.Count;
 
         public GameObject GetShip(int index) => _pool.GetShip(index);
-        public ShipInfo GetStats(int index) => _assetsService.GetShipInfo(index);
+        public ShipInfo GetInfo(int index) => _assetsService.GetShipInfo(index);
         public GameObject GetModel(int index, int version = 0)
         {
             ShipInfo ship = _assetsService.GetShipInfo(index);

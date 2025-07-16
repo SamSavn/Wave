@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using Wave.Data;
 using Wave.Services;
 
 namespace Wave.UI.Screens
@@ -62,7 +63,7 @@ namespace Wave.UI.Screens
                 return;
 
             SetSelection(_playerService.GetEquippedShipIndex());
-            _sceneService.SetScene(Handlers.SceneType.Shop);
+            _sceneService.SetScene(Handlers.SceneType.Shop);            
         }
 
         private void OnDisable()
@@ -78,11 +79,24 @@ namespace Wave.UI.Screens
             _currentIndex = index;
             _shipsService.SetSelectedShip(_currentIndex);
 
-            int selectedVersion = _shipsService.IsShipEquipped(_currentIndex)
+            bool equipped = _shipsService.IsShipEquipped(_currentIndex);
+            int selectedVersion = equipped
                 ? _playerService.GetEquippedShipVersion()
                 : 0;
 
-            _versionsContainer.SetVersions(_shipsService.GetStats(_currentIndex), selectedVersion);
+            _versionsContainer.SetVersions(new ColorVersionsSetData()
+            {
+                shipInfo = _shipsService.GetInfo(_currentIndex),
+                shipsService = _shipsService,
+                selectedVersion = selectedVersion,
+                shipIndex = _currentIndex
+            });
+
+            if (equipped)
+            {
+                _versionsContainer.EquipVersion(_playerService.GetEquippedShipVersion());
+            }
+
             SetVersion(selectedVersion);
             Refresh();
         }
@@ -91,6 +105,7 @@ namespace Wave.UI.Screens
         {
             _currentVersion = index;
             _shipsService.SetShipVersion(_currentIndex, _currentVersion);
+            
             Refresh();
         }
 
@@ -132,12 +147,16 @@ namespace Wave.UI.Screens
         {
             _playerService.AddCoins(-_currentPrice, save: true);
             _shipsService.UnlockShip(_currentIndex, _currentVersion);
+            _versionsContainer.UnlockVersion(_currentVersion);
+
             Refresh();
         }
 
         private void OnEquipButtonClick()
         {
             _playerService.EquipShip(_currentIndex, _currentVersion);
+            _versionsContainer.EquipVersion(_currentVersion);
+
             Refresh();
         }
 

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Wave.Events;
 using Wave.Extentions;
+using Wave.Data;
 
 namespace Wave.UI
 {
@@ -14,6 +15,7 @@ namespace Wave.UI
         private GameObject _colorPrefab;
         private List<ShipVersionColor> _pool = new();
         private ShipVersionColor _selectedVersion;
+        private ShipVersionColor _equippedVersion;
 
         public EventDisparcher<int> OnVersionSelectionChanged { get; } = new EventDisparcher<int>();
 
@@ -22,9 +24,9 @@ namespace Wave.UI
             _colorPrefab = ServiceLocator.Instance.Get<AssetsService>().GetShipVersionColorPrefab();
         }
 
-        public void SetVersions(ShipInfo shipInfo, int selectedVersion)
+        public void SetVersions(ColorVersionsSetData data)
         {
-            if (shipInfo == null || !shipInfo.HasVersions())
+            if (data.shipInfo == null || !data.shipInfo.HasVersions())
                 return;
 
             if (_selectedVersion != null)
@@ -33,25 +35,42 @@ namespace Wave.UI
                 _selectedVersion = null;
             }
 
-            ShipVersion[] variants = shipInfo.GetVersions();
-            int count = variants.Length;
+            AddVersion(new ColorVersionData()
+            {
+                version = data.shipInfo.GetMainVersion(),
+                index = 0,
+                selected = data.selectedVersion == 0,
+                unlocked = data.shipsService.IsVersionUnlocked(data.shipIndex, 0)
+            });
 
-            AddVersion(shipInfo.GetMainVersion(), 0, selectedVersion);
+            ShipVersion[] versions = data.shipInfo.GetVersions();
+            int count = versions.Length;
+            int v;
 
             for (int i = 0; i < count; i++)
-                AddVersion(variants[i], i + 1, selectedVersion);
+            {
+                v = i + 1;
+
+                AddVersion(new ColorVersionData()
+                {
+                    version = versions[i],
+                    index = v,
+                    selected = data.selectedVersion == v,
+                    unlocked = data.shipsService.IsVersionUnlocked(data.shipIndex, v)
+                });
+            }
 
             DeactivateUnusedItems(count + 1);
         }
 
-        private void AddVersion(ShipVersion version, int index, int selected)
+        private void AddVersion(ColorVersionData data)
         {
-            ShipVersionColor versionColor = GetOrCreateVersion(index);
-            versionColor.SetUp(version, index);
+            ShipVersionColor versionColor = GetOrCreateVersion(data.index);
+            versionColor.SetUp(data);
             versionColor.OnClick?.Add(SelectVersion);
             versionColor.gameObject.SetActive(true);
 
-            if (index == selected)
+            if (data.selected)
                 SelectVersion(versionColor);
         }
 
@@ -97,6 +116,36 @@ namespace Wave.UI
             _selectedVersion.Select(true);
 
             OnVersionSelectionChanged?.Invoke(version.Index);
+        }
+
+        public void EquipVersion(int index)
+        {
+            if (!index.IsInCollectionRange(_pool))
+            {
+                return;
+            }
+
+            if (_equippedVersion != null)
+            {
+                _equippedVersion.Equip(false);
+                _equippedVersion = null;
+            }
+
+            ShipVersionColor versionColor = _pool[index];
+            _equippedVersion = versionColor;
+            _equippedVersion.Equip(true);
+        }
+
+        public void UnlockVersion(int index)
+        {
+            if (!index.IsInCollectionRange(_pool))
+            {
+                Debug.LogError($"Version index {index} is out of range.");
+                return;
+            }
+
+            ShipVersionColor versionColor = _pool[index];
+            versionColor.Lock(false);
         }
     }
 }
