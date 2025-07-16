@@ -19,6 +19,7 @@ namespace Wave.UI.Screens
         [SerializeField] private Button _homeButton;
 
         [Space]
+        [SerializeField] private ResizingLabel _nameLabel;
         [SerializeField] private ResizingLabel _priceLabel;
         [SerializeField] private GameObject _equippedLabel;
 
@@ -120,12 +121,10 @@ namespace Wave.UI.Screens
 
             _buyButton.gameObject.SetActive(!unlocked);
             _buyButton.Interactable = _playerService.CanBuy(_currentPrice);
+            _priceLabel.SetValue(_currentPrice);
 
             _equipButton.gameObject.SetActive(unlocked && !equipped);
             _equippedLabel.SetActive(equipped);
-
-            _priceLabel.SetValue(_currentPrice);
-            _priceLabel.gameObject.SetActive(!unlocked);
         }
 
         private void OnLeftArrowClick()
