@@ -16,7 +16,7 @@ namespace Wave.Actors
         [SerializeField] private float _force = 10f;
         [SerializeField] private float _maxAngle = 50f;
 
-        private readonly StateMachine _stateMachine = new StateMachine();
+        private StateMachine _stateMachine;
 
         private InputService _inputService;
         private GameService _gameService;
@@ -26,6 +26,8 @@ namespace Wave.Actors
 
         private void Awake()
         {
+            _stateMachine ??= new StateMachine();
+
             _inputService = ServiceLocator.Instance.Get<InputService>();
             _gameService = ServiceLocator.Instance.Get<GameService>();
 
