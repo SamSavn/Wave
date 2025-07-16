@@ -13,11 +13,18 @@ namespace Wave.UI.Screens
         private const int PROGRESS_STEPS = 3;
         private const float TOTAL_FAKE_LOADING_TIME = 5f;
 
-        private PrefabsService _prefabsService;
+        private AssetsService _prefabsService;
 
         private float _realProgress = 0f;
         private float _fakeProgress = 0f;
         private float _elapsedTime = 0f;
+
+        private bool _isLoading = false;
+
+        private void Awake()
+        {
+            _isLoading = true;
+        }
 
         private void Start()
         {
@@ -27,6 +34,9 @@ namespace Wave.UI.Screens
 
         private void Update()
         {
+            if (!_isLoading)
+                return;
+
             _elapsedTime += Time.deltaTime;
             _fakeProgress = Mathf.Clamp01(_elapsedTime / TOTAL_FAKE_LOADING_TIME);
 
@@ -34,7 +44,10 @@ namespace Wave.UI.Screens
             _loadingBar.fillAmount = Mathf.Lerp(_loadingBar.fillAmount, targetProgress, Time.deltaTime * 5f);
 
             if (_loadingBar.fillAmount >= 0.99f && ServiceLocator.Instance.IsReady && _fakeProgress >= 1f)
+            {
+                _isLoading = false;
                 SceneManager.LoadSceneAsync(1, LoadSceneMode.Single);
+            }
         }
 
         private void AddProgressStep()
@@ -52,7 +65,7 @@ namespace Wave.UI.Screens
         {
             yield return new WaitUntil(() => ServiceLocator.Instance.IsReady);
 
-            _prefabsService = ServiceLocator.Instance.Get<PrefabsService>();
+            _prefabsService = ServiceLocator.Instance.Get<AssetsService>();
             _prefabsService.OnBlocksLoaded?.Add(OnBlocksLoaded);
             _prefabsService.OnShipsLoaded?.Add(OnShipsLoaded);
 

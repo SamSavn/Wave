@@ -9,10 +9,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6160c060ef5548a41ae2f386f97bb2fa, type: 3}
+  m_Script: {fileID: 11500000, guid: 3aea163808bf73b47bff16fb8cede688, type: 3}
   m_Name: 2.1_ShipStats
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 1449967967273523445, guid: 311599e2534effb4fbb4eead92e22bcd, type: 3}
-  _mass: 1
-  _power: 35
-  _speed: 50
+  _info:
+    _prefab: {fileID: 1449967967273523445, guid: 311599e2534effb4fbb4eead92e22bcd, type: 3}
+    _primaryColor: {r: 0.72156864, g: 0.7686275, b: 0.854902, a: 1}
+    _secondaryColor: {r: 0.78823537, g: 0.22352943, b: 0.18039216, a: 1}
+  _variants:
+  - _prefab: {fileID: 7905273816906296396, guid: 458f67c199376214eb84916966ce6933, type: 3}
+    _primaryColor: {r: 0.78823537, g: 0.22352943, b: 0.18039216, a: 1}
+    _secondaryColor: {r: 0.18823531, g: 0.21176472, b: 0.2392157, a: 1}
+  - _prefab: {fileID: 8128395930400257126, guid: f5a6c5090f1731840b4fcee44b791f02, type: 3}
+    _primaryColor: {r: 0.38823533, g: 0.4156863, b: 0.45882356, a: 1}
+    _secondaryColor: {r: 0.86274517, g: 0.6666667, b: 0.25490198, a: 1}
+  - _prefab: {fileID: 2964167740500607726, guid: 07515c5236664774c97113c3c64aff96, type: 3}
+    _primaryColor: {r: 0.18823531, g: 0.21176472, b: 0.2392157, a: 1}
+    _secondaryColor: {r: 0.12941177, g: 0.6039216, b: 0.89019614, a: 1}
+  - _prefab: {fileID: 9134652724535056772, guid: 7cc8fd4288fdcbc4db93fc5f41b3e97b, type: 3}
+    _primaryColor: {r: 0.72156864, g: 0.7686275, b: 0.854902, a: 1}
+    _secondaryColor: {r: 0.13725491, g: 0.31764707, b: 0.8980393, a: 1}
+  _mass: 0
+  _power: 0
+  _speed: 0

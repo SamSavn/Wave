@@ -10,36 +10,50 @@ namespace Wave.Ships
         private Dictionary<int, GameObject> _pool = new();
         private GameObject[] _shipPrefabs;
         private Transform _poolContainer;
-        private PrefabsService _prefabsService;
+        private AssetsService _prefabsService;
 
         public int Count => _pool.Count;
 
         public ShipsPool()
         {
-            _prefabsService = ServiceLocator.Instance.Get<PrefabsService>();
+            _prefabsService = ServiceLocator.Instance.Get<AssetsService>();
             _prefabsService.OnShipsLoaded?.Add(OnPrefabsLoaded);
         }
 
         public GameObject GetShip(int prefabIndex)
         {
             if (_pool.TryGetValue(prefabIndex, out GameObject prefab) && prefab != null)
-            {
-                _pool[prefabIndex] = null;
                 return prefab;
-            }
 
             if (!prefabIndex.IsInCollectionRange(_shipPrefabs))
+            {
+                Debug.LogWarning($"Unable to get ship: {nameof(prefabIndex)} ({prefabIndex}) is out of range (0-{_shipPrefabs.Length})");
                 return null;
+            }
 
-            return GameObject.Instantiate(_shipPrefabs[prefabIndex], _poolContainer);
+            GameObject ship = GameObject.Instantiate(_shipPrefabs[prefabIndex], _poolContainer);
+            _pool[prefabIndex] = ship;
+
+            return ship;
         }
 
         public void RecycleShip(GameObject ship, int prefabIndex)
         {
+            if (ship == null)
+            {
+                Debug.LogError($"Unable to recycle ship: {nameof(ship)} is NULL");
+                return;
+            }
+
+            if (prefabIndex < 0)
+            {
+                Debug.LogError($"Unable to recycle ship: {nameof(prefabIndex)} cannot be a negative value");
+                return;
+            }
+
             ship.SetActive(false);
             ship.SetLayer(Layer.Default);
             ship.transform.SetParent(_poolContainer);
-
             _pool[prefabIndex] = ship;
         }
 

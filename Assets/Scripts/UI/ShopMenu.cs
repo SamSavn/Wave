@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using Wave.Data;
 using Wave.Services;
 
 namespace Wave.UI.Screens
@@ -8,6 +9,9 @@ namespace Wave.UI.Screens
     {
         [SerializeField] private Button _leftArrow;
         [SerializeField] private Button _rightArrow;
+
+        [Space]
+        [SerializeField] private ShipsVersionsContainer _versionsContainer;
 
         [Space]
         [SerializeField] private TextButton _buyButton;
@@ -21,7 +25,9 @@ namespace Wave.UI.Screens
         private SceneService _sceneService;
         private ShipsService _shipsService;
 
-        private int _currentIndex;
+        private int _currentIndex = 0;
+        private int _currentVersion = 0;
+        private int _currentPrice = 0;
 
         protected override void Awake()
         {
@@ -45,6 +51,9 @@ namespace Wave.UI.Screens
             if (_homeButton != null)
                 _homeButton.onClick.AddListener(OnHomeButtonClick);
 
+            if (_versionsContainer != null)
+                _versionsContainer.OnVersionSelectionChanged.Add(OnVersionSelectionChanged);
+
             _uiService.RegisterScreen(this);
         }
 
@@ -53,8 +62,8 @@ namespace Wave.UI.Screens
             if (!_uiService.IsScreenActive<ShopMenu>())
                 return;
 
-            SetSelection(_playerService.GetEquipedShipIndex());
-            _sceneService.SetScene(Handlers.SceneType.Shop);
+            SetSelection(_playerService.GetEquippedShipIndex());
+            _sceneService.SetScene(Handlers.SceneType.Shop);            
         }
 
         private void OnDisable()
@@ -69,24 +78,53 @@ namespace Wave.UI.Screens
         {
             _currentIndex = index;
             _shipsService.SetSelectedShip(_currentIndex);
+
+            bool equipped = _shipsService.IsShipEquipped(_currentIndex);
+            int selectedVersion = equipped
+                ? _playerService.GetEquippedShipVersion()
+                : 0;
+
+            _versionsContainer.SetVersions(new ColorVersionsSetData()
+            {
+                shipInfo = _shipsService.GetInfo(_currentIndex),
+                shipsService = _shipsService,
+                selectedVersion = selectedVersion,
+                shipIndex = _currentIndex
+            });
+
+            if (equipped)
+            {
+                _versionsContainer.EquipVersion(_playerService.GetEquippedShipVersion());
+            }
+
+            SetVersion(selectedVersion);
+            Refresh();
+        }
+
+        private void SetVersion(int index)
+        {
+            _currentVersion = index;
+            _shipsService.SetShipVersion(_currentIndex, _currentVersion);
+            
             Refresh();
         }
 
         private void Refresh()
         {
-            bool unlocked = _shipsService.IsShipUnlocked(_currentIndex);
-            bool equipped = _shipsService.IsShipEquiped(_currentIndex);
+            bool unlocked = _shipsService.IsVersionUnlocked(_currentIndex, _currentVersion);
+            bool equipped = _shipsService.IsShipEquipped(_currentIndex, _currentVersion);
+            _currentPrice = _shipsService.GetPrice(_currentIndex, _currentVersion);
 
             _leftArrow.gameObject.SetActive(_currentIndex > 0);
             _rightArrow.gameObject.SetActive(_currentIndex < _shipsService.GetShipsCount() - 1);
 
             _buyButton.gameObject.SetActive(!unlocked);
-            _buyButton.Interactable = _playerService.CanBuy(_shipsService.GetShipPrice(_currentIndex));
+            _buyButton.Interactable = _playerService.CanBuy(_currentPrice);
 
             _equipButton.gameObject.SetActive(unlocked && !equipped);
             _equippedLabel.SetActive(equipped);
 
-            _priceLabel.SetValue(_shipsService.GetShipPrice(_currentIndex));
+            _priceLabel.SetValue(_currentPrice);
             _priceLabel.gameObject.SetActive(!unlocked);
         }
 
@@ -100,16 +138,25 @@ namespace Wave.UI.Screens
             SetSelection(_currentIndex + 1);
         }
 
+        private void OnVersionSelectionChanged(int index)
+        {
+            SetVersion(index);
+        }
+
         private void OnBuyButtonClick()
         {
-            _playerService.AddCoins(-_shipsService.GetShipPrice(_currentIndex), save: true);
-            _shipsService.UnlockShip(_currentIndex);
+            _playerService.AddCoins(-_currentPrice, save: true);
+            _shipsService.UnlockShip(_currentIndex, _currentVersion);
+            _versionsContainer.UnlockVersion(_currentVersion);
+
             Refresh();
         }
 
         private void OnEquipButtonClick()
         {
-            _playerService.EquipShip(_shipsService.GetShip(_currentIndex), _currentIndex);
+            _playerService.EquipShip(_currentIndex, _currentVersion);
+            _versionsContainer.EquipVersion(_currentVersion);
+
             Refresh();
         }
 

@@ -10,14 +10,14 @@ namespace Wave.Environment
     {
         private Queue<LevelBlock> _pool = new();
         private Transform _parentTransform;
-        private PrefabsService _prefabsService;
+        private AssetsService _prefabsService;
         private GameObject _initialPrefab;
 
         public bool Initialized { get; private set; }
 
         public LevelBlocksPool(Transform parentTransform)
         {
-            _prefabsService = ServiceLocator.Instance.Get<PrefabsService>();
+            _prefabsService = ServiceLocator.Instance.Get<AssetsService>();
 
             _parentTransform = parentTransform;
             Initialized = false;

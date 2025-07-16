@@ -47,7 +47,8 @@ namespace Wave.States.PlayerStates
             _coroutineService.StopCoroutine(_coroutine);
             _coroutine = null;
 
-            _tweener.Kill();
+            _tweener?.Rewind();
+            _tweener?.Kill();
             _tweener = null;
 
             _playerTransform = null;
@@ -56,6 +57,9 @@ namespace Wave.States.PlayerStates
 
         private IEnumerator StartTween()
         {
+            if (_tweener != null && _tweener.IsPlaying())
+                yield break;
+
             yield return new WaitForEndOfFrame();
             _tweener = _playerTransform.DOMoveY(_floatingValue, _floatingDuration)
                                        .SetLoops(-1, LoopType.Yoyo)

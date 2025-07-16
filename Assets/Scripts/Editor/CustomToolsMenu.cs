@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using Wave.Data;
@@ -9,12 +11,14 @@ namespace Wave.CustomEditors
         private static PlayerData GetData()
         {
             string jsonData = PlayerPrefs.GetString("PlayerData");
-            return JsonUtility.FromJson<PlayerData>(jsonData);
+            return !string.IsNullOrEmpty(jsonData)
+                ? JsonConvert.DeserializeObject<PlayerData>(jsonData)
+                : new PlayerData();
         }
 
         private static void Save(PlayerData data)
         {
-            string jsonData = JsonUtility.ToJson(data, true);
+            string jsonData = JsonConvert.SerializeObject(data, Formatting.Indented);
             PlayerPrefs.SetString("PlayerData", jsonData);
 
             Debug.Log($"<color=green>Data Saved</color>:\n{jsonData}");
@@ -55,9 +59,14 @@ namespace Wave.CustomEditors
         public static void UnlockAllShips()
         {
             PlayerData data = GetData();
-            data.unlockedShips = new int[65];
-            for (int i = 0; i < data.unlockedShips.Length; i++)
-                data.unlockedShips[i] = i;
+            data.unlockedShips = new HashSet<int>();
+
+            for (int i = 0; i < 13; i++) 
+            {
+                data.unlockedShips.Add(i);
+                data.unlockedVersions[i] = new HashSet<int> { 0, 1, 2, 3, 4 };
+            }
+
             Save(data);
         }
 
@@ -65,7 +74,13 @@ namespace Wave.CustomEditors
         public static void ResetUnlockedShips()
         {
             PlayerData data = GetData();
-            data.unlockedShips = new int[1] { 0 };
+
+            data.unlockedShips = new HashSet<int>(){ 0 };
+            data.unlockedVersions = new Dictionary<int, HashSet<int>>()
+            {
+                { 0, new HashSet<int> { 0 } }
+            };
+
             Save(data);
         }
     } 

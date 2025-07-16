@@ -32,7 +32,7 @@ namespace Wave.States.GameStates
         public void Exit()
         {
             _player.Resume();
-            _level.StartMoving();
+            _level.Move();
         }
     }
 }

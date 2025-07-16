@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Wave.Services;
 
 namespace Wave.States
@@ -6,6 +7,7 @@ namespace Wave.States
 	public class StateMachine : IDisposable
 	{
         private readonly UpdateService _updateService;
+        private readonly Dictionary<Type, IState> _states = new ();
         private IState _currentState;
 
         public StateMachine()
@@ -14,16 +16,24 @@ namespace Wave.States
             _updateService.Update.Add(Update);
         }
 
-        public void SetState(IState state)
+        public void SetState(IState state, bool force = false)
         {
             if (state == null)
                 return;
 
+            if (_currentState != null && _currentState.GetType() == state.GetType())
+            {
+                if (force)
+                {
+                    _currentState = state;
+                    _currentState.Enter();
+                }
+
+                return;
+            }
+
             if (_currentState != null)
             {
-                if (_currentState == state)
-                    return;
-
                 _currentState.Exit();
                 _currentState = null;
             }

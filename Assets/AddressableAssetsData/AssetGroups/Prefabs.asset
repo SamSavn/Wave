@@ -15,6 +15,11 @@ MonoBehaviour:
   m_GroupName: Prefabs
   m_GUID: 88df0d087647b124b9fe05ba6e7cf70d
   m_SerializeEntries:
+  - m_GUID: 760d8cdd141c9884aa0e846ee34dec7b
+    m_Address: ShipVersionColor
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a1994c6717084354584c58a92d56c9a0
     m_Address: EnvironmentBlocksDB
     m_ReadOnly: 0
