@@ -36,13 +36,20 @@ namespace Wave.Services
         public int GetShipsCount() => _pool.Count;
 
         public GameObject GetShip(int index) => _pool.GetShip(index);
-        public ShipInfo GetInfo(int index) => _assetsService.GetShipInfo(index);
+        public ShipInfo GetInfo(int index) => _assetsService.GetShipInfo(index);        
+
         public GameObject GetModel(int index, int version = 0)
         {
             ShipInfo ship = _assetsService.GetShipInfo(index);
             return version == 0
                 ? ship.GetPrefab()
                 : ship.GetVersions()[version - 1].GetPrefab();
+        }
+
+        public string GetShipName(int index)
+        {
+            ShipInfo ship = _assetsService.GetShipInfo(index);
+            return ship != null ? ship.GetName() : string.Empty;
         }
 
         public void RecycleShip(GameObject ship, int index) => _pool.RecycleShip(ship, index);

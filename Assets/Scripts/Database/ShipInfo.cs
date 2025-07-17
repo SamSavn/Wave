@@ -8,13 +8,12 @@ namespace Wave.Settings
 	[CreateAssetMenu(fileName = "ShipStats", menuName = "Wave/Settings/Ship Stats")]
 	public class ShipInfo : ScriptableObject
 	{
-		[SerializeField] private ShipVersion _info;
+		[SerializeField] private string _name;
+        [SerializeField] private ShipVersion _info;
 		[SerializeField][FormerlySerializedAs("_variants")] private ShipVersion[] _versions;
-		[SerializeField] private float _mass;
-		[SerializeField] private float _power;
-		[SerializeField] private float _speed;
 
-		public GameObject GetPrefab() => _info.GetPrefab();
+		public string GetName() => _name;
+        public GameObject GetPrefab() => _info.GetPrefab();
 		public ShipVersion GetMainVersion() => _info;
 		public ShipVersion[] GetVersions() => _versions;
 		public bool HasVersions() => !_versions.IsNullOrEmpty();
@@ -43,10 +42,6 @@ namespace Wave.Settings
 
 			return true;
         }
-
-        public float GetMass() => _mass;
-		public float GetPower() => _power;
-		public float GetSpeed() => _speed;
 	}
 
     [Serializable]

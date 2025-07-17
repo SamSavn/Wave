@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3aea163808bf73b47bff16fb8cede688, type: 3}
   m_Name: 7.1_ShipStats
   m_EditorClassIdentifier: 
+  _name: Echoscout
   _info:
     _prefab: {fileID: 4443853831605296070, guid: 62990642302a7cc498dad6b168295e7d, type: 3}
     _primaryColor: {r: 0.13725491, g: 0.31764707, b: 0.8980393, a: 1}
     _secondaryColor: {r: 0.72156864, g: 0.7686275, b: 0.854902, a: 1}
-  _variants:
+  _versions:
   - _prefab: {fileID: 5034415378121160754, guid: a028500f0a4595f4aadd152495438ef5, type: 3}
     _primaryColor: {r: 0.18823531, g: 0.21176472, b: 0.2392157, a: 1}
     _secondaryColor: {r: 0.78823537, g: 0.22352943, b: 0.18039216, a: 1}

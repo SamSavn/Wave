@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3aea163808bf73b47bff16fb8cede688, type: 3}
   m_Name: 2.1_ShipStats
   m_EditorClassIdentifier: 
+  _name: Crimson Pulse
   _info:
     _prefab: {fileID: 1449967967273523445, guid: 311599e2534effb4fbb4eead92e22bcd, type: 3}
     _primaryColor: {r: 0.72156864, g: 0.7686275, b: 0.854902, a: 1}
     _secondaryColor: {r: 0.78823537, g: 0.22352943, b: 0.18039216, a: 1}
-  _variants:
+  _versions:
   - _prefab: {fileID: 7905273816906296396, guid: 458f67c199376214eb84916966ce6933, type: 3}
     _primaryColor: {r: 0.78823537, g: 0.22352943, b: 0.18039216, a: 1}
     _secondaryColor: {r: 0.18823531, g: 0.21176472, b: 0.2392157, a: 1}

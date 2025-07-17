@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3aea163808bf73b47bff16fb8cede688, type: 3}
   m_Name: 6.1_ShipStats
   m_EditorClassIdentifier: 
+  _name: Spectra NX
   _info:
     _prefab: {fileID: 4554181297479755479, guid: a672ad5b71c8cc44ca985cfc35b6dbaf, type: 3}
     _primaryColor: {r: 0.13725491, g: 0.31764707, b: 0.8980393, a: 1}
     _secondaryColor: {r: 0.72156864, g: 0.7686275, b: 0.854902, a: 1}
-  _variants:
+  _versions:
   - _prefab: {fileID: 8428327127576516251, guid: db11e951d5871974b8b250cb92a6838e, type: 3}
     _primaryColor: {r: 0.86274517, g: 0.6666667, b: 0.25490198, a: 1}
     _secondaryColor: {r: 0.18823531, g: 0.21176472, b: 0.2392157, a: 1}

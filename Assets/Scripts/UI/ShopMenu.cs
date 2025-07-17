@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Wave.Data;
@@ -19,7 +20,7 @@ namespace Wave.UI.Screens
         [SerializeField] private Button _homeButton;
 
         [Space]
-        [SerializeField] private ResizingLabel _nameLabel;
+        [SerializeField] private TMP_Text _nameLabel;
         [SerializeField] private ResizingLabel _priceLabel;
         [SerializeField] private GameObject _equippedLabel;
 
@@ -112,6 +113,8 @@ namespace Wave.UI.Screens
 
         private void Refresh()
         {
+            _nameLabel.text = _shipsService.GetShipName(_currentIndex).Trim().ToUpper();
+
             bool unlocked = _shipsService.IsVersionUnlocked(_currentIndex, _currentVersion);
             bool equipped = _shipsService.IsShipEquipped(_currentIndex, _currentVersion);
             _currentPrice = _shipsService.GetPrice(_currentIndex, _currentVersion);

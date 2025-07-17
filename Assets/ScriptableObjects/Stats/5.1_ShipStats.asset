@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3aea163808bf73b47bff16fb8cede688, type: 3}
   m_Name: 5.1_ShipStats
   m_EditorClassIdentifier: 
+  _name: Tracer
   _info:
     _prefab: {fileID: 8279969143979241102, guid: ff23e3972c8602b4e87bf04fe4395c79, type: 3}
     _primaryColor: {r: 0.86274517, g: 0.6666667, b: 0.25490198, a: 1}
     _secondaryColor: {r: 0.38823533, g: 0.4156863, b: 0.45882356, a: 1}
-  _variants:
+  _versions:
   - _prefab: {fileID: 877918401672259474, guid: a761ba83e62bf8a4aa3c0efa6f61e22d, type: 3}
     _primaryColor: {r: 0.78823537, g: 0.22352943, b: 0.18039216, a: 1}
     _secondaryColor: {r: 0.72156864, g: 0.7686275, b: 0.854902, a: 1}

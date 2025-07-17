@@ -591,7 +591,7 @@ MonoBehaviour:
   _buyButton: {fileID: 8927986461569666611}
   _equipButton: {fileID: 3479443484937552278}
   _homeButton: {fileID: 67340454616166641}
-  _nameLabel: {fileID: 0}
+  _nameLabel: {fileID: 4482474634820876660}
   _priceLabel: {fileID: 6755498856415473454}
   _equippedLabel: {fileID: 6168934338630946192}
 --- !u!1001 &2732760998369488048

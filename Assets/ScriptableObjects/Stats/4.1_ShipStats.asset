@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3aea163808bf73b47bff16fb8cede688, type: 3}
   m_Name: 4.1_ShipStats
   m_EditorClassIdentifier: 
+  _name: Driftmoon
   _info:
     _prefab: {fileID: 8811089390526393616, guid: 8830d72630a2eea418d0456716001425, type: 3}
     _primaryColor: {r: 0.86274517, g: 0.6666667, b: 0.25490198, a: 1}
     _secondaryColor: {r: 0.38823533, g: 0.4156863, b: 0.45882356, a: 1}
-  _variants:
+  _versions:
   - _prefab: {fileID: 5521279207160557708, guid: d899c8669c7dcf6448ca3076582b8128, type: 3}
     _primaryColor: {r: 0.18823531, g: 0.21176472, b: 0.2392157, a: 1}
     _secondaryColor: {r: 0.78823537, g: 0.22352943, b: 0.18039216, a: 1}

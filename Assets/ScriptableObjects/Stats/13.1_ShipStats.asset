@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3aea163808bf73b47bff16fb8cede688, type: 3}
   m_Name: 13.1_ShipStats
   m_EditorClassIdentifier: 
+  _name: Soltrine
   _info:
     _prefab: {fileID: 4575549578327824228, guid: 6c22508764ce3144cbd293103bc8bd4d, type: 3}
     _primaryColor: {r: 0.18823531, g: 0.21176472, b: 0.2392157, a: 1}
     _secondaryColor: {r: 0.12941177, g: 0.6039216, b: 0.89019614, a: 1}
-  _variants:
+  _versions:
   - _prefab: {fileID: 1738961373979975539, guid: d224cae57ff108e4496928bf6ec7f025, type: 3}
     _primaryColor: {r: 0.78823537, g: 0.22352943, b: 0.18039216, a: 1}
     _secondaryColor: {r: 0.72156864, g: 0.7686275, b: 0.854902, a: 1}
