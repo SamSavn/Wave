@@ -13,12 +13,13 @@ namespace Wave.Environment
         [SerializeField] private int _maxBlocks = 3;
         [SerializeField] private float _speed = 5f;
 
-        private readonly StateMachine _stateMachine = new StateMachine();
+        private StateMachine _stateMachine;
         private List<LevelBlock> _blocks = new();
         private LevelBlocksPool _blocksPool;
 
         private void Awake()
         {
+            _stateMachine ??= new StateMachine();
             _blocksPool = new LevelBlocksPool(transform);
             ServiceLocator.Instance.Get<GameService>().SetLevel(this);
         }

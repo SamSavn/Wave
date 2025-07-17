@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Newtonsoft.Json;
+using UnityEngine;
 using Wave.Data;
 
 namespace Wave.Services
@@ -7,48 +8,20 @@ namespace Wave.Services
     {
         private const string PLAYER_KEY = "PlayerData";
 
-        private PlayerData _playerData;
-
-        public DataService()
+        public PlayerState LoadPlayerState()
         {
-            string jsonData = PlayerPrefs.GetString(PLAYER_KEY);
-            _playerData = !string.IsNullOrEmpty(jsonData)
-                                ? JsonUtility.FromJson<PlayerData>(jsonData)
-                                : new PlayerData();
+            var json = PlayerPrefs.GetString(PLAYER_KEY);
+            var raw = !string.IsNullOrEmpty(json)
+                ? JsonConvert.DeserializeObject<PlayerData>(json)
+                : new PlayerData();
+
+            return new PlayerState(raw);
         }
 
-        public int GetEquipedShip() => _playerData.shipIndex;
-        public int GetBestScore() => _playerData.bestScore;
-        public int GetCoins() => _playerData.coins;
-        public int[] GetUnlockedShips() => _playerData.unlockedShips;
 
-        public void SaveBestScore(int value)
+        public void Save(PlayerState state)
         {
-            _playerData.bestScore = value;
-            Save();
-        }
-
-        public void SaveCoins(int value)
-        {
-            _playerData.coins = value;
-            Save();
-        }
-
-        public void SaveUnlockedShips(int[] values)
-        {
-            _playerData.unlockedShips = values;
-            Save();
-        }
-
-        public void SaveEquipedShip(int index)
-        {
-            _playerData.shipIndex = index;
-            Save();
-        }
-
-        public void Save()
-        {
-            string jsonData = JsonUtility.ToJson(_playerData);
+            string jsonData = JsonConvert.SerializeObject(state.GetRawData());
             PlayerPrefs.SetString(PLAYER_KEY, jsonData);
         }
     }

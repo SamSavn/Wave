@@ -9,10 +9,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6160c060ef5548a41ae2f386f97bb2fa, type: 3}
+  m_Script: {fileID: 11500000, guid: 3aea163808bf73b47bff16fb8cede688, type: 3}
   m_Name: 9.1_ShipStats
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 901983964859913192, guid: 375d8a55f513af3499bbcd48ead0bdd4, type: 3}
-  _mass: 0.6
-  _power: 40
-  _speed: 70
+  _name: Vanguard Mk-V
+  _info:
+    _prefab: {fileID: 901983964859913192, guid: 375d8a55f513af3499bbcd48ead0bdd4, type: 3}
+    _primaryColor: {r: 0.13725491, g: 0.31764707, b: 0.8980393, a: 1}
+    _secondaryColor: {r: 0.72156864, g: 0.7686275, b: 0.854902, a: 1}
+  _versions:
+  - _prefab: {fileID: 597202129879617984, guid: 14f2aa49c10232c4bb48bf85c36d0061, type: 3}
+    _primaryColor: {r: 0.18823531, g: 0.21176472, b: 0.2392157, a: 1}
+    _secondaryColor: {r: 0.78823537, g: 0.22352943, b: 0.18039216, a: 1}
+  - _prefab: {fileID: 8681080979597760483, guid: 2ac4a85a4ad83ea48b81ca9c68132cb7, type: 3}
+    _primaryColor: {r: 0.78823537, g: 0.22352943, b: 0.18039216, a: 1}
+    _secondaryColor: {r: 0.72156864, g: 0.7686275, b: 0.854902, a: 1}
+  - _prefab: {fileID: 7838625540983915092, guid: 1cc06d81508321541980f26dc5045697, type: 3}
+    _primaryColor: {r: 0.12941177, g: 0.6039216, b: 0.89019614, a: 1}
+    _secondaryColor: {r: 0.18823531, g: 0.21176472, b: 0.2392157, a: 1}
+  - _prefab: {fileID: 4615162065745577961, guid: 433d8a2e5f58efd488f42dcc16cece8c, type: 3}
+    _primaryColor: {r: 0.86274517, g: 0.6666667, b: 0.25490198, a: 1}
+    _secondaryColor: {r: 0.38823533, g: 0.4156863, b: 0.45882356, a: 1}
+  _mass: 0
+  _power: 0
+  _speed: 0

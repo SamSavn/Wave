@@ -45,5 +45,35 @@ namespace Wave.Extentions
 
             return true;
         }
+
+        public static void SwapMesh(this GameObject obj, GameObject other, bool applyScale = false)
+        {
+            if (obj == null || other == null)
+            {
+                Debug.LogError("SwapMesh failed: One of the objects is null.");
+                return;
+            }
+
+            if (!obj.TryGetComponent(out MeshFilter to) ||
+                !other.TryGetComponent(out MeshFilter from))
+            {
+                Debug.LogError("SwapMesh failed: One of the objects does not have a MeshFilter component.");
+                return;
+            }
+
+            if (from.sharedMesh == null)
+            {
+                Debug.LogError("SwapMesh failed: The source object does not have a shared mesh.");
+                return;
+            }
+
+            to.mesh = from.sharedMesh;
+
+            if (applyScale)
+                to.transform.localScale = from.transform.lossyScale;
+
+            if (to.TryGetComponent(out MeshCollider collider))
+                collider.sharedMesh = from.sharedMesh;
+        }
     }
 }

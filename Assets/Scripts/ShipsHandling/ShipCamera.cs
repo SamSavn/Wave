@@ -16,6 +16,7 @@ namespace Wave.Ships
         private ShipsService _shipsService;
         private GameObject _currentShip;
         private Tweener _tweener;
+
         private int _shipIndex;
 
         private void Reset()
@@ -25,8 +26,6 @@ namespace Wave.Ships
 
         private void Awake()
         {
-            _shipsService = ServiceLocator.Instance.Get<ShipsService>();
-
             if (_shipContainer == null )
                 _shipContainer = GetComponentInChildren<Transform>();
         }
@@ -58,6 +57,8 @@ namespace Wave.Ships
             StartFloating();
         }
 
+        public void SetShipVersion(GameObject versionPrefab) => _currentShip.SwapMesh(versionPrefab);
+
         [ContextMenu("Start Floating")]
         public void StartFloating()
         {
@@ -69,11 +70,12 @@ namespace Wave.Ships
                                         .SetEase(Ease.InOutSine);
         }
 
-        private void RecycleCurrentShip()
+        public void RecycleCurrentShip()
         {
             if (_currentShip == null)
                 return;
 
+            _shipsService ??= ServiceLocator.Instance.Get<ShipsService>();
             _shipsService.RecycleShip(_currentShip, _shipIndex);
             _currentShip = null;
             _shipIndex = -1;

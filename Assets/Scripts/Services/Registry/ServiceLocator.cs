@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Wave.Events;
 
 namespace Wave.Services
 {

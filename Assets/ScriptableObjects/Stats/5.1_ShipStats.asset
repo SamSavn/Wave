@@ -9,10 +9,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6160c060ef5548a41ae2f386f97bb2fa, type: 3}
+  m_Script: {fileID: 11500000, guid: 3aea163808bf73b47bff16fb8cede688, type: 3}
   m_Name: 5.1_ShipStats
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 8279969143979241102, guid: ff23e3972c8602b4e87bf04fe4395c79, type: 3}
-  _mass: 1
-  _power: 40
-  _speed: 60
+  _name: Tracer
+  _info:
+    _prefab: {fileID: 8279969143979241102, guid: ff23e3972c8602b4e87bf04fe4395c79, type: 3}
+    _primaryColor: {r: 0.86274517, g: 0.6666667, b: 0.25490198, a: 1}
+    _secondaryColor: {r: 0.38823533, g: 0.4156863, b: 0.45882356, a: 1}
+  _versions:
+  - _prefab: {fileID: 877918401672259474, guid: a761ba83e62bf8a4aa3c0efa6f61e22d, type: 3}
+    _primaryColor: {r: 0.78823537, g: 0.22352943, b: 0.18039216, a: 1}
+    _secondaryColor: {r: 0.72156864, g: 0.7686275, b: 0.854902, a: 1}
+  - _prefab: {fileID: 6921238706466614037, guid: f18cef774753a3b47be966654f6e6097, type: 3}
+    _primaryColor: {r: 0.18823531, g: 0.21176472, b: 0.2392157, a: 1}
+    _secondaryColor: {r: 0.15294118, g: 0.79215693, b: 0.8000001, a: 1}
+  - _prefab: {fileID: 7778484918840999946, guid: 5ff23903cc097f34684ffe262418971c, type: 3}
+    _primaryColor: {r: 0.78823537, g: 0.22352943, b: 0.18039216, a: 1}
+    _secondaryColor: {r: 0.18823531, g: 0.21176472, b: 0.2392157, a: 1}
+  - _prefab: {fileID: 2907491432433429739, guid: 5e69db28db8a2c3489766fa1ce875a0b, type: 3}
+    _primaryColor: {r: 0.72156864, g: 0.7686275, b: 0.854902, a: 1}
+    _secondaryColor: {r: 0.13725491, g: 0.31764707, b: 0.8980393, a: 1}
+  _mass: 0
+  _power: 0
+  _speed: 0
