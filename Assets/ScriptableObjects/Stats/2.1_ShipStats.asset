@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3aea163808bf73b47bff16fb8cede688, type: 3}
   m_Name: 2.1_ShipStats
   m_EditorClassIdentifier: 
-  _name: Crimson Pulse
+  _name: Pulse Rider
   _info:
     _prefab: {fileID: 1449967967273523445, guid: 311599e2534effb4fbb4eead92e22bcd, type: 3}
     _primaryColor: {r: 0.72156864, g: 0.7686275, b: 0.854902, a: 1}
@@ -30,6 +30,3 @@ MonoBehaviour:
   - _prefab: {fileID: 9134652724535056772, guid: 7cc8fd4288fdcbc4db93fc5f41b3e97b, type: 3}
     _primaryColor: {r: 0.72156864, g: 0.7686275, b: 0.854902, a: 1}
     _secondaryColor: {r: 0.13725491, g: 0.31764707, b: 0.8980393, a: 1}
-  _mass: 0
-  _power: 0
-  _speed: 0
