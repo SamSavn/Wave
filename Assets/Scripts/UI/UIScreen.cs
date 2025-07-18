@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.U2D;
 using Wave.Services;
 
 namespace Wave.UI.Screens

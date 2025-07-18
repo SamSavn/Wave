@@ -514,6 +514,8 @@ GameObject:
   - component: {fileID: 8017911772181714309}
   - component: {fileID: 5451454827655127458}
   - component: {fileID: 5473964689381602670}
+  - component: {fileID: -3367011055581687729}
+  - component: {fileID: -8361184820656268467}
   m_Layer: 5
   m_Name: ShopMenu
   m_TagString: Untagged
@@ -581,6 +583,46 @@ MonoBehaviour:
   _nameLabel: {fileID: 4482474634820876660}
   _priceLabel: {fileID: 6755498856415473454}
   _equippedLabel: {fileID: 6168934338630946192}
+--- !u!223 &-3367011055581687729
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6590944126936090200}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 0
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 1
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 1
+  m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
+--- !u!114 &-8361184820656268467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6590944126936090200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 32
 --- !u!1001 &2732760998369488048
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -846,6 +888,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 553665090681574111, guid: aabf0e831c7f74846a98b078b896fdfa, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4193769011168130497, guid: aabf0e831c7f74846a98b078b896fdfa, type: 3}
+      propertyPath: m_Type
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4971724095986609068, guid: aabf0e831c7f74846a98b078b896fdfa, type: 3}

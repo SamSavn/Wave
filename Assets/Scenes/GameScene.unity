@@ -888,7 +888,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 32
 --- !u!114 &1962377371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1018,6 +1018,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1070818533}
     m_Modifications:
+    - target: {fileID: -2695383847525578453, guid: 4017dd24b24bf944b99a11d8b2087214, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 919027370241923836, guid: 4017dd24b24bf944b99a11d8b2087214, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
@@ -1205,6 +1209,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1070818533}
     m_Modifications:
+    - target: {fileID: -8357731714438721585, guid: c031e2ade1e376a4093593a8c0daf010, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 561064091493858723, guid: c031e2ade1e376a4093593a8c0daf010, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
@@ -1351,6 +1359,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1070818533}
     m_Modifications:
+    - target: {fileID: -3367011055581687729, guid: 108b34c3860159a4a9c8b773f2cf82ff, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 965152456681606265, guid: 108b34c3860159a4a9c8b773f2cf82ff, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
@@ -1863,6 +1875,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7020424982170138142, guid: 057458e2cadd9f9429ba3ff69e9af3b7, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 8319009850212546643, guid: 057458e2cadd9f9429ba3ff69e9af3b7, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
@@ -1897,6 +1913,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1070818533}
     m_Modifications:
+    - target: {fileID: 1574243950717186005, guid: 2111dfef92dc9b64288e9455fd4bfb3c, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 1870785319844472106, guid: 2111dfef92dc9b64288e9455fd4bfb3c, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
