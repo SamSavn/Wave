@@ -1,4 +1,3 @@
-using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +7,7 @@ namespace Wave.UI.Screens
 	{
         [SerializeField] private Transform _newBestScore;
         [SerializeField] private ResizingLabel _scoreLabel;
+        [SerializeField] private ResizingLabel _bestScoreLabel;
         [SerializeField] private Button _homeButton;
         [SerializeField] private Button _shopButton;
 
@@ -27,6 +27,7 @@ namespace Wave.UI.Screens
         private void OnEnable()
         {
             _scoreLabel.SetValue(_playerService.GetCurrentScore());
+            _bestScoreLabel.SetValue(_playerService.GetBestScore());
             _newBestScore.gameObject.SetActive(_playerService.HasNewBestScore());
         }
 
