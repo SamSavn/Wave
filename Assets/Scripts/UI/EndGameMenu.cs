@@ -38,6 +38,7 @@ namespace Wave.UI.Screens
 
         private void OnShopButtonClick()
         {
+            _gameService.ResetGame();
             _uiService.ShowScreen<ShopMenu>();
         }
     } 
