@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 2619327820146233016}
   - component: {fileID: 7498091856515130860}
   m_Layer: 5
-  m_Name: Ship Camera
+  m_Name: ShipCamera
   m_TagString: ShipCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -97,8 +97,8 @@ Camera:
     y: 0
     width: 1920
     height: 1080
-  near clip plane: 0.3
-  far clip plane: 250
+  near clip plane: 170
+  far clip plane: 215
   field of view: 13.000001
   orthographic: 0
   orthographic size: 5
