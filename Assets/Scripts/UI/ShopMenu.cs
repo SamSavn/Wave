@@ -64,7 +64,7 @@ namespace Wave.UI.Screens
             if (!_uiService.IsScreenActive<ShopMenu>())
                 return;
 
-            SetSelection(_playerService.GetEquippedShipIndex());
+            SetSelection(_playerService.GetEquippedShip().index);
             _sceneService.SetScene(Handlers.SceneType.Shop);            
         }
 
@@ -83,7 +83,7 @@ namespace Wave.UI.Screens
 
             bool equipped = _shipsService.IsShipEquipped(_currentIndex);
             int selectedVersion = equipped
-                ? _playerService.GetEquippedShipVersion()
+                ? _playerService.GetEquippedShip().version
                 : 0;
 
             _versionsContainer.SetVersions(new ColorVersionsSetData()
@@ -96,7 +96,7 @@ namespace Wave.UI.Screens
 
             if (equipped)
             {
-                _versionsContainer.EquipVersion(_playerService.GetEquippedShipVersion());
+                _versionsContainer.EquipVersion(_playerService.GetEquippedShip().version);
             }
 
             SetVersion(selectedVersion);

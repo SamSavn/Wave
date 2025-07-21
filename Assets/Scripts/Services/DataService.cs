@@ -10,10 +10,12 @@ namespace Wave.Services
 
         public PlayerState LoadPlayerState()
         {
-            var json = PlayerPrefs.GetString(PLAYER_KEY);
-            var raw = !string.IsNullOrEmpty(json)
-                ? JsonConvert.DeserializeObject<PlayerData>(json)
-                : new PlayerData();
+            string json = PlayerPrefs.GetString(PLAYER_KEY);
+            Debug.Log($"Loading player data: {json}");
+
+            PlayerData raw = !string.IsNullOrEmpty(json)
+                                ? JsonConvert.DeserializeObject<PlayerData>(json)
+                                : new PlayerData();
 
             return new PlayerState(raw);
         }

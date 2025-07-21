@@ -35,8 +35,11 @@ namespace Wave.Services
             }
         }
 
-        public int GetEquippedShipIndex() => PlayerState.EquippedShip.index;
-        public int GetEquippedShipVersion() => PlayerState.EquippedShip.version;
+        public (int index, int version) GetEquippedShip()
+        {
+            return (PlayerState.EquippedShip.index, PlayerState.EquippedShip.version);
+        }
+
         public int GetCurrentScore() => _currentScore;
         public int GetBestScore() => PlayerState.BestScore;
         public int GetCoins() => PlayerState.Coins;
