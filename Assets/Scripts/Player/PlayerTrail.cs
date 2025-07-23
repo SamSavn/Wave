@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using Wave.Services;
 
 namespace Wave.Actors.Effects
 {
@@ -12,21 +14,35 @@ namespace Wave.Actors.Effects
         [SerializeField] private int _maxTrailPoints = 5;
         [SerializeField] private float _trailLength = 2f;
         [SerializeField] private float _fadeSpeed = 1f;
+        [SerializeField] private float _smoothTime = 1f;
+
+        private UpdateService _updateService;
+        private CoroutineService _coroutineService;
+        private WaitForSeconds _waitForFade;
 
         private Vector3[] _trailPositions;
         private float[] _yTargets;
 
-        private int _currentPoints = 0;
-        private float _buildTimer = 0f;
-        private bool _isFadingIn = false;
-        private bool _isFadingOut = false;
-        private float _fadeAlpha = 0f;
-
+        private Vector3 Position => transform.position;
         private float SegmentSpacing => _trailLength / (_maxTrailPoints - 1);
+        private bool IsWhole => CurrentPoints == _maxTrailPoints;
+
+        private int CurrentPoints
+        {
+            get => _lineRenderer.positionCount;
+            set => _lineRenderer.positionCount = Mathf.Clamp(value, 0, _maxTrailPoints);
+        }
 
         private void Reset()
         {
             _lineRenderer = GetComponent<LineRenderer>();
+        }
+
+        private void Awake()
+        {
+            _updateService = ServiceLocator.Instance.Get<UpdateService>();
+            _coroutineService = ServiceLocator.Instance.Get<CoroutineService>();
+            _waitForFade = new WaitForSeconds(_fadeSpeed / _maxTrailPoints);
         }
 
         private void OnEnable()
@@ -34,43 +50,44 @@ namespace Wave.Actors.Effects
             _trailPositions = new Vector3[_maxTrailPoints];
             _yTargets = new float[_maxTrailPoints];
             _lineRenderer.positionCount = 0;
-
-            _isFadingIn = true;
-            _isFadingOut = false;
         }
 
-        public void TriggerFadeOut()
+        public void Show()
         {
-            _isFadingOut = true;
-            _isFadingIn = false;
-        }
+            _coroutineService.StartCoroutine(ShowTrail());
 
-        private void Update()
-        {
-            Vector3 pos = transform.position;
-
-            if (_isFadingIn && _currentPoints < _maxTrailPoints)
+            IEnumerator ShowTrail()
             {
-                _buildTimer += Time.deltaTime;
-                float timePerPoint = _fadeSpeed / _maxTrailPoints;
-
-                if (_buildTimer >= timePerPoint)
+                while (!IsWhole)
                 {
-                    _buildTimer -= timePerPoint;
-                    _currentPoints++;
-                    _lineRenderer.positionCount = _currentPoints;
+                    CurrentPoints++;
+                    yield return _waitForFade;
                 }
             }
 
-            for (int i = 0; i < _currentPoints; i++)
+            _updateService.LateUpdate.Add(UpdateTrail);
+        }
+
+        public void Hide()
+        {
+            _updateService.LateUpdate.Remove(UpdateTrail);
+            CurrentPoints = 0;
+        }
+
+        private void UpdateTrail(float dt)
+        {
+            if (!IsWhole)
+                return;
+
+            for (int i = 0; i < CurrentPoints; i++)
             {
                 if (i == 0)
-                    _yTargets[i] = pos.y;
+                    _yTargets[i] = Position.y;
                 else
-                    _yTargets[i] = Mathf.Lerp(_yTargets[i], _yTargets[i - 1], Time.deltaTime * (_maxTrailPoints / _fadeSpeed));
+                    _yTargets[i] = Mathf.Lerp(_yTargets[i], _yTargets[i - 1], dt * (_maxTrailPoints / _smoothTime));
 
                 Vector3 localOffset = -transform.forward * SegmentSpacing * i;
-                Vector3 rotatedPosition = transform.position + localOffset;
+                Vector3 rotatedPosition = Position + localOffset;
 
                 rotatedPosition.y = _yTargets[i];
                 _trailPositions[i] = rotatedPosition;
@@ -78,12 +95,6 @@ namespace Wave.Actors.Effects
             }
 
             _lineRenderer.SetPositions(_trailPositions);
-
-            // Fade logic
-            if (_isFadingIn && _fadeAlpha < 1f)
-                _fadeAlpha = Mathf.MoveTowards(_fadeAlpha, 1f, Time.deltaTime / _fadeSpeed);
-            else if (_isFadingOut)
-                _fadeAlpha = Mathf.MoveTowards(_fadeAlpha, 0f, Time.deltaTime / _fadeSpeed);
         }
     }
 }

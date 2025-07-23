@@ -19,9 +19,21 @@ namespace Wave.Services
 
                 service.Update?.Invoke(Time.deltaTime);
             }
+
+            private void LateUpdate()
+            {
+                if (service == null)
+                {
+                    GameObject.Destroy(gameObject);
+                    return;
+                }
+
+                service.LateUpdate?.Invoke(Time.deltaTime);
+            }
         }
 
         public EventDisparcher<float> Update { get; } = new EventDisparcher<float>();
+        public EventDisparcher<float> LateUpdate { get; } = new EventDisparcher<float>();
 
         public UpdateService()
         {

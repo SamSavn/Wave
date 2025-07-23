@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using UnityEngine;
+using Wave.Actors.Effects;
 using Wave.Services;
 
 namespace Wave.States.PlayerStates
@@ -9,6 +10,7 @@ namespace Wave.States.PlayerStates
 	{
 		private Transform _playerTransform;
         private Rigidbody _playerBody;
+        private PlayerTrail _playerTrail;
 
         private CoroutineService _coroutineService;
 
@@ -20,10 +22,11 @@ namespace Wave.States.PlayerStates
         private float _floatingValue = 5f;
         private float _floatingDuration = 1f;
 
-		public PlayerIdleState(Transform playerTransform, Rigidbody rigidbody, Vector3 startPosition)
+		public PlayerIdleState(Transform playerTransform, Rigidbody rigidbody, PlayerTrail trail, Vector3 startPosition)
 		{
 			_playerTransform = playerTransform;
             _playerBody = rigidbody;
+            _playerTrail = trail;
             _startPosition = startPosition;
 
             _coroutineService = ServiceLocator.Instance.Get<CoroutineService>();
@@ -50,6 +53,8 @@ namespace Wave.States.PlayerStates
             _tweener?.Rewind();
             _tweener?.Kill();
             _tweener = null;
+
+            _playerTrail.Show();
 
             _playerTransform = null;
             _playerBody = null;

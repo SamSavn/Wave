@@ -188,6 +188,7 @@ MonoBehaviour:
   _model: {fileID: 2629252547439064168}
   _collider: {fileID: 7073417241145913679}
   _explosionParticle: {fileID: 7760254050557076039}
+  _trail: {fileID: 4070783326305536352}
   _force: 150
   _maxAngle: 45
 --- !u!1 &6507614843323733871
@@ -5080,6 +5081,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fe13cb3652a8e9e4e8d71ccd875cb8c0, type: 3}
+--- !u!114 &4070783326305536352 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5090267073837892965, guid: fe13cb3652a8e9e4e8d71ccd875cb8c0, type: 3}
+  m_PrefabInstance: {fileID: 9140637296423324677}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cc2c38856793da4abec5615dc533f1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &5789993728307856843 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3350715160992434638, guid: fe13cb3652a8e9e4e8d71ccd875cb8c0, type: 3}
