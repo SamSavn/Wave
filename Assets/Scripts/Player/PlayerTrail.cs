@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using Wave.Services;
 
@@ -13,19 +12,16 @@ namespace Wave.Actors.Effects
         [Header("Settings")]
         [SerializeField] private int _maxTrailPoints = 5;
         [SerializeField] private float _trailLength = 2f;
-        [SerializeField] private float _fadeSpeed = 1f;
         [SerializeField] private float _smoothTime = 1f;
 
         private UpdateService _updateService;
-        private CoroutineService _coroutineService;
-        private WaitForSeconds _waitForFade;
 
         private Vector3[] _trailPositions;
         private float[] _yTargets;
 
         private Vector3 Position => transform.position;
         private float SegmentSpacing => _trailLength / (_maxTrailPoints - 1);
-        private bool IsWhole => CurrentPoints == _maxTrailPoints;
+        private bool IsVisible => CurrentPoints == _maxTrailPoints;
 
         private int CurrentPoints
         {
@@ -41,60 +37,55 @@ namespace Wave.Actors.Effects
         private void Awake()
         {
             _updateService = ServiceLocator.Instance.Get<UpdateService>();
-            _coroutineService = ServiceLocator.Instance.Get<CoroutineService>();
-            _waitForFade = new WaitForSeconds(_fadeSpeed / _maxTrailPoints);
         }
 
         private void OnEnable()
         {
-            _trailPositions = new Vector3[_maxTrailPoints];
-            _yTargets = new float[_maxTrailPoints];
-            _lineRenderer.positionCount = 0;
+            ResetPoints();
         }
 
         public void Show()
         {
-            _coroutineService.StartCoroutine(ShowTrail());
-
-            IEnumerator ShowTrail()
-            {
-                while (!IsWhole)
-                {
-                    CurrentPoints++;
-                    yield return _waitForFade;
-                }
-            }
-
+            CurrentPoints = _maxTrailPoints;
             _updateService.LateUpdate.Add(UpdateTrail);
         }
 
         public void Hide()
         {
             _updateService.LateUpdate.Remove(UpdateTrail);
-            CurrentPoints = 0;
+            ResetPoints();
         }
 
         private void UpdateTrail(float dt)
         {
-            if (!IsWhole)
+            if (!IsVisible)
                 return;
 
             for (int i = 0; i < CurrentPoints; i++)
-            {
-                if (i == 0)
-                    _yTargets[i] = Position.y;
-                else
-                    _yTargets[i] = Mathf.Lerp(_yTargets[i], _yTargets[i - 1], dt * (_maxTrailPoints / _smoothTime));
-
-                Vector3 localOffset = -transform.forward * SegmentSpacing * i;
-                Vector3 rotatedPosition = Position + localOffset;
-
-                rotatedPosition.y = _yTargets[i];
-                _trailPositions[i] = rotatedPosition;
-
-            }
+                UpdatePoint(i, dt);
 
             _lineRenderer.SetPositions(_trailPositions);
+        }
+
+        private void UpdatePoint(int i, float dt)
+        {
+            if (i == 0)
+                _yTargets[i] = Position.y;
+            else
+                _yTargets[i] = Mathf.Lerp(_yTargets[i], _yTargets[i - 1], dt * (_maxTrailPoints / _smoothTime));
+
+            Vector3 localOffset = -transform.forward * SegmentSpacing * i;
+            Vector3 rotatedPosition = Position + localOffset;
+
+            rotatedPosition.y = _yTargets[i];
+            _trailPositions[i] = rotatedPosition;
+        }
+
+        private void ResetPoints()
+        {
+            _trailPositions = new Vector3[_maxTrailPoints];
+            _yTargets = new float[_maxTrailPoints];
+            _lineRenderer.positionCount = 0;
         }
     }
 }

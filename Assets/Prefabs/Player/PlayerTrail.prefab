@@ -164,5 +164,5 @@ MonoBehaviour:
   _lineRenderer: {fileID: 2365658508175424348}
   _maxTrailPoints: 5
   _trailLength: 13
-  _fadeSpeed: 0.7
+  _fadeSpeed: 0.3
   _smoothTime: 0.45
