@@ -7,6 +7,7 @@ namespace Wave.Collectables
     {
         [SerializeField] private MeshRenderer _renderer;
         [SerializeField] private Color _activeColor;
+        [SerializeField] private ParticleSystem _collectEffect;
         [SerializeField] [Range(1, 100)] private int _points = 1;
 
         private PlayerService _playerService;
@@ -30,6 +31,7 @@ namespace Wave.Collectables
         public void Collect()
         {
             _renderer.material.color = _activeColor;
+            _collectEffect.Play(true);
             _playerService.AddScore(_points);
         }
 
@@ -39,6 +41,8 @@ namespace Wave.Collectables
 
             if (!value)
                 _renderer.material.color = _defaultColor;
+            else
+                _collectEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         }
     } 
 }
