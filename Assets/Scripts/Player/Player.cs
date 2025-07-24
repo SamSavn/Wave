@@ -62,7 +62,7 @@ namespace Wave.Actors
             else _rigidbody.Sleep();
         }
 
-        public void SetModel(GameObject newModel)
+        public void SetModel(GameObject newModel, Vector3 trailOrigin)
         {
             _model ??= GetComponentInChildren<MeshFilter>(true)?.gameObject;
             _collider ??= _model.GetComponent<Collider>();
@@ -78,6 +78,8 @@ namespace Wave.Actors
 
             _model.SetActive(true);
             _collider.enabled = true;
+
+            _trail.Initialize(newModel, trailOrigin);
 
             ResetState();
         }

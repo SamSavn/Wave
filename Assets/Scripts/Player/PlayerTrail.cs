@@ -1,5 +1,6 @@
 using UnityEngine;
 using Wave.Services;
+using static UnityEngine.ParticleSystem;
 
 namespace Wave.Actors.Effects
 {
@@ -42,6 +43,23 @@ namespace Wave.Actors.Effects
         private void OnEnable()
         {
             ResetPoints();
+        }
+
+        public void Initialize(GameObject model, Vector3 origin)
+        {
+            if (origin == Vector3.zero)
+            {
+                MeshFilter meshFilter = model.GetComponent<MeshFilter>();
+                Vector3 center = meshFilter.mesh.bounds.center;
+                Vector3 size = meshFilter.mesh.bounds.size;
+                float zOffset = size.z * .5f;
+                float yOffset = size.y / 3f;
+
+                origin = new Vector3(center.x, center.y - yOffset, center.z - zOffset);
+            }                
+
+            transform.localPosition = origin;
+            Hide();
         }
 
         public void Show()
