@@ -52,6 +52,12 @@ namespace Wave.Services
             return ship != null ? ship.GetName() : string.Empty;
         }
 
+        public Vector3 GetTrailOrigin(int index)
+        {
+            ShipInfo ship = _assetsService.GetShipInfo(index);
+            return ship != null ? ship.GetTrailOrigin() : Vector3.zero;
+        }
+
         public void RecycleShip(GameObject ship, int index) => _pool.RecycleShip(ship, index);
 
         public bool IsShipUnlocked(int index) => _playerService.IsShipUnlocked(index);

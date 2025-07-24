@@ -60,7 +60,7 @@ namespace Wave.Services
             _dataService.Save(PlayerState);
 
             _shipService ??= ServiceLocator.Instance.Get<ShipsService>();
-            _gameService.GetPlayer().SetModel(_shipService.GetModel(shipIndex, version));
+            _gameService.GetPlayer().SetModel(_shipService.GetModel(shipIndex, version), _shipService.GetTrailOrigin(shipIndex));
         }
 
         public void AddScore(int value)

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 1.1_ShipStats
   m_EditorClassIdentifier: 
   _name: Aetherion
+  _trailOrigin: {x: 0, y: 0.7105986, z: -8.341135}
   _info:
     _prefab: {fileID: 909896894237664339, guid: c484e9ee88e6f4942ad5c8a0461c6493, type: 3}
     _primaryColor: {r: 0.72156864, g: 0.7686275, b: 0.854902, a: 1}
@@ -30,6 +31,3 @@ MonoBehaviour:
   - _prefab: {fileID: 6065277741757894850, guid: 713bd277a73233041b5a74db3c82aca0, type: 3}
     _primaryColor: {r: 0.12941177, g: 0.6039216, b: 0.89019614, a: 1}
     _secondaryColor: {r: 0.18823531, g: 0.21176472, b: 0.2392157, a: 1}
-  _mass: 0
-  _power: 0
-  _speed: 0

@@ -9,10 +9,12 @@ namespace Wave.Settings
 	public class ShipInfo : ScriptableObject
 	{
 		[SerializeField] private string _name;
+        [SerializeField] private Vector3 _trailOrigin = Vector3.zero;
         [SerializeField] private ShipVersion _info;
 		[SerializeField][FormerlySerializedAs("_variants")] private ShipVersion[] _versions;
 
 		public string GetName() => _name;
+        public Vector3 GetTrailOrigin() => _trailOrigin;
         public GameObject GetPrefab() => _info.GetPrefab();
 		public ShipVersion GetMainVersion() => _info;
 		public ShipVersion[] GetVersions() => _versions;

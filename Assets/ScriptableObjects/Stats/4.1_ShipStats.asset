@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 4.1_ShipStats
   m_EditorClassIdentifier: 
   _name: Driftmoon
+  _trailOrigin: {x: 0, y: 0.5579572, z: -5.5871487}
   _info:
     _prefab: {fileID: 8811089390526393616, guid: 8830d72630a2eea418d0456716001425, type: 3}
     _primaryColor: {r: 0.86274517, g: 0.6666667, b: 0.25490198, a: 1}
@@ -30,6 +31,3 @@ MonoBehaviour:
   - _prefab: {fileID: 115718321918359647, guid: c064b03b28ce92447a43f1258def3452, type: 3}
     _primaryColor: {r: 0.12941177, g: 0.6039216, b: 0.89019614, a: 1}
     _secondaryColor: {r: 0.18823531, g: 0.21176472, b: 0.2392157, a: 1}
-  _mass: 0
-  _power: 0
-  _speed: 0

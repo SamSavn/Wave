@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 2.1_ShipStats
   m_EditorClassIdentifier: 
   _name: Pulse Rider
+  _trailOrigin: {x: 0, y: 0.9265872, z: -6.863899}
   _info:
     _prefab: {fileID: 1449967967273523445, guid: 311599e2534effb4fbb4eead92e22bcd, type: 3}
     _primaryColor: {r: 0.72156864, g: 0.7686275, b: 0.854902, a: 1}

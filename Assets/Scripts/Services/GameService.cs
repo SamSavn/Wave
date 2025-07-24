@@ -13,6 +13,8 @@ namespace Wave.Services
         private readonly StateMachine _stateMachine;
 		private readonly UiService _uiService;
 		private readonly SceneService _sceneService;
+		private PlayerService _playerService;
+		private ShipsService _shipsService;
 
         private Player _player;
 		private Level _level;
@@ -45,12 +47,16 @@ namespace Wave.Services
 
 		public void SetPlayer(Player player)
 		{
+			_playerService ??= ServiceLocator.Instance.Get<PlayerService>();
+			_shipsService ??= ServiceLocator.Instance.Get<ShipsService>();
+
             _player = player;
 
-            (int index, int version) ship = ServiceLocator.Instance.Get<PlayerService>().GetEquippedShip();
-			GameObject model = ServiceLocator.Instance.Get<ShipsService>().GetModel(ship.index, ship.version);
+            (int index, int version) ship = _playerService.GetEquippedShip();
+			GameObject model = _shipsService.GetModel(ship.index, ship.version);
+			Vector3 trailOrigin = _shipsService.GetTrailOrigin(ship.index);
 
-            _player.SetModel(model);
+            _player.SetModel(model, trailOrigin);
 			TrySetGame();
         }
 

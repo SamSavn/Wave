@@ -3,10 +3,11 @@ using Wave.Services;
 
 namespace Wave.Collectables
 {
-    public class Portal : MonoBehaviour, ICollectable
+    public class Portal : Collectable
     {
         [SerializeField] private MeshRenderer _renderer;
         [SerializeField] private Color _activeColor;
+        
         [SerializeField] [Range(1, 100)] private int _points = 1;
 
         private PlayerService _playerService;
@@ -27,15 +28,16 @@ namespace Wave.Collectables
             _defaultColor = _renderer.sharedMaterial.color;
         }
 
-        public void Collect()
+        public override void Collect()
         {
-            _renderer.material.color = _activeColor;
+            base.Collect();
+            _renderer.material.color = _activeColor;            
             _playerService.AddScore(_points);
         }
 
-        public void SetActive(bool value)
+        public override void SetActive(bool value)
         {
-            gameObject.SetActive(value);
+            base.SetActive(value);
 
             if (!value)
                 _renderer.material.color = _defaultColor;

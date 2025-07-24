@@ -1,4 +1,5 @@
 using UnityEngine;
+using Wave.Actors.Effects;
 using Wave.Collectables;
 using Wave.Extentions;
 using Wave.Services;
@@ -13,6 +14,8 @@ namespace Wave.Actors
         [SerializeField] private GameObject _model;
         [SerializeField] private Collider _collider;
         [SerializeField] private ParticleSystem _explosionParticle;
+        [SerializeField] private PlayerTrail _trail;
+
         [SerializeField] private float _force = 10f;
         [SerializeField] private float _maxAngle = 50f;
 
@@ -59,7 +62,7 @@ namespace Wave.Actors
             else _rigidbody.Sleep();
         }
 
-        public void SetModel(GameObject newModel)
+        public void SetModel(GameObject newModel, Vector3 trailOrigin)
         {
             _model ??= GetComponentInChildren<MeshFilter>(true)?.gameObject;
             _collider ??= _model.GetComponent<Collider>();
@@ -76,13 +79,15 @@ namespace Wave.Actors
             _model.SetActive(true);
             _collider.enabled = true;
 
+            _trail.Initialize(newModel, trailOrigin);
+
             ResetState();
         }
 
-        public void ResetState() => _stateMachine.SetState(new PlayerIdleState(transform, _rigidbody, _startPosition));
+        public void ResetState() => _stateMachine.SetState(new PlayerIdleState(transform, _rigidbody, _trail, _startPosition));
         public void Pause() => _stateMachine.SetState(new PlayerPausedState(_rigidbody));
         public void Resume() => _stateMachine.SetState(new PlayerFallingState(_rigidbody, AdjustRotation));
-        public void Die() => _stateMachine.SetState(new PlayerExplodingState(this, _explosionParticle));
+        public void Die() => _stateMachine.SetState(new PlayerExplodingState(this, _explosionParticle, _trail));
 
         private void OnInputDown()
         {

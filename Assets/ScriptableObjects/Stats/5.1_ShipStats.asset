@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 5.1_ShipStats
   m_EditorClassIdentifier: 
   _name: Tracer
+  _trailOrigin: {x: 0, y: 1.05, z: -8.3}
   _info:
     _prefab: {fileID: 8279969143979241102, guid: ff23e3972c8602b4e87bf04fe4395c79, type: 3}
     _primaryColor: {r: 0.86274517, g: 0.6666667, b: 0.25490198, a: 1}
@@ -30,6 +31,3 @@ MonoBehaviour:
   - _prefab: {fileID: 2907491432433429739, guid: 5e69db28db8a2c3489766fa1ce875a0b, type: 3}
     _primaryColor: {r: 0.72156864, g: 0.7686275, b: 0.854902, a: 1}
     _secondaryColor: {r: 0.13725491, g: 0.31764707, b: 0.8980393, a: 1}
-  _mass: 0
-  _power: 0
-  _speed: 0
