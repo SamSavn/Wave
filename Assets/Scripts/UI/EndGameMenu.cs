@@ -14,13 +14,6 @@ namespace Wave.UI.Screens
         protected override void Awake()
         {
             base.Awake();
-
-            if (_homeButton != null)
-                _homeButton.onClick.AddListener(OnHomeButtonClick);
-
-            if (_shopButton != null)
-                _shopButton.onClick.AddListener(OnShopButtonClick);
-
             _uiService.RegisterScreen(this);
         }
 
@@ -29,6 +22,18 @@ namespace Wave.UI.Screens
             _scoreLabel.SetValue(_playerService.GetCurrentScore());
             _bestScoreLabel.SetValue(_playerService.GetBestScore());
             _newBestScore.gameObject.SetActive(_playerService.HasNewBestScore());
+        }
+
+        protected override void RegisterButtons()
+        {
+            _uiService.RegisterButton(_homeButton, OnHomeButtonClick);
+            _uiService.RegisterButton(_shopButton, OnShopButtonClick);
+        }
+
+        protected override void UnregisterButtons()
+        {
+            _uiService.UnregisterButton(_homeButton);
+            _uiService.UnregisterButton(_shopButton);
         }
 
         private void OnHomeButtonClick()

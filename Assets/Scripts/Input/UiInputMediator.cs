@@ -2,14 +2,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using Wave.Services;
+using Wave.UI;
 
 namespace Wave.Input
 {
     public class UiInputMediator
     {
-        private readonly Dictionary<Button, Action> _buttonsRegister = new ();
+        private readonly Dictionary<object, Action> _buttonsRegister = new ();
+        private readonly Dictionary<object, UnityAction> _buttonsValidations = new ();
+
         private readonly CoroutineService _coroutineService;
         private readonly WaitForSeconds _waitForSeconds;
 
@@ -23,43 +27,59 @@ namespace Wave.Input
             _waitForSeconds = new WaitForSeconds(WAIT_TIME);
         }
 
+        public void RegisterButton(TextButton button, Action onClick)
+        {
+            RegisterButton(button.Button, onClick);
+        }
+
         public void RegisterButton(Button button, Action onClick)
         {
-            if (button == null || onClick == null)
+            if (button == null)
             {
-                Debug.LogError("Button or onClick action cannot be null.");
+                Debug.LogError("Button cannot be null");
                 return;
             }
 
-            if (_buttonsRegister.ContainsKey(button))
+            if (onClick == null)
             {
-                Debug.LogWarning("Button is already registered.");
+                Debug.LogWarning("Action cannot be null");
                 return;
             }
 
             _buttonsRegister[button] = onClick;
-            button.onClick.AddListener(() => ValidateInput(button));
+            _buttonsValidations[button] = () => ValidateInput(button);
+            button.onClick.AddListener(_buttonsValidations[button]);
+        }
+
+        public void UnregisterButton(TextButton button)
+        {
+            UnregisterButton(button.Button);
         }
 
         public void UnregisterButton(Button button)
         {
             if (button == null)
             {
-                Debug.LogError("Button cannot be null.");
+                Debug.LogError("Button cannot be null");
                 return;
             }
 
             if (!_buttonsRegister.ContainsKey(button))
             {
-                Debug.LogWarning("Button is not registered.");
+                Debug.LogWarning("Button is not registered");
                 return;
             }
 
-            button.onClick.RemoveListener(() => ValidateInput(button));
+            if (_buttonsValidations.TryGetValue(button, out UnityAction action))
+            {
+                button.onClick.RemoveListener(action);
+                _buttonsValidations.Remove(button);
+            }
+            
             _buttonsRegister.Remove(button);
         }
 
-        private void ValidateInput(Button button)
+        private void ValidateInput(object button)
         {
             if (IsWaiting)
             {
@@ -67,7 +87,7 @@ namespace Wave.Input
                 return;
             }
 
-            if (!_buttonsRegister.TryGetValue(button, out var action))
+            if (!_buttonsRegister.TryGetValue(button, out Action action))
                 return;
 
             action?.Invoke();

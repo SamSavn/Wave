@@ -12,10 +12,6 @@ namespace Wave.UI.Screens
         protected override void Awake()
         {
             base.Awake();
-
-            if (_pauseButton != null ) 
-                _pauseButton.onClick.AddListener(OnPauseButtonClick);
-
             _uiService.RegisterScreen(this);
             _playerService.OnScoreChanged.Add(OnScoreChanged);
         }
@@ -23,6 +19,16 @@ namespace Wave.UI.Screens
         private void OnEnable()
         {
             SetScore(0);
+        }
+
+        protected override void RegisterButtons()
+        {
+            _uiService.RegisterButton(_pauseButton, OnPauseButtonClick);
+        }
+
+        protected override void UnregisterButtons()
+        {
+            _uiService.UnregisterButton(_pauseButton);
         }
 
         private void SetScore(int value) => _scoreLabel.text = value.ToString();

@@ -26,6 +26,7 @@ namespace Wave.UI
 
         private ResizingLabel _resizingLabel;
 
+        public Button Button => _button;
         public Button.ButtonClickedEvent OnClick => _button.onClick;
 
         public bool Interactable

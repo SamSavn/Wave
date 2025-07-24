@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.U2D;
 using Wave.Services;
 
 namespace Wave.UI.Screens
@@ -19,12 +18,17 @@ namespace Wave.UI.Screens
 
         public void Enter()
         {
+            RegisterButtons();
             gameObject.SetActive(true);
         }
 
         public void Exit()
         {
             gameObject.SetActive(false);
+            UnregisterButtons();
         }
+
+        protected abstract void RegisterButtons();
+        protected abstract void UnregisterButtons();
     } 
 }

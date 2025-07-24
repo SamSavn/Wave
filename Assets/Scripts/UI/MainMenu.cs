@@ -15,10 +15,6 @@ namespace Wave.UI.Screens
         {
             base.Awake();
             _inputService = ServiceLocator.Instance.Get<InputService>();
-
-            if (_shopButton != null )
-                _shopButton.onClick.AddListener(OnShopButtonClick);
-
             _uiService.RegisterScreen(this);
         }
 
@@ -31,6 +27,18 @@ namespace Wave.UI.Screens
         private void OnDisable()
         {
             _inputService.OnGameInputDown.Remove(OnGameInputDown);
+        }
+
+        protected override void RegisterButtons()
+        {
+            if (_shopButton != null)
+                _uiService.RegisterButton(_shopButton, OnShopButtonClick);
+        }
+
+        protected override void UnregisterButtons()
+        {
+            if (_shopButton != null)
+                _uiService.UnregisterButton(_shopButton);
         }
 
         private void OnGameInputDown()

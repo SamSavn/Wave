@@ -11,14 +11,19 @@ namespace Wave.UI.Screens
         protected override void Awake()
         {
             base.Awake();
-
-            if (_homeButton != null)
-                _homeButton.onClick.AddListener(OnHomeButtonClick);
-
-            if (_resumeButton != null)
-                _resumeButton.onClick.AddListener(OnResumeButtonClick);
-
             _uiService.RegisterScreen(this);
+        }
+
+        protected override void RegisterButtons()
+        {
+            _uiService.RegisterButton(_homeButton, OnHomeButtonClick);
+            _uiService.RegisterButton(_resumeButton, OnResumeButtonClick);
+        }
+
+        protected override void UnregisterButtons()
+        {
+            _uiService.UnregisterButton(_homeButton);
+            _uiService.UnregisterButton(_resumeButton);
         }
 
         private void OnHomeButtonClick()
