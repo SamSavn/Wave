@@ -3,14 +3,30 @@ using Wave.Services;
 
 namespace Wave.Collectables
 {
-    public class Coin : MonoBehaviour, ICollectable
+    public class Coin : Collectable
     {
-        public void Collect()
+        [SerializeField] private MeshRenderer _meshRenderer;
+        [SerializeField][Range(1, 10)] private int _value;
+
+        private void Reset()
         {
-            SetActive(false);
-            ServiceLocator.Instance.Get<PlayerService>().AddCoins(1);
+            _meshRenderer = GetComponent<MeshRenderer>();
+            _value = 1;
         }
 
-        public void SetActive(bool value) => gameObject.SetActive(value);
+        public override void Collect()
+        {
+            base.Collect();
+            _meshRenderer.enabled = false;
+            ServiceLocator.Instance.Get<PlayerService>().AddCoins(_value);
+        }
+
+        public override void SetActive(bool value)
+        {
+            base.SetActive(value);
+
+            if (value)
+                _meshRenderer.enabled = true;
+        }
     }
 }
