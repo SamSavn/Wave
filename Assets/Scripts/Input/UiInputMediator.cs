@@ -17,7 +17,7 @@ namespace Wave.Input
         private readonly CoroutineService _coroutineService;
         private readonly WaitForSeconds _waitForSeconds;
 
-        private const float WAIT_TIME = .5f;
+        private const float WAIT_TIME = .3f;
 
         public bool IsWaiting { get; private set; } = false;
 
