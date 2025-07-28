@@ -36,13 +36,13 @@ namespace Wave.Input
         {
             if (button == null)
             {
-                Debug.LogError("Button cannot be null");
+                Debug.LogError($"Unable to register button: {nameof(button)} cannot be null");
                 return;
             }
 
             if (onClick == null)
             {
-                Debug.LogWarning("Action cannot be null");
+                Debug.LogWarning($"Unable to register button: {nameof(onClick)} cannot be null");
                 return;
             }
 
@@ -60,13 +60,13 @@ namespace Wave.Input
         {
             if (button == null)
             {
-                Debug.LogError("Button cannot be null");
+                Debug.LogError($"Unable to unregister button: {nameof(button)} cannot be null");
                 return;
             }
 
             if (!_buttonsRegister.ContainsKey(button))
             {
-                Debug.LogWarning("Button is not registered");
+                Debug.LogWarning($"Unable to unregister button: {button.gameObject.name} was not registered");
                 return;
             }
 
@@ -83,7 +83,7 @@ namespace Wave.Input
         {
             if (IsWaiting)
             {
-                Debug.LogWarning("Input is currently waiting, ignoring button press.");
+                Debug.LogWarning("Input is currently waiting, ignoring button press");
                 return;
             }
 
