@@ -15,7 +15,7 @@ namespace Wave.Services
             AddressablesService addressablesService = new AddressablesService(coroutineService);
             DataService dataService = new DataService();
             AssetsService assetsService = new AssetsService(addressablesService);
-            UiService uiService = new UiService();
+            UiService uiService = new UiService(coroutineService);
             SceneService sceneService = new SceneService();
 
             ServiceLocator.Instance.Register(updateService);

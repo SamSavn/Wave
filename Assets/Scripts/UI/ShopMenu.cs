@@ -36,22 +36,7 @@ namespace Wave.UI.Screens
             base.Awake();
 
             _sceneService = ServiceLocator.Instance.Get<SceneService>();
-            _shipsService = ServiceLocator.Instance.Get<ShipsService>();
-
-            if (_leftArrow != null)
-                _leftArrow.onClick.AddListener(OnLeftArrowClick);
-
-            if (_rightArrow != null)
-                _rightArrow.onClick.AddListener(OnRightArrowClick);
-
-            if (_buyButton != null)
-                _buyButton.OnClick.AddListener(OnBuyButtonClick);
-
-            if (_equipButton != null)
-                _equipButton.OnClick.AddListener(OnEquipButtonClick);
-
-            if (_homeButton != null)
-                _homeButton.onClick.AddListener(OnHomeButtonClick);
+            _shipsService = ServiceLocator.Instance.Get<ShipsService>();            
 
             if (_versionsContainer != null)
                 _versionsContainer.OnVersionSelectionChanged.Add(OnVersionSelectionChanged);
@@ -74,6 +59,24 @@ namespace Wave.UI.Screens
                 return;
 
             _sceneService.SetScene(Handlers.SceneType.Game);
+        }
+
+        protected override void RegisterButtons()
+        {
+            _uiService.RegisterButton(_leftArrow, OnLeftArrowClick);
+            _uiService.RegisterButton(_rightArrow, OnRightArrowClick);
+            _uiService.RegisterButton(_buyButton.Button, OnBuyButtonClick);
+            _uiService.RegisterButton(_equipButton.Button, OnEquipButtonClick);
+            _uiService.RegisterButton(_homeButton, OnHomeButtonClick);
+        }
+
+        protected override void UnregisterButtons()
+        {
+            _uiService.UnregisterButton(_leftArrow);
+            _uiService.UnregisterButton(_rightArrow);
+            _uiService.UnregisterButton(_buyButton.Button);
+            _uiService.UnregisterButton(_equipButton.Button);
+            _uiService.UnregisterButton(_homeButton);
         }
 
         private void SetSelection(int index)

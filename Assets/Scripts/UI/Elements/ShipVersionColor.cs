@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Wave.Data;
 using Wave.Events;
+using Wave.Services;
 
 namespace Wave.UI
 {
@@ -18,6 +19,8 @@ namespace Wave.UI
         [SerializeField] private GameObject _selection;
         [SerializeField] private GameObject _equippedIndicator;
         [SerializeField] private Image _lockIcon;
+
+        private UiService _uiService;
 
         public int Index { get; private set; }
 
@@ -54,7 +57,17 @@ namespace Wave.UI
         private void Awake()
         {
             _button ??= GetComponent<Button>();
-            _button.onClick.AddListener(OnButtonClick);
+            _uiService = ServiceLocator.Instance.Get<UiService>();
+        }
+
+        private void OnEnable()
+        {
+            _uiService.RegisterButton(_button, OnButtonClick);            
+        }
+
+        private void OnDisable()
+        {
+            _uiService.UnregisterButton(_button);
         }
 
         public void SetUp(ColorVersionData data)
