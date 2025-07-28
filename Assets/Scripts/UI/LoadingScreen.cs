@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -8,6 +9,7 @@ namespace Wave.UI.Screens
 {
     public class LoadingScreen : MonoBehaviour
     {
+        [SerializeField] private TMP_Text _versionText;
         [SerializeField] private Image _loadingBar;
 
         private const int PROGRESS_STEPS = 3;
@@ -28,6 +30,7 @@ namespace Wave.UI.Screens
 
         private void Start()
         {
+            _versionText.text = $"v{Application.version}";
             _loadingBar.fillAmount = 0;
             StartCoroutine(WaitForServices());
         }
